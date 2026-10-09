@@ -1,0 +1,672 @@
+<title>Algebra I Study Map</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+/* Layout: one index bar on top, one reading column underneath.
+   Accent is used once per view (the stage ladder, the active tab). */
+:root{
+  --paper:#EEF1F0; --card:#FFFFFF; --ink:#18212B; --ink-2:#4A5661;
+  --rule:#C9D1D6; --accent:#1F6F78; --accent-soft:#D5E9EA; --warm:#A94F25; --warm-soft:#F6E3D8;
+  --f-display:"IBM Plex Serif",Georgia,serif; --f-body:"IBM Plex Sans",system-ui,sans-serif; --f-mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1417; --card:#162025; --ink:#E4EBEE; --ink-2:#A6B3BA; --rule:#2B3840;
+    --accent:#5FC0C8; --accent-soft:#1B3A3F; --warm:#E0875A; --warm-soft:#33241D; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1417; --card:#162025; --ink:#E4EBEE; --ink-2:#A6B3BA; --rule:#2B3840;
+  --accent:#5FC0C8; --accent-soft:#1B3A3F; --warm:#E0875A; --warm-soft:#33241D; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;padding-inline:16px}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.2;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(1.6rem,4vw,2.3rem)} h2{font-size:1.5rem} h3{font-size:1.15rem}
+p{margin:0 0 .9em;max-width:66ch}
+.wrap{max-width:980px;margin:0 auto;padding-block:20px 56px}
+header.top{padding-top:18px;border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+header.top .wrap{padding-block:0 12px}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 4px}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+nav.tabs a{flex:0 0 auto;text-decoration:none;color:var(--ink-2);padding:7px 12px;border-radius:8px;font-size:14px;border:1px solid transparent}
+nav.tabs a:hover{color:var(--ink);border-color:var(--rule)}
+nav.tabs a[aria-current="page"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.page{display:none}
+.page.on{display:block}
+.lede{font-size:1.08rem;color:var(--ink-2);max-width:62ch}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;min-width:0}
+.card+.card{margin-top:14px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:7px 12px;cursor:pointer;text-align:left}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip{font-size:13px;color:var(--accent);background:var(--accent-soft);border:none;border-radius:999px;padding:4px 10px;cursor:pointer;font-family:inherit}
+.muted{color:var(--ink-2);font-size:14px}
+.formula{font-family:var(--f-mono);font-size:15px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;overflow-x:auto;max-width:100%}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:9px 8px;border-bottom:1px solid var(--rule)}
+th{font-size:13px;color:var(--ink-2);font-weight:500}
+.tablewrap{overflow-x:auto;max-width:100%}
+input[type=text],select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;width:100%;max-width:100%}
+textarea{min-height:64px;font-family:var(--f-mono);font-size:14px}
+label{font-size:14px;color:var(--ink-2);display:block;margin-bottom:4px}
+.grid2{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:720px){.grid2{grid-template-columns:1fr 1fr}}
+.ladder{display:grid;gap:10px;grid-template-columns:1fr;margin:8px 0 18px}
+@media (min-width:820px){.ladder{grid-template-columns:repeat(7,minmax(0,1fr));gap:0;align-items:stretch}}
+.rung{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:14px;text-align:left;cursor:pointer;color:var(--ink);font:inherit;min-width:0;position:relative}
+.rung:hover{border-color:var(--accent)}
+.rung[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+@media (min-width:820px){.rung{border-radius:0}.rung:first-child{border-radius:12px 0 0 12px}.rung:last-child{border-radius:0 12px 12px 0}}
+.rung .n{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.rung .t{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:4px 0 6px;line-height:1.25}
+.rung .l{font-size:12px;color:var(--ink-2);font-family:var(--f-mono)}
+.stepline{display:none}
+@media (min-width:820px){.stepline{display:block;height:2px;background:var(--accent);position:absolute;left:100%;top:50%;width:0;}}
+.note{font-size:14px;color:var(--ink-2);border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:12px 0}
+.warn{border-left-color:var(--warm);background:var(--warm-soft);padding:10px 12px;border-radius:0 8px 8px 0}
+.defs-layout{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:860px){.defs-layout{grid-template-columns:300px minmax(0,1fr);align-items:start}}
+.deflist{max-height:none}
+@media (min-width:860px){.deflist{position:sticky;top:150px;max-height:calc(100vh - 170px);overflow:auto}}
+.deflist h3{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);margin:14px 0 6px;font-weight:500}
+.deflist button{display:block;width:100%;margin-bottom:4px}
+.parts td:first-child{font-family:var(--f-mono);white-space:nowrap;color:var(--accent)}
+.two{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:600px){.two{grid-template-columns:1fr 1fr}}
+.stepbox{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--rule)}
+.stepbox input{margin-top:5px;width:18px;height:18px;flex:0 0 auto;accent-color:var(--accent)}
+.stepbox .num{font-family:var(--f-mono);color:var(--accent);font-size:13px}
+.progress{height:6px;background:var(--rule);border-radius:999px;overflow:hidden;margin:10px 0 4px}
+.progress div{height:100%;background:var(--accent);width:0;transition:width .3s}
+.ask{list-style:none;padding:0;margin:0;counter-reset:q}
+.ask li{counter-increment:q;padding:6px 0;border-bottom:1px solid var(--rule)}
+.ask li::before{content:counter(q) ". ";font-family:var(--f-mono);color:var(--accent)}
+ol.moves{padding-left:1.2em;margin:.4em 0}
+ol.moves li{margin:.3em 0}
+.crumbs{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);margin-bottom:10px;min-height:1.6em}
+.result-title{font-family:var(--f-display);font-size:1.4rem;margin:0 0 6px}
+.status{font-size:14px;margin-top:8px}
+.ok{color:var(--accent)} .bad{color:var(--warm)}
+.blank{font-family:var(--f-mono);color:var(--warm);}
+.plainout{font-size:1.1rem;line-height:1.5;font-family:var(--f-display);margin:.2em 0 .6em}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <p class="kicker">Algebra I · Lectures 1–9 and Chapter 5</p>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#map">Course map</a>
+      <a href="#defs">Definitions</a>
+      <a href="#decide">What kind of question?</a>
+      <a href="#routine">When you're stuck</a>
+      <a href="#notation">Reading notation</a>
+      <a href="#build">Build a statement</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= MAP ================= -->
+<section class="page" id="page-map">
+  <h1>How the course fits together</h1>
+  <p class="lede">Each stage uses the ideas before it. Start at the left, and click a stage to see the definitions it introduces. The arrows mean "you need this before that," not "this proves that."</p>
+  <div class="ladder" id="ladder"></div>
+  <div class="card" id="stageDetail" aria-live="polite"></div>
+  <div class="note">The course also teaches proof methods and the field axioms, which run through every stage. This map shows what depends on what, not the order of a formal proof.</div>
+</section>
+
+<!-- ================= DEFINITIONS ================= -->
+<section class="page" id="page-defs">
+  <h1>Definitions, one at a time</h1>
+  <p class="lede">Each card goes in four steps: the plain meaning, the symbols broken into parts, a worked example and a non-example, and a question to check yourself.</p>
+  <div class="defs-layout">
+    <aside class="card deflist">
+      <label for="defSearch">Search</label>
+      <input type="text" id="defSearch" placeholder="e.g. injective, basis, mod" autocomplete="off">
+      <div id="defList"></div>
+    </aside>
+    <article class="card" id="defDetail" aria-live="polite"></article>
+  </div>
+</section>
+
+<!-- ================= DECIDE ================= -->
+<section class="page" id="page-decide">
+  <h1>What kind of question is this?</h1>
+  <p class="lede">Answer one question at a time. Each answer narrows the question until you reach a move to try. The trail at the top shows the path you took.</p>
+  <div class="card">
+    <div class="crumbs" id="crumbs"></div>
+    <h2 id="decQ" style="font-size:1.25rem"></h2>
+    <div class="row" id="decOpts" style="margin-top:10px;flex-direction:column;align-items:stretch"></div>
+    <div id="decLeaf"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="decBack">Back</button><button class="btn" id="decReset">Start over</button></div>
+  </div>
+</section>
+
+<!-- ================= ROUTINE ================= -->
+<section class="page" id="page-routine">
+  <h1>When you're stuck: six steps</h1>
+  <p class="lede">Work through the steps in order. Tick each one as you go. If you've been stuck for more than a few minutes, go back to step 3 and ask which condition you haven't checked.</p>
+  <div class="progress" aria-hidden="true"><div id="progBar"></div></div>
+  <p class="muted" id="progText"></p>
+  <div class="card" id="routineList"></div>
+  <div class="card">
+    <h3>Questions to ask yourself</h3>
+    <ol class="ask">
+      <li>What exactly is given, and what do I have to show or find?</li>
+      <li>Which definition applies, and what are its conditions?</li>
+      <li>What does this sentence mean in ordinary words?</li>
+      <li>Can I test a small case to see what is happening?</li>
+      <li>Am I assuming a picture proves a general claim?</li>
+    </ol>
+  </div>
+  <div style="margin-top:12px"><button class="btn" id="routineReset">Clear all ticks</button></div>
+</section>
+
+<!-- ================= NOTATION ================= -->
+<section class="page" id="page-notation">
+  <h1>Reading the notation</h1>
+  <p class="lede">Each symbol gets a plain reading and a small example. Read the words first, then the symbol, then the example.</p>
+  <div class="card">
+    <label for="symSearch">Filter symbols</label>
+    <input type="text" id="symSearch" placeholder="type a word, e.g. union or inverse" autocomplete="off">
+    <div class="tablewrap" style="margin-top:12px">
+      <table><thead><tr><th>Symbol</th><th>Read it as</th><th>Example</th></tr></thead>
+      <tbody id="symRows"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUILD ================= -->
+<section class="page" id="page-build">
+  <h1>Build a statement, or a proof outline</h1>
+  <p class="lede">Two tools. The first translates a formal statement into plain English, one piece at a time. The second gives you the outline of a proof, so you can fill in each step yourself. The page checks that the steps are written, not that the mathematics is correct.</p>
+
+  <div class="card">
+    <h2 style="font-size:1.25rem">Statement translator</h2>
+    <label for="tplSel">Choose a statement</label>
+    <select id="tplSel"></select>
+    <div id="tplInputs" class="two" style="margin-top:12px"></div>
+    <div style="margin-top:14px">
+      <p class="muted" style="margin-bottom:4px">In symbols</p>
+      <div class="formula" id="tplSym"></div>
+      <p class="muted" style="margin:14px 0 4px">In plain English</p>
+      <p class="plainout" id="tplPlain"></p>
+      <p class="muted" style="margin:14px 0 4px">Piece by piece</p>
+      <div class="tablewrap"><table class="parts"><tbody id="tplParts"></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:1.25rem">Proof outline</h2>
+    <label for="skSel">Choose what you're proving</label>
+    <select id="skSel"></select>
+    <div id="skSteps" style="margin-top:12px"></div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="skCheck">Check the outline</button></div>
+    <p class="status" id="skStatus" aria-live="polite"></p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function $(id){return document.getElementById(id);}
+
+/* ---------- stages ---------- */
+var STAGES=[
+ {n:"1",t:"Sets and functions",l:"Lectures 1–2",p:"Inputs, outputs, and what can be undone. Everything later uses these.",defs:["set","subset","union","intersection","function","image","preimage","injective","surjective","bijective","composition"]},
+ {n:"2",t:"Equivalence and clock numbers",l:"Lecture 3 · Ch. 5",p:"Sorting things by remainder. This creates the clock numbers Z/mZ.",defs:["congruence","equivclass","equivrel","zm","unit"]},
+ {n:"3",t:"Fields",l:"Lectures 2, 4",p:"Number systems where you can divide by anything nonzero. A clock is a field exactly when m is prime.",defs:["field","primefield","complex"]},
+ {n:"4",t:"Vector spaces",l:"Lecture 5",p:"Things you can add and scale. Arrows are one example, not the only one.",defs:["vectorspace","subspace"]},
+ {n:"5",t:"Span",l:"Lecture 6",p:"Everything you can build from a list of vectors.",defs:["lincomb","span","spanning"]},
+ {n:"6",t:"Independence and bases",l:"Lectures 7–8",p:"Which lists have no redundancy, and which lists are exactly enough.",defs:["indep","basis"]},
+ {n:"7",t:"Dimension",l:"Lectures 8–9",p:"How many vectors a basis has, and why that number is the same for every basis.",defs:["dim","replacement"]}
+];
+
+/* ---------- definitions ---------- */
+var DEFS={
+ set:{t:"Set",s:0,L:"Lecture 1",plain:"A set is a bag of things. Nothing repeats, and the order does not matter.",
+  f:"x ∈ S",parts:[["x","one thing"],["∈","is an element of, or 'is in'"],["S","the bag"]],
+  ex:"{1, 2, 3} is a set, and 2 ∈ {1, 2, 3}.",nx:"A list like (1, 2), where order matters, is not a set.",
+  chk:["Is 4 ∈ {1, 2, 3}?","No. 4 is not in the bag."],links:["subset","union"]},
+ subset:{t:"Subset",s:0,L:"Lecture 1",plain:"A ⊂ B means every item in A is also in B.",
+  f:"A ⊂ B  ⇔  for all x: x ∈ A ⇒ x ∈ B",parts:[["A ⊂ B","A is inside B"],["for all x","take any item x"],["x ∈ A ⇒ x ∈ B","if it is in A, then it is in B"]],
+  ex:"{1, 2} ⊂ {1, 2, 3}.",nx:"{1, 4} is not inside {1, 2, 3}, because 4 is missing.",
+  chk:["Is {1, 2, 3} ⊂ {1, 2}?","No. 3 is in the first set but not the second."],links:["set","union"]},
+ union:{t:"Union",s:0,L:"Lecture 1",plain:"A ∪ B is everything that is in A, in B, or in both.",
+  f:"x ∈ A ∪ B  ⇔  x ∈ A  or  x ∈ B",parts:[["∪","combine the two bags"],["or","at least one; 'both' counts"]],
+  ex:"{1, 2} ∪ {2, 3} = {1, 2, 3}. The 2 appears once.",nx:"The union is not only the overlap. That is the intersection.",
+  chk:["What is {1, 2} ∪ {2, 3}?","{1, 2, 3}"],links:["intersection"]},
+ intersection:{t:"Intersection",s:0,L:"Lecture 1",plain:"A ∩ B is what A and B have in common.",
+  f:"x ∈ A ∩ B  ⇔  x ∈ A  and  x ∈ B",parts:[["∩","keep only what both share"],["and","must be in both"]],
+  ex:"{1, 2} ∩ {2, 3} = {2}.",nx:"{1, 2} ∩ {3, 4} = ∅. They share nothing, so the result is empty.",
+  chk:["What is {1, 2, 3} ∩ {3, 4, 5}?","{3}"],links:["union","set"]},
+ "function":{t:"Function",s:0,L:"Lectures 1–2",plain:"A function is a machine. You give it an input, and it returns exactly one output.",
+  f:"f : S → T",parts:[["f","the machine"],["S","the domain: allowed inputs"],["T","the codomain: allowed outputs"],["→","each input goes to one output"],["f(x)","the output for input x"]],
+  ex:"f(x) = 2x + 1, from ℝ to ℝ. The input 3 gives 7.",nx:"Sending 2 to both 3 and 5 is not a function. One input cannot have two outputs.",
+  chk:["Can one function send 2 to both 3 and 5?","No. Each input gets exactly one output."],links:["image","preimage","injective","surjective","composition"]},
+ image:{t:"Image",s:0,L:"Lecture 1",plain:"The image of a set U of inputs is the set of outputs that U lands on.",
+  f:"f(U) = { f(x) : x ∈ U }",parts:[["f(U)","the image of U"],["{ f(x) : x ∈ U }","list f(x) for each x in U"]],
+  ex:"f(x) = x², U = {−1, 2}. Then f(U) = {1, 4}.",nx:"The image of the whole domain is the range. It is not the whole codomain.",
+  chk:["For f(x) = x², what is f({−2, 3})?","{4, 9}"],links:["function","preimage"]},
+ preimage:{t:"Preimage",s:0,L:"Lecture 1",plain:"The preimage of a set V of outputs is every input that lands in V.",
+  f:"f⁻¹(V) = { x : f(x) ∈ V }",parts:[["f⁻¹(V)","the preimage of V (this is a name for a set, not an inverse function)"],["x : f(x) ∈ V","all x whose output is in V"]],
+  ex:"f(x) = x². Then f⁻¹({4}) = {−2, 2}.",nx:"The preimage can have several inputs or none at all, so it is not an inverse function.",
+  chk:["For f(x) = x², what is f⁻¹({9})?","{−3, 3}"],links:["image","injective"]},
+ injective:{t:"Injective",s:0,L:"Lecture 1",plain:"Injective means no collisions: two different inputs never give the same output.",
+  f:"f(x) = f(y)  ⇒  x = y",parts:[["f(x) = f(y)","the outputs match"],["⇒","then"],["x = y","the inputs must have been the same"]],
+  ex:"f(x) = 2x + 1 is injective.",nx:"f(x) = x² is not injective, because f(2) = f(−2) = 4.",
+  chk:["Is f(x) = x² injective on ℝ?","No. f(2) = f(−2) = 4."],links:["surjective","bijective"]},
+ surjective:{t:"Surjective",s:0,L:"Lecture 1",plain:"Surjective means nothing is missed: every allowed output is hit by at least one input.",
+  f:"for all y ∈ T, there exists x ∈ S with f(x) = y",parts:[["for all y ∈ T","take any allowed output"],["there exists x ∈ S","at least one input"],["f(x) = y","that input lands on y"]],
+  ex:"f(x) = 2x + 1, from ℝ to ℝ, is surjective.",nx:"f(x) = 2x + 1, from ℤ to ℤ, is not surjective. Every output is odd, so 2 is missed.",
+  chk:["Is f: ℤ → ℤ, f(x) = 2x + 1 surjective?","No. Every output is odd, so 2 is never hit."],links:["injective","bijective","function"]},
+ bijective:{t:"Bijective",s:0,L:"Lectures 1–2",plain:"Bijective means both injective and surjective: a perfect pairing, with nothing left over and nothing shared.",
+  f:"f is injective  and  f is surjective",parts:[["injective","no collisions"],["surjective","nothing missed"]],
+  ex:"f(x) = x³, from ℝ to ℝ, is bijective.",nx:"f(x) = |x| + 1, from ℤ to ℕ, is surjective but not injective, since f(−1) = f(1).",
+  chk:["Is f(x) = x³ on ℝ bijective?","Yes. Each real number has exactly one real cube root."],links:["invertible","injective","surjective"]},
+ invertible:{t:"Invertible",s:0,L:"Lecture 1",plain:"A function is invertible if a second machine can undo it exactly.",
+  f:"exists g with g(f(x)) = x for all x, and f(g(y)) = y for all y",parts:[["exists g","there is a second function"],["g(f(x)) = x","going through f, then g, returns you to the start"],["f(g(y)) = y","going through g, then f, returns you to the start"]],
+  ex:"f(x) = 2x + 1 on ℝ. The undo is g(y) = (y − 1)/2.",nx:"f(x) = x² on ℝ is not invertible. Both 2 and −2 give 4, so you cannot tell which input to return.",
+  chk:["Is f(x) = 2x + 1 on ℝ invertible? If yes, what is the undo?","Yes. g(y) = (y − 1)/2."],links:["bijective","composition"]},
+ composition:{t:"Composition",s:0,L:"Lecture 1",plain:"g ∘ f means: apply f first, then apply g to the result.",
+  f:"(g ∘ f)(x) = g(f(x))",parts:[["g ∘ f","a single function built from f and g"],["g(f(x))","f runs first, g runs second"]],
+  ex:"f(x) = x + 1 and g(x) = 2x. Then (g ∘ f)(3) = g(4) = 8.",nx:"Order matters. Here (f ∘ g)(3) = f(6) = 7, which is not 8.",
+  chk:["For f(x) = x + 1 and g(x) = 2x, what is (f ∘ g)(3)?","f(g(3)) = f(6) = 7."],links:["function","invertible"]},
+ congruence:{t:"Congruence mod m",s:1,L:"Lecture 3 · Ch. 5",plain:"a ≡ b (mod m) means a and b leave the same remainder when divided by m. They sit at the same spot on an m-hour clock.",
+  f:"a ≡ b (mod m)  ⇔  m divides (a − b)",parts:[["≡","'same spot on the clock'"],["(mod m)","the clock has m hours"],["m divides (a − b)","the difference is a whole multiple of m"]],
+  ex:"7 ≡ 2 (mod 5), because 7 − 2 = 5.",nx:"7 is not congruent to 3 mod 5, because 7 − 3 = 4 is not a multiple of 5.",
+  chk:["Is 13 ≡ 3 (mod 5)?","Yes. 13 − 3 = 10, which is a multiple of 5."],links:["equivrel","zm"]},
+ equivrel:{t:"Equivalence relation",s:1,L:"Lecture 3",plain:"An equivalence relation is a 'same kind' rule that passes three checks: each thing matches itself, the match works both ways, and it chains through.",
+  f:"reflexive:  a ~ a\nsymmetric:  a ~ b ⇒ b ~ a\ntransitive:  a ~ b and b ~ c ⇒ a ~ c",parts:[["reflexive","everything matches itself"],["symmetric","if a matches b, then b matches a"],["transitive","matches chain through"]],
+  ex:"Congruence mod m is an equivalence relation.",nx:"'<' is not one. It fails symmetry, because 1 < 2 but 2 < 1 is false.",
+  chk:["Does '<' pass the symmetry check?","No. 1 < 2, but not 2 < 1."],links:["congruence","equivclass"]},
+ equivclass:{t:"Equivalence class",s:1,L:"Lecture 3",plain:"The class of a is everything equivalent to a. Classes split the set into separate pieces that never overlap.",
+  f:"[a] = { x : x ≡ a }",parts:[["[a]","the class containing a"],["x ≡ a","everything that matches a"]],
+  ex:"In Z/3Z, [1] = [4] = [−2]. They are the same piece.",nx:"[1] and [2] in Z/3Z are different pieces, so they share no elements.",
+  chk:["In Z/3Z, is [1] = [4]?","Yes. 4 ≡ 1 (mod 3)."],links:["congruence","zm"]},
+ zm:{t:"Clock numbers Z/mZ",s:1,L:"Lecture 3 · Ch. 5",plain:"Z/mZ is the set of clock numbers 0 up to m − 1. To add or multiply, do the arithmetic normally, then take the remainder.",
+  f:"Z/mZ = { 0, 1, …, m − 1 }",parts:[["Z/mZ","the clock with m numbers"],["take the remainder","wrap back into 0 … m − 1"]],
+  ex:"In Z/5Z: 3 + 4 = 2 and 3 · 4 = 2.",nx:"Z/mZ is not infinite. It has exactly m elements.",
+  chk:["In Z/5Z, what is 2 · 3?","1, since 6 leaves remainder 1 on the 5-clock."],links:["unit","field"]},
+ unit:{t:"Unit",s:1,L:"Ch. 5 §7",plain:"A unit is a clock number that has a partner which multiplies with it to give 1.",
+  f:"a · b ≡ 1 (mod m)",parts:[["a","the number you have"],["b","its partner"],["≡ 1 (mod m)","the product leaves remainder 1"]],
+  ex:"2 is a unit in Z/9Z, because 2 · 5 = 10 ≡ 1.",nx:"3 is not a unit in Z/9Z. Multiples of 3 mod 9 are 0, 3, or 6, never 1.",
+  chk:["Is 4 a unit in Z/9Z? If yes, what is its partner?","Yes. 4 · 7 = 28 ≡ 1 (mod 9), so the partner is 7."],links:["zm","field"]},
+ field:{t:"Field",s:2,L:"Lectures 2, 4",plain:"A field is a number system where you can add, subtract, multiply, and divide, with one exception: you cannot divide by zero.",
+  f:"every a has an additive inverse, and\nevery a ≠ 0 has a multiplicative inverse",parts:[["additive inverse","a + (−a) = 0, for every a, including 0"],["multiplicative inverse","a · a⁻¹ = 1, for every a ≠ 0 only"]],
+  ex:"ℚ, ℝ, ℂ, and Z/pZ for prime p are fields.",nx:"Z/6Z is not a field. 2 · 3 = 6 ≡ 0, and 2 has no partner that gives 1.",
+  chk:["Is Z/6Z a field?","No. 2 · 3 ≡ 0 (mod 6), and 2 has no inverse."],links:["primefield","unit"]},
+ primefield:{t:"Z/pZ is a field (p prime)",s:2,L:"Lecture 4",plain:"When p is prime, every nonzero clock number is a unit. So Z/pZ is a field.",
+  f:"p prime  ⇒  every a ≠ 0 in Z/pZ has an inverse",parts:[["p prime","no smaller number (other than 1) divides p"],["every a ≠ 0","all nonzero clock numbers"],["has an inverse","a partner that gives 1"]],
+  ex:"Z/5Z is a field. The partners are 1↔1, 2↔3, and 4↔4.",nx:"Z/6Z is not, because 2 and 3 are nonzero and multiply to 0.",
+  chk:["Why is Z/7Z a field?","7 is prime, so every nonzero clock number has an inverse."],links:["field","zm"]},
+ complex:{t:"Complex numbers",s:2,L:"Lecture 2",plain:"A complex number is a + bi, where i is a number with i² = −1. Multiply like polynomials, then replace i² with −1.",
+  f:"(a + bi)(c + di) = (ac − bd) + (ad + bc)i",parts:[["a","the real part"],["b","the imaginary part (a real number)"],["i","the number with i² = −1"]],
+  ex:"(2 + i)(3 − 4i) = 10 − 5i.",nx:"a + bi and c + di are equal only if a = c and b = d. They are not equal just because they look similar.",
+  chk:["What is (1 + i)²?","2i, since 1 + 2i + i² = 1 + 2i − 1 = 2i."],links:["field"]},
+ vectorspace:{t:"Vector space",s:3,L:"Lecture 5",plain:"A vector space is a set of things you can add and scale by numbers, where the usual rules hold, including that there is a zero.",
+  f:"closed under +  and  scaling by F,\nplus eight rules (commutative, associative, zero, inverses, distributive…)",parts:[["vector","any object: an arrow, a polynomial, a matrix"],["scalar","a number from the field F"],["rules","for example, u + v = v + u, and there is a zero"]],
+  ex:"ℝ² with usual addition and scaling. Pairs (x, y) can be added and stretched.",nx:"The positive pairs (x, y) with x, y > 0 are not a vector space. They contain no zero, and scaling by −1 leaves the set.",
+  chk:["Does the set of all (x, y) with x, y > 0 contain the zero vector?","No, so it fails the rules."],links:["subspace","lincomb"]},
+ subspace:{t:"Subspace",s:3,L:"Lecture 5",plain:"A subspace is a vector space living inside a bigger one. It must contain zero, and it must stay inside when you add or scale.",
+  f:"0 ∈ W\nu, v ∈ W  ⇒  u + v ∈ W\nc ∈ F, u ∈ W  ⇒  cu ∈ W",parts:[["0 ∈ W","zero is in W"],["u + v ∈ W","closed under adding"],["cu ∈ W","closed under scaling"]],
+  ex:"The line y = x in ℝ² is a subspace.",nx:"The line y = x + 1 is not. It does not contain (0, 0).",
+  chk:["Is {(x, y) : x = 2y} a subspace of ℝ²?","Yes. It contains (0, 0), and sums and scalings keep x = 2y true."],links:["vectorspace","span"]},
+ lincomb:{t:"Linear combination",s:4,L:"Lecture 6",plain:"A linear combination scales some vectors and adds the results.",
+  f:"c₁v₁ + c₂v₂ + … + cₙvₙ",parts:[["cᵢ","the scalars, or coefficients: numbers you choose"],["vᵢ","the vectors"],["+","add the scaled vectors"]],
+  ex:"2(1, 0) + 3(0, 1) = (2, 3).",nx:"There is no 'multiply two vectors' operation in a vector space. A linear combination always uses numbers as the scalars.",
+  chk:["What is 2(1, 1) + 1(0, 2)?","(2, 4)"],links:["span","indep"]},
+ span:{t:"Span",s:4,L:"Lecture 6",plain:"The span of a list is every vector you can build from the list using linear combinations.",
+  f:"span(S) = { c₁s₁ + … + cₙsₙ : cᵢ ∈ F, sᵢ ∈ S }",parts:[["span(S)","everything buildable from S"],["cᵢ ∈ F","choose any scalars"],["sᵢ ∈ S","use vectors from S"]],
+  ex:"span{(1, 0), (0, 1)} = ℝ².",nx:"span{(1, 0)} is only the x-axis. It cannot reach (0, 1).",
+  chk:["Does span{(1, 1)} contain (2, 2)?","Yes: (2, 2) = 2·(1, 1)."],links:["lincomb","spanning"]},
+ spanning:{t:"Spanning set",s:4,L:"Lectures 6, 8",plain:"A list S spans V if its span is all of V. Everything in V can be built from S.",
+  f:"span(S) = V",parts:[["span(S)","what S can build"],["= V","that is the whole space"]],
+  ex:"{(1, 0), (0, 1)} spans ℝ².",nx:"{(1, 0), (2, 0)} spans only the x-axis, not all of ℝ².",
+  chk:["Does {(1, 0), (0, 1), (1, 1)} span ℝ²?","Yes. Even (1, 0) and (0, 1) alone already do."],links:["span","basis"]},
+ indep:{t:"Linear independence",s:5,L:"Lecture 7",plain:"A list is linearly independent if the only way to combine its vectors into zero is to use zero of each. Otherwise it is dependent: one vector is redundant.",
+  f:"c₁v₁ + … + cₙvₙ = 0  ⇒  every cᵢ = 0",parts:[["= 0","the combination equals the zero vector"],["⇒ every cᵢ = 0","forced: all the coefficients are zero"]],
+  ex:"{(1, 0), (0, 1)} is independent.",nx:"{(1, 0), (0, 1), (1, 1)} is dependent. (1, 1) − (1, 0) − (0, 1) = 0 with nonzero coefficients.",
+  chk:["Is {(1, 2), (2, 4)} independent?","No. 2(1, 2) − (2, 4) = 0, with coefficients that are not all zero."],links:["lincomb","basis"]},
+ basis:{t:"Basis",s:5,L:"Lectures 7–8",plain:"A basis is a list that is both spanning and independent. It is just enough to build everything, with no extras, and each vector is built in exactly one way.",
+  f:"span(β) = V  and  β is linearly independent",parts:[["span(β) = V","enough to build everything"],["independent","no extras"]],
+  ex:"{(1, 0), (0, 1)} is a basis of ℝ².",nx:"{(1, 0), (0, 1), (1, 1)} is not a basis. It spans, but it is dependent.",
+  chk:["Is {(1, 0), (1, 1)} a basis of ℝ²?","Yes. It spans, since (0, 1) = (1, 1) − (1, 0), and neither vector is a multiple of the other."],links:["spanning","indep","dim"]},
+ dim:{t:"Dimension",s:6,L:"Lectures 8–9",plain:"The dimension of a space is the number of vectors in any basis. It counts the independent directions you can move in.",
+  f:"dim V = number of vectors in a basis of V",parts:[["dim V","the dimension of V"],["basis","a minimal spanning list"]],
+  ex:"dim ℝ² = 2, and dim ℝ³ = 3.",nx:"ℂ has dimension 1 as a space over ℂ, but dimension 2 as a space over ℝ. The field you scale by matters.",
+  chk:["What is the dimension of ℝ³?","3, because the standard basis has 3 vectors."],links:["basis","replacement"]},
+ replacement:{t:"Replacement theorem",s:6,L:"Lecture 8",plain:"An independent list is never longer than a spanning list. So all bases of a finite-dimensional space have the same size.",
+  f:"|independent list| ≤ |spanning list|",parts:[["|…|","the number of vectors"],["≤","is at most"]],
+  ex:"In ℝ², any three vectors are dependent, because an independent list can have at most two.",nx:"This needs a finite spanning list. The size rule is for finite-dimensional spaces.",
+  chk:["In ℝ², can three vectors be independent?","No. An independent list has at most two vectors."],links:["dim","basis"]}
+};
+var DEF_ORDER=[];
+STAGES.forEach(function(s){s.defs.forEach(function(id){DEF_ORDER.push(id);});});
+
+/* ---------- map ---------- */
+var activeStage=null;
+function renderLadder(){
+  var html="";
+  STAGES.forEach(function(s,i){
+    html+='<button class="rung" data-stage="'+i+'" aria-pressed="'+(activeStage===i)+'">'+
+      '<span class="n">'+s.n+'</span><div class="t">'+esc(s.t)+'</div><div class="l">'+esc(s.l)+'</div>'+
+      (i<STAGES.length-1?'<span class="stepline" aria-hidden="true"></span>':'')+'</button>';
+  });
+  $("ladder").innerHTML=html;
+}
+function renderStage(i){
+  var box=$("stageDetail");
+  if(i===null){box.innerHTML='<p class="muted">Pick a stage above to see the definitions it introduces.</p>';return;}
+  var s=STAGES[i];
+  var items=s.defs.map(function(id){return '<button class="chip" data-def="'+id+'">'+esc(DEFS[id].t)+'</button>';}).join(" ");
+  box.innerHTML='<p class="kicker">Stage '+esc(s.n)+' · '+esc(s.l)+'</p><h2>'+esc(s.t)+'</h2><p>'+esc(s.p)+'</p><div class="row">'+items+'</div>';
+}
+$("ladder").addEventListener("click",function(e){
+  var b=e.target.closest("[data-stage]"); if(!b) return;
+  activeStage=Number(b.getAttribute("data-stage"));
+  renderLadder(); renderStage(activeStage);
+});
+$("stageDetail").addEventListener("click",function(e){
+  var b=e.target.closest("[data-def]"); if(!b) return;
+  openDef(b.getAttribute("data-def"));
+});
+
+/* ---------- definitions ---------- */
+var currentDef=null;
+function renderDefList(filter){
+  var f=(filter||"").trim().toLowerCase();
+  var html="";
+  STAGES.forEach(function(s){
+    var ids=s.defs.filter(function(id){
+      if(!f) return true;
+      var d=DEFS[id];
+      return (d.t+" "+d.plain).toLowerCase().indexOf(f)>=0;
+    });
+    if(!ids.length) return;
+    html+='<h3>'+esc(s.n)+' · '+esc(s.t)+'</h3>';
+    ids.forEach(function(id){
+      html+='<button class="btn" data-def="'+id+'" aria-pressed="'+(currentDef===id)+'">'+esc(DEFS[id].t)+'</button>';
+    });
+  });
+  $("defList").innerHTML=html||'<p class="muted">Nothing matches. Try a shorter word.</p>';
+}
+function renderDef(id){
+  var d=DEFS[id], s=STAGES[d.s];
+  var rows=d.parts.map(function(p){return "<tr><td>"+esc(p[0])+"</td><td>"+esc(p[1])+"</td></tr>";}).join("");
+  var links=d.links.map(function(l){return '<button class="chip" data-def="'+l+'">'+esc(DEFS[l].t)+'</button>';}).join(" ");
+  $("defDetail").innerHTML=
+    '<p class="kicker">Stage '+esc(s.n)+' · '+esc(s.t)+' · '+esc(d.L)+'</p>'+
+    '<h2>'+esc(d.t)+'</h2>'+
+    '<h3 style="font-size:1rem;color:var(--ink-2);font-family:var(--f-body);font-weight:500">1 · In plain English</h3>'+
+    '<p class="plainout">'+esc(d.plain)+'</p>'+
+    '<h3 style="font-size:1rem;color:var(--ink-2);font-family:var(--f-body);font-weight:500">2 · Break it into parts</h3>'+
+    '<div class="formula" style="white-space:pre-wrap">'+esc(d.f)+'</div>'+
+    '<div class="tablewrap" style="margin-top:10px"><table class="parts"><tbody>'+rows+'</tbody></table></div>'+
+    '<h3 style="font-size:1rem;color:var(--ink-2);font-family:var(--f-body);font-weight:500;margin-top:16px">3 · Examples</h3>'+
+    '<div class="two"><div class="card" style="margin:0"><p class="muted" style="margin:0 0 4px">Example</p><p style="margin:0">'+esc(d.ex)+'</p></div>'+
+    '<div class="card warn" style="margin:0"><p class="muted" style="margin:0 0 4px">Not an example</p><p style="margin:0">'+esc(d.nx)+'</p></div></div>'+
+    '<h3 style="font-size:1rem;color:var(--ink-2);font-family:var(--f-body);font-weight:500;margin-top:16px">4 · Check yourself</h3>'+
+    '<details class="card" style="margin:0"><summary style="cursor:pointer;font-weight:500">'+esc(d.chk[0])+'</summary><p style="margin:10px 0 0">'+esc(d.chk[1])+'</p></details>'+
+    '<h3 style="font-size:1rem;color:var(--ink-2);font-family:var(--f-body);font-weight:500;margin-top:16px">Connected to</h3>'+
+    '<div class="row">'+links+'</div>';
+}
+function openDef(id){
+  currentDef=id;
+  renderDefList($("defSearch").value);
+  renderDef(id);
+}
+$("defSearch").addEventListener("input",function(){renderDefList(this.value);});
+$("defList").addEventListener("click",function(e){
+  var b=e.target.closest("[data-def]"); if(!b) return;
+  openDef(b.getAttribute("data-def"));
+});
+$("defDetail").addEventListener("click",function(e){
+  var b=e.target.closest("[data-def]"); if(!b) return;
+  openDef(b.getAttribute("data-def"));
+});
+
+/* ---------- decision flow ---------- */
+var DEC={
+ start:{q:"What is the question asking you to do?",o:[["Show that something exists","ex"],["Show that a claim holds for every element","fa"],["Show that two things are equal","eq"],["Show that something is false","L_counter"],["Work with vectors, subspaces, or bases","vec"],["Work with clock numbers or fields","fld"]]},
+ ex:{q:"What must you produce?",o:[["A specific input, number, or vector","L_construct"],["Coefficients that combine vectors into a target","L_span"]]},
+ fa:{q:"Is the claim about every element of a set, or about a property of a function?",o:[["Every element of a set","L_arb"],["A property of a function","fn"]]},
+ fn:{q:"Which property?",o:[["No two inputs share an output (injective)","L_inj"],["Every allowed output is hit (surjective)","L_surj"],["Both, or an undo exists (bijective or invertible)","L_bij"]]},
+ eq:{q:"What kind of equality?",o:[["Two sets","L_sets"],["Two numbers mod m","L_cong"],["Two vector spaces or subspaces","L_vecs"]]},
+ vec:{q:"Which vector question?",o:[["Is this set a subspace?","L_sub"],["Is this list linearly independent?","L_ind"],["Does this list span the space?","L_spanq"],["Is this list a basis?","L_basis"],["What is the dimension?","L_dim"]]},
+ fld:{q:"Which question?",o:[["Is Z/mZ a field?","L_field"],["Does this clock number have an inverse?","L_unit"],["Something about complex numbers","L_cplx"]]},
+ L_construct:{leaf:1,t:"Construct it",m:["Write down the candidate explicitly.","Check it satisfies every condition in the definition, one at a time."],w:"Saying 'it probably exists' is not enough. Build it, or prove that it must exist.",d:["span"]},
+ L_span:{leaf:1,t:"Solve for the coefficients",m:["Write the target as c₁s₁ + … + cₙsₙ.","Solve the resulting equations for the c's.","If there is a solution, the target is in the span. If there is none, it is not."],w:"Find the coefficients first. Do not just guess from a picture.",d:["lincomb","span"]},
+ L_arb:{leaf:1,t:"Start with arbitrary elements",m:["Let x (and y) be arbitrary elements of the set.","Use only the definition, not specific numbers.","Conclude the property for that arbitrary element."],w:"Checking a few numbers does not prove a 'for all' claim.",d:["set"]},
+ L_inj:{leaf:1,t:"Show injective",m:["Assume f(x) = f(y).","Use the definition to show x = y."],w:"Checking a few inputs does not prove injectivity.",d:["injective"]},
+ L_surj:{leaf:1,t:"Show surjective",m:["Take any target y in the codomain.","Solve f(x) = y for an x in the domain.","Check that the x you found really works."],w:"Changing the codomain changes the answer. Read it from the statement.",d:["surjective","function"]},
+ L_bij:{leaf:1,t:"Show bijective or invertible",m:["Show injective and surjective, or","find g with g(f(x)) = x and f(g(y)) = y for all x and y."],w:"An undo must work from both sides.",d:["bijective","invertible"]},
+ L_sets:{leaf:1,t:"Show two sets are equal",m:["Show that every element of A is in B.","Show that every element of B is in A."],w:"Two inclusions, one for each direction.",d:["subset","set"]},
+ L_cong:{leaf:1,t:"Show a ≡ b (mod m)",m:["Compute a − b.","Show a − b = m·k for some integer k."],w:"",d:["congruence"]},
+ L_vecs:{leaf:1,t:"Show two subspaces are equal",m:["Show each contains the other.","Or show one is inside the other and they have the same dimension."],w:"",d:["subspace","dim"]},
+ L_counter:{leaf:1,t:"Disprove it with one example",m:["Find one specific case that breaks the claim.","Keep the example small, so you can check every condition.","Check the example against the definition, step by step."],w:"One correct counterexample is enough to disprove a 'for all' claim.",d:["injective","subspace"]},
+ L_sub:{leaf:1,t:"Check it is a subspace",m:["Check that 0 is in the set.","Take two arbitrary elements; show their sum is in the set.","Take an arbitrary element and a scalar; show the scaled element is in the set."],w:"If 0 is not in the set, stop. It is not a subspace.",d:["subspace"]},
+ L_ind:{leaf:1,t:"Check linear independence",m:["Set c₁v₁ + … + cₙvₙ = 0.","Solve for the c's.","Only the all-zero solution means independent. One other solution means dependent."],w:"Dependence needs just one nonzero solution.",d:["indep"]},
+ L_spanq:{leaf:1,t:"Check whether the list spans",m:["Pick an arbitrary vector v in the space.","Solve v = c₁s₁ + … + cₙsₙ for the c's.","If the c's exist for every v, the list spans."],w:"Checking a few vectors does not prove spanning.",d:["span","spanning"]},
+ L_basis:{leaf:1,t:"Check whether the list is a basis",m:["Check spanning.","Check independence.","Both must hold."],w:"Enough vectors is not enough. They must also be independent.",d:["basis"]},
+ L_dim:{leaf:1,t:"Find the dimension",m:["Find any basis.","Count its vectors.","All bases of a finite-dimensional space have the same count."],w:"Count a basis, not a spanning list that contains redundant vectors.",d:["dim","replacement"]},
+ L_field:{leaf:1,t:"Decide whether Z/mZ is a field",m:["If m is prime: yes. Every nonzero element has an inverse.","If m is not prime: find two nonzero numbers that multiply to 0. That breaks the field rule."],w:"A field needs an inverse for every nonzero element, not just some of them.",d:["primefield","field"]},
+ L_unit:{leaf:1,t:"Check for an inverse",m:["Find b with a · b ≡ 1 (mod m).","If you find one, a is a unit. If none exists, it is not."],w:"",d:["unit"]},
+ L_cplx:{leaf:1,t:"Compute with complex numbers",m:["Multiply normally, as with polynomials.","Replace i² with −1.","Collect the real part and the imaginary part."],w:"",d:["complex"]}
+};
+var trail=[], node="start";
+function renderDec(){
+  var n=DEC[node];
+  $("crumbs").textContent=trail.length?trail.map(function(t){return t.label;}).join("  →  "):"Start";
+  if(n.leaf){
+    $("decQ").textContent=n.t;
+    $("decOpts").innerHTML="";
+    var moves=n.m.map(function(m){return "<li>"+esc(m)+"</li>";}).join("");
+    var ds=n.d.map(function(id){return '<button class="chip" data-def="'+id+'">'+esc(DEFS[id].t)+'</button>';}).join(" ");
+    $("decLeaf").innerHTML='<h3 style="margin-top:14px">Try this</h3><ol class="moves">'+moves+'</ol>'+
+      (n.w?'<div class="note warn" style="margin-top:12px">'+esc(n.w)+'</div>':'')+
+      '<p class="muted" style="margin:12px 0 4px">Read the definitions behind this move</p><div class="row">'+ds+'</div>';
+  } else {
+    $("decQ").textContent=n.q;
+    $("decLeaf").innerHTML="";
+    $("decOpts").innerHTML=n.o.map(function(o,i){return '<button class="btn" data-opt="'+i+'">'+esc(o[0])+'</button>';}).join("");
+  }
+}
+$("decOpts").addEventListener("click",function(e){
+  var b=e.target.closest("[data-opt]"); if(!b) return;
+  var o=DEC[node].o[Number(b.getAttribute("data-opt"))];
+  trail.push({label:o[0],from:node});
+  node=o[1]; renderDec();
+});
+$("decLeaf").addEventListener("click",function(e){
+  var b=e.target.closest("[data-def]"); if(!b) return;
+  location.hash="defs";
+  openDef(b.getAttribute("data-def"));
+});
+$("decBack").addEventListener("click",function(){
+  if(!trail.length) return;
+  var t=trail.pop(); node=t.from; renderDec();
+});
+$("decReset").addEventListener("click",function(){trail=[];node="start";renderDec();});
+
+/* ---------- routine ---------- */
+var ROUTINE=[
+ {t:"Name the object",p:"What is it: a set, a function, a field, a vector space, a subspace, a span, a basis, or a dimension question?",e:"'Is W a subspace of ℝ³?' The object is W, a set of vectors inside ℝ³."},
+ {t:"Translate the symbols",p:"Say every symbol in an ordinary sentence before you try anything else.",e:"'∀x ∈ S' means 'for every x in S'. Say it out loud."},
+ {t:"Unpack the definition",p:"Turn the definition into a list of conditions you can check one at a time.",e:"Subspace: contains 0; closed under adding; closed under scaling."},
+ {t:"Identify the task",p:"Are you proving, disproving, constructing, or computing?",e:"'Show' or 'prove': argue from the definition. 'Find': construct it."},
+ {t:"Test a small case",p:"Try a tiny example (ℝ², Z/3Z, a two-element set) to see what is going on.",e:"In ℝ², try (1, 0), (0, 1), and (1, 1) before proving a general claim."},
+ {t:"Connect and solve",p:"Apply the definition or a theorem, and justify every step.",e:"If a combination gives zero with some nonzero coefficient, the list is dependent."}
+];
+var ticks=[false,false,false,false,false,false];
+function renderRoutine(){
+  $("routineList").innerHTML=ROUTINE.map(function(s,i){
+    return '<div class="stepbox"><input type="checkbox" id="rs'+i+'" data-i="'+i+'"'+(ticks[i]?' checked':'')+'>'+
+      '<div><span class="num">Step '+(i+1)+'</span><h3 style="margin:2px 0 4px">'+esc(s.t)+'</h3><p style="margin:0 0 6px">'+esc(s.p)+'</p><p class="muted" style="margin:0">Example: '+esc(s.e)+'</p></div></div>';
+  }).join("");
+  var done=ticks.filter(Boolean).length;
+  $("progBar").style.width=(done/ROUTINE.length*100)+"%";
+  $("progText").textContent=done+" of "+ROUTINE.length+" steps done";
+}
+$("routineList").addEventListener("change",function(e){
+  var i=Number(e.target.getAttribute("data-i"));
+  ticks[i]=e.target.checked; renderRoutine();
+});
+$("routineReset").addEventListener("click",function(){ticks=ticks.map(function(){return false;});renderRoutine();});
+
+/* ---------- notation ---------- */
+var SYMS=[
+ ["∈","is an element of ('is in')","x ∈ S: x is one of the items in S","4 ∈ {1, 2, 3} is false"],
+ ["∉","is not an element of","4 ∉ {1, 2, 3}","—"],
+ ["⊂","is a subset of (every item of the left is in the right)","{1, 2} ⊂ {1, 2, 3}","{1, 2} ⊂ {1, 2} is also true here"],
+ ["⊊","is a proper subset (inside, and not equal)","{1, 2} ⊊ {1, 2, 3}","—"],
+ ["∪","union: in either set","{1, 2} ∪ {2, 3} = {1, 2, 3}","—"],
+ ["∩","intersection: in both sets","{1, 2} ∩ {2, 3} = {2}","—"],
+ ["∅","the empty set: no elements","{1} ∩ {2} = ∅","—"],
+ ["∃","there exists: at least one","∃x: f(x) = 4","—"],
+ ["∀","for all: every one","∀x ∈ ℝ: x² ≥ 0","—"],
+ ["⇒","if … then (one direction)","x = y ⇒ f(x) = f(y)","—"],
+ ["⇔","if and only if (both directions)","a ≡ b ⇔ m | (a − b)","—"],
+ ["≡ (mod m)","same remainder when divided by m","7 ≡ 2 (mod 5)","—"],
+ ["f : S → T","f is a function from S to T","f : ℝ → ℝ","—"],
+ ["f(x)","the output of f on input x","f(2) = 5 when f(x) = 2x + 1","—"],
+ ["f(U)","image of U: outputs of inputs in U","f(U) = {f(x) : x ∈ U}","—"],
+ ["f⁻¹(V)","preimage of V: inputs that land in V (a set, not an inverse)","f(x) = x²: f⁻¹({4}) = {−2, 2}","—"],
+ ["g ∘ f","apply f, then g","(g ∘ f)(x) = g(f(x))","—"],
+ ["[a]","equivalence class of a","[1] in Z/3Z contains 1, 4, and −2","—"],
+ ["Z/mZ","clock numbers 0 to m − 1","Z/5Z = {0, 1, 2, 3, 4}","—"],
+ ["a⁻¹","multiplicative inverse: partner that gives 1","2⁻¹ = 3 in Z/5Z","—"],
+ ["|z|, z̄","modulus (length) and conjugate of a complex number","|3 + 4i| = 5, and conj(3 + 4i) = 3 − 4i","—"],
+ ["c₁v₁ + … + cₙvₙ","linear combination: scale and add","2(1, 0) + 3(0, 1) = (2, 3)","—"],
+ ["span(S)","everything buildable from S","span{(1, 0)} is the x-axis","—"],
+ ["dim V","the number of vectors in a basis of V","dim ℝ² = 2","—"],
+ ["≤","is at most","|independent| ≤ |spanning|","—"]
+];
+function renderSyms(filter){
+  var f=(filter||"").trim().toLowerCase();
+  var rows=SYMS.filter(function(r){return !f||(r[0]+" "+r[1]+" "+r[2]).toLowerCase().indexOf(f)>=0;});
+  $("symRows").innerHTML=rows.map(function(r){
+    return "<tr><td style='font-family:var(--f-mono);color:var(--accent);white-space:nowrap'>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td style='font-family:var(--f-mono);font-size:14px'>"+esc(r[2])+"</td></tr>";
+  }).join("")||"<tr><td colspan='3' class='muted'>Nothing matches.</td></tr>";
+}
+$("symSearch").addEventListener("input",function(){renderSyms(this.value);});
+
+/* ---------- statement translator ---------- */
+var TPL=[
+ {id:"inj",name:"f is injective",vars:[["f","f"],["S","ℝ"]],
+  sym:"For all x, y in «S»: if «f»(x) = «f»(y), then x = y.",
+  plain:"Different inputs to «f» never give the same output.",
+  parts:[["For all x, y in «S»","take any two inputs"],["«f»(x) = «f»(y)","they give the same output"],["then x = y","so they were the same input"]]},
+ {id:"surj",name:"f is surjective",vars:[["f","f"],["S","ℝ"],["T","ℝ"]],
+  sym:"For every y in «T», there exists x in «S» with «f»(x) = y.",
+  plain:"Every allowed output of «f» is hit by at least one input.",
+  parts:[["For every y in «T»","take any allowed output"],["there exists x in «S»","at least one input..."],["«f»(x) = y","...lands on it"]]},
+ {id:"cong",name:"a ≡ b (mod m)",vars:[["a","7"],["b","2"],["m","5"]],
+  sym:"«a» ≡ «b» (mod «m»)  ⇔  «m» divides («a» − «b»)",
+  plain:"«a» and «b» leave the same remainder when divided by «m».",
+  parts:[["≡ (mod «m»)","same remainder when divided by «m»"],["«m» divides («a» − «b»)","«a» − «b» is a whole multiple of «m»"]]},
+ {id:"span",name:"v is in span(S)",vars:[["v","v"],["S","S"]],
+  sym:"«v» ∈ span(«S») ⇔ there are scalars c₁…cₙ and vectors s₁…sₙ in «S» with «v» = c₁s₁ + … + cₙsₙ.",
+  plain:"«v» can be built from the vectors in «S» by scaling and adding.",
+  parts:[["∈ span(«S»)","can be built from «S»"],["c₁…cₙ","numbers you choose"],["«v» = c₁s₁ + … + cₙsₙ","scale each sᵢ and add"]]},
+ {id:"indep",name:"S is linearly independent",vars:[["S","S"]],
+  sym:"«S» is linearly independent ⇔ (c₁s₁ + … + cₙsₙ = 0 ⇒ every cᵢ = 0).",
+  plain:"The only way to combine the vectors in «S» into zero is to use zero of each.",
+  parts:[["c₁s₁ + … + cₙsₙ = 0","a combination that gives zero"],["every cᵢ = 0","forced: all coefficients are zero"]]}
+];
+var curTpl=0, tplVals={};
+function fillTpl(str,vals){
+  return str.replace(/«(\w+)»/g,function(_,k){
+    var v=vals[k];
+    return (v&&String(v).length)?esc(v):'<span class="blank">___</span>';
+  });
+}
+function renderTpl(){
+  var t=TPL[curTpl];
+  tplVals={};
+  $("tplInputs").innerHTML=t.vars.map(function(v){
+    tplVals[v[0]]=v[1];
+    return '<div><label for="tv_'+v[0]+'">'+esc(v[0])+'</label><input type="text" id="tv_'+v[0]+'" data-k="'+v[0]+'" value="'+esc(v[1])+'"></div>';
+  }).join("");
+  paintTpl();
+}
+function paintTpl(){
+  var t=TPL[curTpl];
+  $("tplSym").innerHTML=fillTpl(t.sym,tplVals);
+  $("tplPlain").innerHTML=fillTpl(t.plain,tplVals);
+  $("tplParts").innerHTML=t.parts.map(function(p){return "<tr><td>"+fillTpl(p[0],tplVals)+"</td><td>"+fillTpl(p[1],tplVals)+"</td></tr>";}).join("");
+}
+$("tplSel").innerHTML=TPL.map(function(t,i){return '<option value="'+i+'">'+esc(t.name)+'</option>';}).join("");
+$("tplSel").addEventListener("change",function(){curTpl=Number(this.value);renderTpl();});
+$("tplInputs").addEventListener("input",function(e){
+  var k=e.target.getAttribute("data-k"); if(!k) return;
+  tplVals[k]=e.target.value; paintTpl();
+});
+
+/* ---------- proof outline ---------- */
+var SK=[
+ {id:"inj",name:"Prove f is injective",steps:["Let x and y be arbitrary elements of the domain.","Assume f(x) = f(y).","Use the assumption and the definitions to show x = y.","State the conclusion: f is injective."]},
+ {id:"surj",name:"Prove f is surjective",steps:["Let y be an arbitrary element of the codomain.","Find an x in the domain with f(x) = y (solve for x).","Check that f(x) really equals y.","State the conclusion: f is surjective."]},
+ {id:"sub",name:"Prove W is a subspace",steps:["Show that 0 is in W.","Let u and v be arbitrary in W. Show u + v is in W.","Let c be a scalar and u in W. Show cu is in W.","State the conclusion."]},
+ {id:"basis",name:"Prove a list is a basis",steps:["Spanning: let v be arbitrary. Find coefficients that build v.","Independence: assume c₁v₁ + … + cₙvₙ = 0 and show every cᵢ = 0.","State the conclusion: spanning and independent, so a basis."]},
+ {id:"cong",name:"Prove a ≡ b (mod m)",steps:["Write a − b.","Show that a − b = m·k for some integer k.","State the conclusion."]}
+];
+var curSk=0;
+function renderSk(){
+  var s=SK[curSk];
+  $("skSteps").innerHTML=s.steps.map(function(t,i){
+    return '<div class="stepbox" style="display:block"><span class="num">Step '+(i+1)+'</span><p style="margin:4px 0 6px">'+esc(t)+'</p><textarea data-i="'+i+'" aria-label="Your writing for step '+(i+1)+'"></textarea></div>';
+  }).join("");
+  $("skStatus").textContent="";
+}
+$("skSel").innerHTML=SK.map(function(s,i){return '<option value="'+i+'">'+esc(s.name)+'</option>';}).join("");
+$("skSel").addEventListener("change",function(){curSk=Number(this.value);renderSk();});
+$("skCheck").addEventListener("click",function(){
+  var boxes=$("skSteps").querySelectorAll("textarea");
+  var filled=0;
+  boxes.forEach(function(b){
+    var ok=b.value.trim().length>0;
+    b.style.borderColor=ok?"var(--accent)":"var(--warm)";
+    if(ok) filled++;
+  });
+  var total=boxes.length;
+  $("skStatus").className="status "+(filled===total?"ok":"bad");
+  $("skStatus").textContent=filled===total
+    ? "All "+total+" steps have writing. This checks structure only. Compare your argument with a worked example."
+    : filled+" of "+total+" steps written. Fill in the empty ones.";
+});
+
+/* ---------- tabs ---------- */
+var PAGES=["map","defs","decide","routine","notation","build"];
+function show(){
+  var h=(location.hash||"#map").slice(1);
+  if(PAGES.indexOf(h)<0) h="map";
+  PAGES.forEach(function(p){
+    $("page-"+p).classList.toggle("on",p===h);
+  });
+  document.querySelectorAll("nav.tabs a").forEach(function(a){
+    if(a.getAttribute("href")==="#"+h) a.setAttribute("aria-current","page");
+    else a.removeAttribute("aria-current");
+  });
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",show);
+
+/* ---------- init ---------- */
+renderLadder(); renderStage(null);
+renderDefList(""); renderDef("set"); currentDef="set";
+renderDec(); renderRoutine(); renderSyms(""); renderTpl(); renderSk();
+show();
+})();
+</script>
