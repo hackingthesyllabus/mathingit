@@ -465,105 +465,25 @@
 
   /* ---------- Visual roadmap and glossary visuals ---------- */
   var ROADMAP_STAGES = [
-    {
-      title: 'Sets and functions',
-      plain: 'This is where the course starts. You learn what the objects are, how to describe collections, and how to talk about rules that send inputs to outputs.',
-      math: 'Sets give the language of membership, subsets, unions and products. Functions give the language of domain, codomain, injective, surjective, bijective and invertible.',
-      example: 'once you know what a function is, you can ask whether f(x)=2x+1 is one-to-one or onto.'
-    },
-    {
-      title: 'Equivalence and clock arithmetic',
-      plain: 'Instead of treating every integer as separate, you start grouping numbers that behave the same way with respect to a modulus.',
-      math: 'Congruence modulo m is an equivalence relation on the integers. Its equivalence classes are the elements of ℤ/mℤ.',
-      example: 'mod 5, the integers ..., -3, 2, 7, and 12 all belong to the same class because they leave remainder 2.'
-    },
-    {
-      title: 'Fields',
-      plain: 'A field is a number system where arithmetic behaves well enough that you can add, subtract, multiply, and divide by nonzero elements.',
-      math: 'A field provides the scalars used later in vector spaces. Typical examples are ℚ, ℝ, ℂ, and ℤ/pℤ when p is prime.',
-      example: 'over ℝ you can scale a vector by 2 or by 1/3. That only works cleanly because ℝ is a field.'
-    },
-    {
-      title: 'Vector spaces',
-      plain: 'Now the objects are vectors. You can add them together and scale them by numbers from a field.',
-      math: 'A vector space V over a field F has vector addition and scalar multiplication satisfying the vector-space axioms.',
-      example: 'ℝ² is a vector space over ℝ, and ℂ is a vector space over ℝ as well.'
-    },
-    {
-      title: 'Span and combinations',
-      plain: 'Once you have vectors, a natural question is what you can build from a given list of them.',
-      math: 'The span of a set S is the set of all linear combinations of vectors from S.',
-      example: 'in ℝ², the vectors (1,0) and (0,1) can build any vector (a,b), so they span ℝ².'
-    },
-    {
-      title: 'Independence',
-      plain: 'A second natural question is whether some vectors are unnecessary because they can already be built from the others.',
-      math: 'A list is linearly independent when the only linear combination giving 0 uses all-zero coefficients.',
-      example: '(1,0) and (2,0) are dependent because one is a multiple of the other.'
-    },
-    {
-      title: 'Basis',
-      plain: 'A basis is the sweet spot: enough vectors to build everything, but no extra redundant ones.',
-      math: 'A basis is a linearly independent spanning set.',
-      example: '{(1,0),(0,1)} is a basis of ℝ².'
-    },
-    {
-      title: 'Dimension',
-      plain: 'Dimension counts how many independent building blocks a space needs.',
-      math: 'The dimension of a finite-dimensional vector space is the number of vectors in any basis.',
-      example: 'ℝ² has dimension 2 because every basis has two vectors.'
-    }
+    {title:"Sets and functions",plain:"You first learn how to describe a collection and how a rule assigns each allowed input exactly one output.",math:"Sets, Cartesian products, relations and functions provide notation used later in the course.",example:"For f(x)=x², each real input has a single output, but different inputs can share one output."},
+    {title:"Fields and complex numbers",plain:"A field is a system of numbers in which you can add, subtract, multiply, and divide by every nonzero number. Complex numbers are one example.",math:"The field axioms specify the arithmetic rules. Examples include ℚ, ℝ and ℂ. Fields supply scalars for vector spaces.",example:"In ℝ, multiplying by 1/2 is allowed because 2 has a multiplicative inverse."},
+    {title:"Relations and clock arithmetic",plain:"A relation compares items. An equivalence relation puts items into groups that count as alike under a chosen rule. Clock arithmetic groups integers by remainder.",math:"Congruence modulo m defines an equivalence relation on ℤ, and its classes form ℤ/mℤ.",example:"Modulo 5, 2, 7 and 12 are in the same equivalence class because they leave remainder 2."},
+    {title:"Finite fields",plain:"Some clock-number systems obey every field rule. That happens precisely when the number of positions is prime.",math:"ℤ/mℤ is a field if and only if the positive integer m is prime. These are examples of finite fields.",example:"ℤ/5ℤ is a field. ℤ/6ℤ is not, since [2][3]=[0] with neither factor equal to [0]."},
+    {title:"Vector spaces",plain:"In a vector space, you may add vectors and multiply them by numbers from a field. The operations must follow specific rules.",math:"A vector space V over field F has addition and scalar multiplication satisfying the vector-space axioms.",example:"ℝ² is a vector space over ℝ; (1,2)+(3,4)=(4,6)."},
+    {title:"Span",plain:"Span asks which vectors you can build by scaling and adding the vectors you already have.",math:"span(S) consists of all finite linear combinations of vectors from S.",example:"The two vectors (1,0) and (0,1) span ℝ²."},
+    {title:"Independence and bases",plain:"Independence asks whether some vectors are unnecessary. A basis has enough vectors to reach everything, but no redundant ones.",math:"A list is linearly independent if c₁v₁+⋯+cₙvₙ=0 only for all-zero coefficients. A basis is an independent spanning set.",example:"{(1,0),(0,1)} is a basis of ℝ²; neither vector can be built from the other."},
+    {title:"Dimension",plain:"Dimension tells you how many vectors are needed in any basis of a finite-dimensional space.",math:"Every basis of a finite-dimensional space has the same number of vectors, and this count is its dimension.",example:"Every basis of ℝ³ has three vectors, so dim ℝ³=3."}
   ];
 
   var ROADMAP_CONNECTIONS = [
-    {
-      from: 0, to: 1, label: 'Sets/functions → equivalence/clock',
-      plain: 'Sets let you talk about collections, and functions teach you how mathematics tracks rules and outputs. That language is then reused when you define an equivalence relation, which groups a set into “same kind as” classes.',
-      math: 'An equivalence relation is a special subset of S × S. Its equivalence classes partition the set S. Congruence modulo m is one such relation on ℤ.',
-      example: 'integers become grouped by remainder mod 5: one class for remainder 0, one for remainder 1, and so on.'
-    },
-    {
-      from: 1, to: 2, label: 'Clock arithmetic → fields',
-      plain: 'Clock arithmetic gives you new number systems. Some of those systems are good enough to allow division by every nonzero element, and those are exactly the ones that become fields.',
-      math: 'ℤ/mℤ is a ring for every m. It is a field exactly when m is prime.',
-      example: 'ℤ/5ℤ is a field, but ℤ/6ℤ is not because 2·3 ≡ 0 mod 6.'
-    },
-    {
-      from: 2, to: 3, label: 'Fields → vector spaces',
-      plain: 'Vectors need numbers to scale them. The field tells you which numbers are allowed as scalars and guarantees that scalar arithmetic behaves properly.',
-      math: 'A vector space V is defined over a field F, and scalar multiplication is a map F × V → V.',
-      example: 'ℝ² is a vector space over ℝ. You can multiply a vector by any real number.'
-    },
-    {
-      from: 3, to: 4, label: 'Vector spaces → span',
-      plain: 'After defining a vector space, the next question is what new vectors you can produce from a given list.',
-      math: 'Span is defined using linear combinations inside a vector space.',
-      example: 'all vectors of the form a(1,0)+b(0,1) make up the span of {(1,0),(0,1)}.'
-    },
-    {
-      from: 3, to: 5, label: 'Vector spaces → independence',
-      plain: 'At the same time, you want to know whether a list has unnecessary repeats in disguise.',
-      math: 'Independence is tested by asking whether c₁v₁+⋯+cₙvₙ=0 has only the trivial solution.',
-      example: 'if one vector is a scalar multiple of another, the list is dependent.'
-    },
-    {
-      from: 4, to: 6, label: 'Span → basis',
-      plain: 'Span contributes the “enough vectors” half of the basis idea.',
-      math: 'If a list spans V, it can potentially be a basis, but only if it is also independent.',
-      example: 'three vectors may span ℝ², but one of them is then redundant.'
-    },
-    {
-      from: 5, to: 6, label: 'Independence → basis',
-      plain: 'Independence contributes the “no redundancy” half of the basis idea.',
-      math: 'A basis is exactly a spanning set that is also linearly independent.',
-      example: '{(1,0),(0,1)} is independent and spans ℝ², so it is a basis.'
-    },
-    {
-      from: 6, to: 7, label: 'Basis → dimension',
-      plain: 'Once you find a basis, counting its vectors tells you the dimension.',
-      math: 'All bases of the same finite-dimensional vector space have the same size, so dimension is well defined.',
-      example: 'every basis of ℝ³ has three vectors, so dim(ℝ³)=3.'
-    }
+    {from:0,to:2,label:"Sets/functions → relations",plain:"Sets give you the language needed to talk about which ordered pairs are related. A function is another specific kind of rule involving inputs and outputs. This is a conceptual connection, not a requirement to study every function before relations.",math:"A relation on S is a subset of S × S. An equivalence relation is a relation satisfying reflexivity, symmetry and transitivity.",example:"For S={1,2,3}, the relation “same parity” puts 1 and 3 together, with 2 in another group."},
+    {from:2,to:3,label:"Clock arithmetic → finite fields",plain:"Once you have integers grouped by remainder, you can ask whether addition and multiplication on the classes satisfy all the field rules. They do exactly when the modulus is prime.",math:"ℤ/mℤ is a field if and only if m is prime (for m>1).",example:"Modulo 5 every nonzero class has a multiplicative inverse; modulo 6, [2][3]=[0], so it is not a field."},
+    {from:1,to:3,label:"Field rules → finite fields",plain:"The earlier field definition gives the criteria used to test the clock-number systems. The course teaches fields before this particular example.",math:"Check whether ℤ/mℤ meets the field axioms, especially whether each nonzero class has a multiplicative inverse.",example:"In ℤ/5ℤ, [2]·[3]=[1], so [3] is the inverse of [2]."},
+    {from:1,to:4,label:"Fields → vector spaces",plain:"A vector space needs numbers with which to scale its vectors. Those numbers come from a field.",math:"Scalar multiplication is an operation F × V → V, where F is a field and V is a vector space over F.",example:"In ℝ², the real number 3 scales (1,2) to (3,6)."},
+    {from:4,to:5,label:"Vector spaces → span",plain:"Once addition and scaling are available, we can ask what combinations of the original vectors can produce.",math:"Span(S) is the set of all finite linear combinations of vectors in S.",example:"2(1,0)+3(0,1)=(2,3), so (2,3) belongs to the span of {(1,0),(0,1)}."},
+    {from:4,to:6,label:"Vector spaces → independence",plain:"The operations of a vector space make it possible to test whether one vector is redundant, using equations that add and scale vectors.",math:"A finite list v₁,…,vₙ is independent when c₁v₁+⋯+cₙvₙ=0 only if all coefficients are zero.",example:"(1,0) and (2,0) are dependent because 2(1,0)−(2,0)=(0,0)."},
+    {from:5,to:6,label:"Span → basis",plain:"Span contributes the “enough to build everything” half of a basis. Spanning alone is not enough: the list might include extras.",math:"A basis spans the whole space and is linearly independent.",example:"{(1,0),(0,1),(1,1)} spans ℝ² but is not a basis because (1,1) is redundant."},
+    {from:6,to:7,label:"Basis → dimension",plain:"Once you find a basis, you can count its vectors. Any other basis of the same finite-dimensional space has the same count.",math:"If B is a basis of a finite-dimensional space V, then dim V=|B|.",example:"{(1,0),(0,1)} is a basis with two vectors, so dim ℝ²=2."}
   ];
 
   function renderRoadmapControls() {
@@ -653,9 +573,9 @@
         'The smaller collection lies entirely inside the larger one. That is what A ⊆ B means.'
       ],
       'union-intersection': [
-        '<circle cx="135" cy="104" r="60" fill="#cfe2ff" stroke="#77a0d8"/><circle cx="205" cy="104" r="60" fill="#ffe6c8" stroke="#d59f60"/><path d="M170 48 A60 60 0 0 1 170 160 A60 60 0 0 1 170 48 Z" fill="#cfdcc0" opacity="0.95"/><text x="112" y="104" text-anchor="middle" font-size="24" font-weight="700" fill="#244264">A</text><text x="228" y="104" text-anchor="middle" font-size="24" font-weight="700" fill="#7e4d17">B</text><text x="170" y="220" text-anchor="middle" font-size="16" fill="#516376">Union = both circles together. Intersection = the overlap.</text>',
-        '0 0 340 250',
-        'Use the picture to separate “everything in either set” from “only what they share.”'
+        "<defs><clipPath id=\"union-left-clip\"><circle cx=\"155\" cy=\"120\" r=\"55\"/></clipPath><clipPath id=\"intersection-right-clip\"><circle cx=\"535\" cy=\"120\" r=\"55\"/></clipPath></defs>\n<text x=\"155\" y=\"33\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" fill=\"#24364a\">Union: A ∪ B</text>\n<circle cx=\"125\" cy=\"120\" r=\"55\" fill=\"#cbe6f7\"/><circle cx=\"185\" cy=\"120\" r=\"55\" fill=\"#cbe6f7\"/>\n<circle cx=\"125\" cy=\"120\" r=\"55\" fill=\"none\" stroke=\"#5285b3\" stroke-width=\"3\"/>\n<circle cx=\"185\" cy=\"120\" r=\"55\" fill=\"none\" stroke=\"#5285b3\" stroke-width=\"3\"/>\n<text x=\"101\" y=\"122\" font-size=\"18\" fill=\"#244c73\" font-weight=\"700\">A</text><text x=\"207\" y=\"122\" font-size=\"18\" fill=\"#244c73\" font-weight=\"700\">B</text>\n<text x=\"505\" y=\"33\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" fill=\"#24364a\">Intersection: A ∩ B</text>\n<circle cx=\"475\" cy=\"120\" r=\"55\" fill=\"#f9fbfd\" stroke=\"#5285b3\" stroke-width=\"3\"/>\n<circle cx=\"535\" cy=\"120\" r=\"55\" fill=\"#f9fbfd\" stroke=\"#5285b3\" stroke-width=\"3\"/>\n<circle cx=\"475\" cy=\"120\" r=\"55\" fill=\"#77b7a3\" clip-path=\"url(#intersection-right-clip)\"/>\n<text x=\"450\" y=\"122\" font-size=\"18\" fill=\"#244c73\" font-weight=\"700\">A</text><text x=\"555\" y=\"122\" font-size=\"18\" fill=\"#244c73\" font-weight=\"700\">B</text>\n<text x=\"155\" y=\"206\" text-anchor=\"middle\" font-size=\"17\" fill=\"#24364a\">Everything in either set</text>\n<text x=\"505\" y=\"206\" text-anchor=\"middle\" font-size=\"17\" fill=\"#24364a\">Only their shared part</text>",
+        "0 0 680 240",
+        "The left picture shades both circles (union). The right picture shades only the exact shared region (intersection)."
       ],
       'function': [
         '<rect x="28" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="197" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><text x="85" y="48" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">Domain</text><text x="254" y="48" text-anchor="middle" font-size="18" font-weight="700" fill="#7b4d19">Codomain</text><circle cx="85" cy="84" r="10" fill="#3e72b1"/><circle cx="85" cy="125" r="10" fill="#3e72b1"/><circle cx="85" cy="166" r="10" fill="#3e72b1"/><circle cx="254" cy="92" r="10" fill="#c9833a"/><circle cx="254" cy="146" r="10" fill="#c9833a"/><path d="M95 84 C135 84, 185 92, 244 92" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#ga)"/><path d="M95 125 C135 125, 185 146, 244 146" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#ga)"/><path d="M95 166 C135 166, 185 92, 244 92" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#ga)"/><defs><marker id="ga" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">Each input has exactly one arrow leaving it.</text>',
@@ -663,19 +583,19 @@
         'A function may send different inputs to the same output, but one input cannot split into two outputs.'
       ],
       'injective': [
-        '<rect x="20" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="205" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><circle cx="78" cy="84" r="10" fill="#3e72b1"/><circle cx="78" cy="125" r="10" fill="#3e72b1"/><circle cx="78" cy="166" r="10" fill="#3e72b1"/><circle cx="262" cy="84" r="10" fill="#c9833a"/><circle cx="262" cy="125" r="10" fill="#c9833a"/><circle cx="262" cy="166" r="10" fill="#c9833a"/><path d="M88 84 C135 84, 185 84, 252 84" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gb)"/><path d="M88 125 C135 125, 185 125, 252 125" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gb)"/><path d="M88 166 C135 166, 185 166, 252 166" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gb)"/><defs><marker id="gb" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">No two different inputs land at the same output.</text>',
-        '0 0 340 245',
-        'Injective means no collisions.'
+        "<rect x=\"20\" y=\"26\" width=\"116\" height=\"180\" rx=\"14\" fill=\"#eef4fb\" stroke=\"#9db9d8\"/>\n<rect x=\"204\" y=\"26\" width=\"116\" height=\"180\" rx=\"14\" fill=\"#fff0df\" stroke=\"#dbb383\"/>\n<text x=\"78\" y=\"48\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#20406a\">2 inputs</text>\n<text x=\"262\" y=\"48\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#805223\">4 outputs</text>\n<g fill=\"#3670ae\"><circle cx=\"78\" cy=\"95\" r=\"10\"/><circle cx=\"78\" cy=\"160\" r=\"10\"/></g>\n<g fill=\"#d58a48\"><circle cx=\"262\" cy=\"70\" r=\"9\"/><circle cx=\"262\" cy=\"108\" r=\"9\"/><circle cx=\"262\" cy=\"146\" r=\"9\"/><circle cx=\"262\" cy=\"184\" r=\"9\"/></g>\n<g stroke=\"#526b8a\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M90 95 L250 70\"/><path d=\"M90 160 L250 146\"/></g>\n<text x=\"170\" y=\"232\" text-anchor=\"middle\" font-size=\"15\" fill=\"#24364a\">Different inputs, different destinations.</text>",
+        "0 0 340 250",
+        "The two inputs land at two different outputs. Two other possible outputs are not reached, which is allowed for injectivity."
       ],
       'surjective': [
-        '<rect x="20" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="205" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><circle cx="78" cy="84" r="10" fill="#3e72b1"/><circle cx="78" cy="125" r="10" fill="#3e72b1"/><circle cx="78" cy="166" r="10" fill="#3e72b1"/><circle cx="262" cy="84" r="10" fill="#c9833a"/><circle cx="262" cy="125" r="10" fill="#c9833a"/><circle cx="262" cy="166" r="10" fill="#c9833a"/><path d="M88 84 C150 84, 180 84, 252 84" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gc)"/><path d="M88 125 C135 125, 190 125, 252 125" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gc)"/><path d="M88 166 C135 166, 185 166, 252 166" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gc)"/><defs><marker id="gc" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">Every output gets hit by at least one input.</text>',
-        '0 0 340 245',
-        'Surjective means nothing in the codomain is missed.'
+        "<rect x=\"20\" y=\"24\" width=\"116\" height=\"190\" rx=\"14\" fill=\"#eef4fb\" stroke=\"#9db9d8\"/>\n<rect x=\"204\" y=\"24\" width=\"116\" height=\"190\" rx=\"14\" fill=\"#fff0df\" stroke=\"#dbb383\"/>\n<text x=\"78\" y=\"47\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#20406a\">4 inputs</text>\n<text x=\"262\" y=\"47\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#805223\">3 outputs</text>\n<g fill=\"#3670ae\"><circle cx=\"78\" cy=\"78\" r=\"10\"/><circle cx=\"78\" cy=\"113\" r=\"10\"/><circle cx=\"78\" cy=\"148\" r=\"10\"/><circle cx=\"78\" cy=\"183\" r=\"10\"/></g>\n<g fill=\"#d58a48\"><circle cx=\"262\" cy=\"83\" r=\"10\"/><circle cx=\"262\" cy=\"130\" r=\"10\"/><circle cx=\"262\" cy=\"179\" r=\"10\"/></g>\n<g stroke=\"#526b8a\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M90 78 L250 83\"/><path d=\"M90 113 L250 130\"/><path d=\"M90 148 L250 130\"/><path d=\"M90 183 L250 179\"/></g>\n<text x=\"170\" y=\"237\" text-anchor=\"middle\" font-size=\"15\" fill=\"#24364a\">Every output is hit; one is hit twice.</text>",
+        "0 0 340 255",
+        "All three outputs are reached. Two inputs share the middle output: this is surjective but not injective."
       ],
       'bijective': [
-        '<rect x="20" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="205" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><circle cx="78" cy="84" r="10" fill="#3e72b1"/><circle cx="78" cy="125" r="10" fill="#3e72b1"/><circle cx="78" cy="166" r="10" fill="#3e72b1"/><circle cx="262" cy="84" r="10" fill="#c9833a"/><circle cx="262" cy="125" r="10" fill="#c9833a"/><circle cx="262" cy="166" r="10" fill="#c9833a"/><path d="M88 84 C135 84, 185 84, 252 84" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gd)"/><path d="M88 125 C135 125, 185 125, 252 125" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gd)"/><path d="M88 166 C135 166, 185 166, 252 166" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gd)"/><defs><marker id="gd" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">Each output is reached exactly once, so the rule can be undone.</text>',
-        '0 0 340 245',
-        'Bijective means both injective and surjective.'
+        "<rect x=\"20\" y=\"24\" width=\"116\" height=\"190\" rx=\"14\" fill=\"#eef4fb\" stroke=\"#9db9d8\"/>\n<rect x=\"204\" y=\"24\" width=\"116\" height=\"190\" rx=\"14\" fill=\"#fff0df\" stroke=\"#dbb383\"/>\n<text x=\"78\" y=\"47\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#20406a\">3 inputs</text>\n<text x=\"262\" y=\"47\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#805223\">3 outputs</text>\n<g fill=\"#3670ae\"><circle cx=\"78\" cy=\"83\" r=\"10\"/><circle cx=\"78\" cy=\"130\" r=\"10\"/><circle cx=\"78\" cy=\"179\" r=\"10\"/></g>\n<g fill=\"#d58a48\"><circle cx=\"262\" cy=\"83\" r=\"10\"/><circle cx=\"262\" cy=\"130\" r=\"10\"/><circle cx=\"262\" cy=\"179\" r=\"10\"/></g>\n<g stroke=\"#526b8a\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M90 83 L250 83\"/><path d=\"M90 130 L250 130\"/><path d=\"M90 179 L250 179\"/></g>\n<text x=\"170\" y=\"237\" text-anchor=\"middle\" font-size=\"15\" fill=\"#24364a\">Each output is hit exactly once.</text>",
+        "0 0 340 255",
+        "A perfect pairing. No output is missed, and no two inputs share one: bijective means injective and surjective."
       ],
       'equiv-class': [
         '<rect x="20" y="40" width="70" height="50" rx="12" fill="#eef4fb" stroke="#a8bfd7"/><rect x="105" y="40" width="70" height="50" rx="12" fill="#eef4fb" stroke="#a8bfd7"/><rect x="190" y="40" width="70" height="50" rx="12" fill="#eef4fb" stroke="#a8bfd7"/><text x="55" y="70" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">0</text><text x="140" y="70" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">1</text><text x="225" y="70" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">2</text><text x="170" y="135" text-anchor="middle" font-size="17" fill="#516376">mod 3 classes</text><rect x="52" y="155" width="236" height="42" rx="12" fill="#e6f1ea" stroke="#88b49a"/><text x="170" y="181" text-anchor="middle" font-size="16" fill="#275c3c">[1] = {…, −5, −2, 1, 4, 7, …}</text>',
@@ -683,29 +603,29 @@
         'Pick one element, then collect everything equivalent to it. That collection is its equivalence class.'
       ],
       'congruence': [
-        '<circle cx="170" cy="110" r="70" fill="#eef4fb" stroke="#a8bfd7" stroke-width="3"/><g font-size="18" font-weight="700" fill="#20406a" text-anchor="middle"><text x="170" y="52">0</text><text x="228" y="78">1</text><text x="252" y="138">2</text><text x="170" y="190">3</text><text x="94" y="138">4</text></g><circle cx="252" cy="138" r="18" fill="#ffefd7" stroke="#d6a76d"/><text x="252" y="144" text-anchor="middle" font-size="16" font-weight="700" fill="#7b4d19">2</text><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">7 and 2 land at the same clock position mod 5.</text>',
-        '0 0 340 240',
-        'Congruent numbers behave the same with respect to the chosen modulus because they have the same remainder.'
+        "<circle cx=\"170\" cy=\"115\" r=\"86\" fill=\"#eef4fb\" stroke=\"#9bb5d3\" stroke-width=\"3\"/>\n<g font-size=\"21\" font-weight=\"700\" fill=\"#20406a\" text-anchor=\"middle\">\n<text x=\"170\" y=\"61\">0</text><text x=\"223\" y=\"102\">1</text><text x=\"137\" y=\"170\">3</text><text x=\"117\" y=\"102\">4</text></g>\n<circle cx=\"203\" cy=\"161\" r=\"21\" fill=\"#ffe8c3\" stroke=\"#c2833d\" stroke-width=\"2\"/>\n<text x=\"203\" y=\"168\" font-size=\"21\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#7b4a14\">2</text>\n<text x=\"170\" y=\"230\" text-anchor=\"middle\" font-size=\"16\" fill=\"#24364a\">7 and 2 both leave remainder 2 (mod 5).</text>",
+        "0 0 340 250",
+        "Numbers at the same remainder position belong to the same congruence class; both 7 and 2 give remainder 2 on division by 5."
       ],
       'zm': [
-        '<circle cx="170" cy="110" r="74" fill="#eef4fb" stroke="#a8bfd7" stroke-width="3"/><g font-size="18" font-weight="700" fill="#20406a" text-anchor="middle"><text x="170" y="43">[0]</text><text x="239" y="83">[1]</text><text x="214" y="165">[2]</text><text x="126" y="165">[3]</text><text x="101" y="83">[4]</text></g><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">ℤ/5ℤ has five positions: one class for each remainder.</text>',
+        '<circle cx="170" cy="110" r="74" fill="#eef4fb" stroke="#a8bfd7" stroke-width="3"/><g font-size="18" font-weight="700" fill="#20406a" text-anchor="middle"><text x="170" y="43">[0]</text><text x="239" y="83">[1]</text><text x="214" y="165">[2]</text><text x="126" y="165">[3]</text><text x="101" y="83">[4]</text></g><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">Five classes: [0], [1], [2], [3], [4].</text>',
         '0 0 340 240',
         'Clock arithmetic does not keep every integer separately. It keeps one class for each remainder.'
       ],
       'units': [
-        '<circle cx="170" cy="110" r="74" fill="#eef4fb" stroke="#a8bfd7" stroke-width="3"/><g font-size="18" font-weight="700" fill="#20406a" text-anchor="middle"><text x="170" y="43">0</text><text x="239" y="83">1</text><text x="214" y="165">2</text><text x="126" y="165">3</text><text x="101" y="83">4</text></g><path d="M206 153 C220 135, 232 110, 239 91" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#ge)"/><path d="M231 99 C222 118, 208 140, 190 154" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#ge)"/><defs><marker id="ge" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">In ℤ/5ℤ, 2 and 3 are partners because 2·3 ≡ 1.</text>',
-        '0 0 340 240',
-        'A unit has a multiplicative partner that brings you to 1.'
+        "<circle cx=\"170\" cy=\"116\" r=\"86\" fill=\"#eef4fb\" stroke=\"#9bb5d3\" stroke-width=\"3\"/>\n<g font-size=\"21\" font-weight=\"700\" fill=\"#20406a\" text-anchor=\"middle\">\n<text x=\"170\" y=\"61\">0</text><text x=\"223\" y=\"102\">1</text><text x=\"203\" y=\"170\">2</text><text x=\"137\" y=\"170\">3</text><text x=\"117\" y=\"102\">4</text></g>\n<path d=\"M185 174 Q170 199 155 174\" fill=\"none\" stroke=\"#b6672b\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n<path d=\"M185 174 l-1 12 l-10 -8 M155 174 l9 5 l-8 9\" fill=\"none\" stroke=\"#b6672b\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<text x=\"170\" y=\"232\" font-size=\"16\" fill=\"#24364a\" text-anchor=\"middle\">2 × 3 ≡ 1 (mod 5)</text>",
+        "0 0 340 250",
+        "The curved connection joins the positions for 2 and 3, because multiplying them gives remainder 1 modulo 5."
       ],
       'field': [
-        '<rect x="32" y="38" width="125" height="148" rx="16" fill="#e7f3ea" stroke="#88b49a"/><rect x="183" y="38" width="125" height="148" rx="16" fill="#fff0df" stroke="#d7b07c"/><text x="94" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#275c3c">Allowed</text><text x="246" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#7b4d19">Not allowed</text><text x="94" y="100" text-anchor="middle" font-size="15" fill="#275c3c">add</text><text x="94" y="124" text-anchor="middle" font-size="15" fill="#275c3c">subtract</text><text x="94" y="148" text-anchor="middle" font-size="15" fill="#275c3c">multiply</text><text x="94" y="172" text-anchor="middle" font-size="15" fill="#275c3c">divide by nonzero</text><text x="246" y="124" text-anchor="middle" font-size="15" fill="#7b4d19">divide by 0</text><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">A field is a system where the usual arithmetic works, except division by 0.</text>',
+        '<rect x="32" y="38" width="125" height="148" rx="16" fill="#e7f3ea" stroke="#88b49a"/><rect x="183" y="38" width="125" height="148" rx="16" fill="#fff0df" stroke="#d7b07c"/><text x="94" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#275c3c">Allowed</text><text x="246" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#7b4d19">Not allowed</text><text x="94" y="100" text-anchor="middle" font-size="15" fill="#275c3c">add</text><text x="94" y="124" text-anchor="middle" font-size="15" fill="#275c3c">subtract</text><text x="94" y="148" text-anchor="middle" font-size="15" fill="#275c3c">multiply</text><text x="94" y="172" text-anchor="middle" font-size="15" fill="#275c3c">divide by nonzero</text><text x="246" y="124" text-anchor="middle" font-size="15" fill="#7b4d19">divide by 0</text><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">Division by nonzero elements is allowed.</text>',
         '0 0 340 240',
         'The picture compresses the idea: fields support the usual arithmetic and inverses for every nonzero element.'
       ],
       'vector-space': [
-        '<line x1="45" y1="190" x2="45" y2="28" stroke="#7d90a8" stroke-width="2"/><line x1="30" y1="175" x2="292" y2="175" stroke="#7d90a8" stroke-width="2"/><path d="M45 175 L132 102" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gf)"/><path d="M45 175 L235 145" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gf)"/><path d="M45 175 L215 72" stroke="#2f7a4a" stroke-width="4" fill="none" marker-end="url(#gf)"/><defs><marker id="gf" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="140" y="94" font-size="15" fill="#3e72b1">u</text><text x="240" y="143" font-size="15" fill="#c9833a">v</text><text x="218" y="68" font-size="15" fill="#2f7a4a">2u+v</text><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">A vector space lets you add vectors and scale them.</text>',
-        '0 0 320 240',
-        'The green arrow is built from the blue and orange ones, showing addition and scalar multiplication.'
+        "<defs><marker id=\"vs-arrow\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L7 4 L0 8Z\" fill=\"#2a506e\"/></marker></defs>\n<line x1=\"36\" y1=\"214\" x2=\"288\" y2=\"214\" stroke=\"#aebdcb\" stroke-width=\"2\"/>\n<line x1=\"50\" y1=\"230\" x2=\"50\" y2=\"28\" stroke=\"#aebdcb\" stroke-width=\"2\"/>\n<circle cx=\"50\" cy=\"214\" r=\"4\" fill=\"#24364a\"/><text x=\"35\" y=\"235\" font-size=\"13\" fill=\"#24364a\">0</text>\n<path d=\"M50 214 L110 174\" stroke=\"#2a68ae\" stroke-width=\"4\" fill=\"none\" marker-end=\"url(#vs-arrow)\"/>\n<path d=\"M50 214 L85 154\" stroke=\"#c4742c\" stroke-width=\"4\" fill=\"none\" marker-end=\"url(#vs-arrow)\"/>\n<path d=\"M50 214 L170 134\" stroke=\"#2a68ae\" stroke-width=\"3\" stroke-dasharray=\"6 4\" fill=\"none\"/>\n<path d=\"M170 134 L205 74\" stroke=\"#c4742c\" stroke-width=\"4\" fill=\"none\" marker-end=\"url(#vs-arrow)\"/>\n<path d=\"M50 214 L205 74\" stroke=\"#2c8a59\" stroke-width=\"5\" fill=\"none\" marker-end=\"url(#vs-arrow)\"/>\n<text x=\"108\" y=\"160\" font-size=\"15\" fill=\"#24588f\">u</text>\n<text x=\"74\" y=\"137\" font-size=\"15\" fill=\"#9a541c\">v</text>\n<text x=\"141\" y=\"120\" font-size=\"14\" fill=\"#24588f\">2u</text>\n<text x=\"214\" y=\"68\" font-size=\"15\" fill=\"#247148\">2u + v</text>",
+        "0 0 340 260",
+        "Blue u is doubled to the dashed 2u; then orange v is moved to its tip. The green arrow from zero to the final point is exactly 2u + v."
       ],
       'subspace': [
         '<line x1="40" y1="180" x2="40" y2="32" stroke="#7d90a8" stroke-width="2"/><line x1="25" y1="165" x2="145" y2="165" stroke="#7d90a8" stroke-width="2"/><line x1="55" y1="150" x2="130" y2="80" stroke="#2f7a4a" stroke-width="5"/><circle cx="92" cy="115" r="4" fill="#2f7a4a"/><text x="95" y="220" text-anchor="middle" font-size="14" fill="#516376">through the origin ✓</text><line x1="195" y1="180" x2="195" y2="32" stroke="#7d90a8" stroke-width="2"/><line x1="180" y1="165" x2="300" y2="165" stroke="#7d90a8" stroke-width="2"/><line x1="210" y1="120" x2="285" y2="65" stroke="#c9833a" stroke-width="5"/><text x="245" y="220" text-anchor="middle" font-size="14" fill="#516376">offset line ✗</text>',
@@ -713,17 +633,17 @@
         'A familiar visual test in ℝ²: a line through the origin can be a subspace; a shifted line cannot.'
       ],
       'lincomb': [
-        '<line x1="40" y1="190" x2="40" y2="32" stroke="#7d90a8" stroke-width="2"/><line x1="25" y1="175" x2="300" y2="175" stroke="#7d90a8" stroke-width="2"/><path d="M40 175 L120 125" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gg)"/><path d="M40 175 L80 75" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gg)"/><path d="M40 175 L160 95" stroke="#8b56a8" stroke-width="5" fill="none" marker-end="url(#gg)"/><defs><marker id="gg" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="125" y="121" font-size="14" fill="#3e72b1">2v₁</text><text x="82" y="70" font-size="14" fill="#c9833a">v₂</text><text x="164" y="92" font-size="14" fill="#8b56a8">2v₁+v₂</text>',
-        '0 0 330 240',
-        'A linear combination is what you get after scaling some vectors and adding the results.'
+        "<defs><marker id=\"lc-arrow\" markerWidth=\"9\" markerHeight=\"9\" refX=\"7\" refY=\"4.5\" orient=\"auto\"><path d=\"M0 0 L8 4.5 L0 9Z\" fill=\"#374f75\"/></marker></defs>\n<line x1=\"42\" y1=\"210\" x2=\"294\" y2=\"210\" stroke=\"#bac7d5\" stroke-width=\"2\"/>\n<line x1=\"60\" y1=\"222\" x2=\"60\" y2=\"28\" stroke=\"#bac7d5\" stroke-width=\"2\"/>\n<circle cx=\"60\" cy=\"210\" r=\"4\" fill=\"#24364a\"/><text x=\"43\" y=\"229\" font-size=\"13\" fill=\"#24364a\">0</text>\n<path d=\"M60 210 L180 210\" stroke=\"#2a68ae\" stroke-width=\"5\" fill=\"none\" marker-end=\"url(#lc-arrow)\"/>\n<path d=\"M180 210 L180 126\" stroke=\"#cb772e\" stroke-width=\"5\" fill=\"none\" marker-end=\"url(#lc-arrow)\"/>\n<path d=\"M60 210 L180 126\" stroke=\"#7e4fa3\" stroke-width=\"5\" fill=\"none\" marker-end=\"url(#lc-arrow)\"/>\n<path d=\"M60 210 L60 126 L180 126\" stroke=\"#9daabb\" stroke-width=\"2\" stroke-dasharray=\"5 4\" fill=\"none\"/>\n<text x=\"112\" y=\"237\" font-size=\"15\" fill=\"#24588f\" text-anchor=\"middle\">2v₁</text>\n<text x=\"194\" y=\"169\" font-size=\"15\" fill=\"#9a541c\">v₂</text>\n<text x=\"198\" y=\"111\" font-size=\"14\" fill=\"#67428c\">2v₁ + v₂</text>",
+        "0 0 340 255",
+        "From the origin, move right by 2v₁ (blue), then add v₂ (orange, translated to the blue arrow’s tip). The purple result ends at exactly the same point."
       ],
       'span': [
-        '<rect x="38" y="46" width="254" height="152" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><line x1="58" y1="174" x2="270" y2="68" stroke="#a14e90" stroke-width="5"/><circle cx="170" cy="120" r="4" fill="#a14e90"/><text x="170" y="220" text-anchor="middle" font-size="15" fill="#516376">All purple points belong to the span.</text><text x="170" y="240" text-anchor="middle" font-size="13" fill="#516376">If one vector is available, the span may be a line.</text>',
-        '0 0 330 255',
-        'Span is the collection of everything you can reach using linear combinations.'
+        "<line x1=\"30\" y1=\"205\" x2=\"306\" y2=\"205\" stroke=\"#bdcad7\" stroke-width=\"2\"/>\n<line x1=\"90\" y1=\"227\" x2=\"90\" y2=\"26\" stroke=\"#bdcad7\" stroke-width=\"2\"/>\n<line x1=\"25\" y1=\"232\" x2=\"280\" y2=\"62\" stroke=\"#9055b4\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n<circle cx=\"90\" cy=\"189\" r=\"5\" fill=\"#24364a\"/>\n<text x=\"71\" y=\"211\" font-size=\"14\" fill=\"#24364a\">0</text>\n<path d=\"M90 189 L164 140\" stroke=\"#2a68ae\" stroke-width=\"5\" fill=\"none\"/>\n<path d=\"M153 143 L164 140 L158 153\" stroke=\"#2a68ae\" stroke-width=\"4\" fill=\"none\"/>\n<text x=\"169\" y=\"136\" font-size=\"16\" fill=\"#24588f\">v</text>\n<text x=\"170\" y=\"247\" text-anchor=\"middle\" font-size=\"15\" fill=\"#24364a\">The purple line shows all real multiples of v.</text>",
+        "0 0 340 262",
+        "The origin is 0. The blue generating vector v lies on the purple line, and any real multiple of v also lies on that line (including negative multiples)."
       ],
       'indep': [
-        '<line x1="40" y1="185" x2="40" y2="30" stroke="#7d90a8" stroke-width="2"/><line x1="25" y1="170" x2="145" y2="170" stroke="#7d90a8" stroke-width="2"/><path d="M40 170 L102 110" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gh)"/><path d="M40 170 L134 158" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gh)"/><text x="92" y="220" text-anchor="middle" font-size="14" fill="#516376">independent</text><line x1="190" y1="185" x2="190" y2="30" stroke="#7d90a8" stroke-width="2"/><line x1="175" y1="170" x2="305" y2="170" stroke="#7d90a8" stroke-width="2"/><path d="M190 170 L240 130" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gh)"/><path d="M190 170 L290 90" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gh)" stroke-dasharray="6 5"/><text x="250" y="220" text-anchor="middle" font-size="14" fill="#516376">dependent if one is built from the other</text><defs><marker id="gh" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs>',
+        '<line x1="40" y1="185" x2="40" y2="30" stroke="#7d90a8" stroke-width="2"/><line x1="25" y1="170" x2="145" y2="170" stroke="#7d90a8" stroke-width="2"/><path d="M40 170 L102 110" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gh)"/><path d="M40 170 L134 158" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gh)"/><text x="92" y="220" text-anchor="middle" font-size="14" fill="#516376">independent</text><line x1="190" y1="185" x2="190" y2="30" stroke="#7d90a8" stroke-width="2"/><line x1="175" y1="170" x2="305" y2="170" stroke="#7d90a8" stroke-width="2"/><path d="M190 170 L240 130" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gh)"/><path d="M190 170 L290 90" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gh)" stroke-dasharray="6 5"/><text x="250" y="220" text-anchor="middle" font-size="14" fill="#516376">dependent</text><defs><marker id="gh" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs>',
         '0 0 330 240',
         'Independent vectors contribute genuinely new directions.'
       ],

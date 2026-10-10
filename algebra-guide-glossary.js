@@ -290,7 +290,48 @@ var GLOSSARY = [
    example:"In ℝ², any three vectors are dependent, because an independent list has at most 2 vectors.",
    nonex:"The theorem needs a finite spanning set. That finiteness is what makes dimension a well-defined count.",
    check:["Can four vectors in ℝ³ be linearly independent?", "No. An independent list in ℝ³ has at most 3 vectors."],
-   rel:["dimension", "basis"]}
+   rel:["dimension", "basis"]},
+
+  {id:"restriction",
+   stage:1,
+   term:"Restriction of a function",
+   plain:"Keep the same input-output rule, but allow only some of the original inputs.",
+   formal:"If f:S→T is a function and U⊆S, the restriction f|_U:U→T is defined by f|_U(x)=f(x) for every x∈U. Its codomain is still T unless a new one is explicitly specified.",
+   example:"For f:ℝ→ℝ, f(x)=x², restricting to U=[0,∞) makes the rule injective, since two different nonnegative inputs have different squares.",
+   nonex:"Restriction alone does not make f|_U onto ℝ: negative real numbers are still never outputs. A change of codomain would be a separate change.",
+   check:["For f(x)=x² with original domain ℝ, is the restriction to x≥0 still the same formula?","Yes. The formula remains x²; only the set of allowed inputs is smaller."],
+   rel:["function","injective","surjective"]},
+
+  {id:"well-defined",
+   stage:3,
+   term:"Well-defined operation or function",
+   plain:"A rule gives one unambiguous answer, even when the same object can be written in different ways.",
+   formal:"A rule on equivalence classes is well defined if it is independent of the chosen representatives. For example, if a≡a′ (mod m) and b≡b′ (mod m), then a+b≡a′+b′ (mod m).",
+   example:"Modulo 5, [2]=[7], so [2]+[3]=[0] and [7]+[3]=[0]. Using a different representative leaves the same resulting class.",
+   nonex:"The rule [a]↦“a is even” is not well defined on ℤ/3ℤ: [0]=[3], but 0 is even and 3 is odd.",
+   check:["If [2]=[7] modulo 5, must adding [4] to either produce the same class?","Yes. [2]+[4]=[1] and [7]+[4]=[1] modulo 5."],
+   rel:["equiv-class","congruence","zm"]},
+
+  {id:"gcd",
+   stage:3,
+   term:"Greatest common divisor (gcd)",
+   plain:"The largest positive whole number that divides both given whole numbers exactly, without leaving a remainder (when they are not both zero).",
+   formal:"For integers a,b not both zero, gcd(a,b) is the largest positive integer d such that d∣a and d∣b. The numbers are coprime when gcd(a,b)=1.",
+   example:"gcd(8,12)=4. In clock arithmetic modulo 9, [2] is a unit because gcd(2,9)=1.",
+   nonex:"gcd(8,12) is not 2: although 2 divides both, 4 is a larger common divisor.",
+   check:["What is gcd(6,15)?","3: the positive common divisors are 1 and 3, and 3 is larger."],
+   rel:["units","congruence"]},
+
+  {id:"integral-domain",
+   stage:3,
+   term:"Integral domain",
+   plain:"A commutative number system with 1 different from 0 where the product of two nonzero numbers is never zero.",
+   formal:"An integral domain is a nonzero commutative ring with multiplicative identity 1 and no zero divisors. Equivalently, in such a ring ab=0 implies a=0 or b=0.",
+   example:"ℤ is an integral domain: the product of two nonzero integers is not zero. Every field is also an integral domain.",
+   nonex:"ℤ/6ℤ is not an integral domain: [2]≠[0] and [3]≠[0], but [2][3]=[0].",
+   check:["Is ℤ/5ℤ an integral domain?","Yes. ℤ/5ℤ is a field, and every field has no zero divisors."],
+   rel:["ring","fp"]}
+
 ];
 
 var BYID = {};
