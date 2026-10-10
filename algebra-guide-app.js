@@ -52,10 +52,12 @@
       return (g.term + ' ' + g.plain + ' ' + g.formal).toLowerCase().indexOf(q) >= 0;
     });
     $('glist').innerHTML = rows.map(function (g) {
+      var visual = getGlossaryVisual(g.id);
       return '<details class="entry" id="g-' + g.id + '">' +
         '<summary>' + esc(g.term) + '<span class="tag">' + esc(STAGES[g.stage]) + '</span></summary>' +
         '<p>' + esc(g.plain) + '</p>' +
         '<h3>Precise version</h3><div class="formula">' + esc(g.formal) + '</div>' +
+        visual +
         '<div class="grid"><div><h3>Example</h3><p>' + esc(g.example) + '</p></div>' +
         '<div><h3>Not an example</h3><p>' + esc(g.nonex) + '</p></div></div>' +
         '<details class="check"><summary>Check yourself</summary>' +
@@ -459,6 +461,289 @@
     });
   });
 
+
+
+  /* ---------- Visual roadmap and glossary visuals ---------- */
+  var ROADMAP_STAGES = [
+    {
+      title: 'Sets and functions',
+      plain: 'This is where the course starts. You learn what the objects are, how to describe collections, and how to talk about rules that send inputs to outputs.',
+      math: 'Sets give the language of membership, subsets, unions and products. Functions give the language of domain, codomain, injective, surjective, bijective and invertible.',
+      example: 'once you know what a function is, you can ask whether f(x)=2x+1 is one-to-one or onto.'
+    },
+    {
+      title: 'Equivalence and clock arithmetic',
+      plain: 'Instead of treating every integer as separate, you start grouping numbers that behave the same way with respect to a modulus.',
+      math: 'Congruence modulo m is an equivalence relation on the integers. Its equivalence classes are the elements of ℤ/mℤ.',
+      example: 'mod 5, the integers ..., -3, 2, 7, and 12 all belong to the same class because they leave remainder 2.'
+    },
+    {
+      title: 'Fields',
+      plain: 'A field is a number system where arithmetic behaves well enough that you can add, subtract, multiply, and divide by nonzero elements.',
+      math: 'A field provides the scalars used later in vector spaces. Typical examples are ℚ, ℝ, ℂ, and ℤ/pℤ when p is prime.',
+      example: 'over ℝ you can scale a vector by 2 or by 1/3. That only works cleanly because ℝ is a field.'
+    },
+    {
+      title: 'Vector spaces',
+      plain: 'Now the objects are vectors. You can add them together and scale them by numbers from a field.',
+      math: 'A vector space V over a field F has vector addition and scalar multiplication satisfying the vector-space axioms.',
+      example: 'ℝ² is a vector space over ℝ, and ℂ is a vector space over ℝ as well.'
+    },
+    {
+      title: 'Span and combinations',
+      plain: 'Once you have vectors, a natural question is what you can build from a given list of them.',
+      math: 'The span of a set S is the set of all linear combinations of vectors from S.',
+      example: 'in ℝ², the vectors (1,0) and (0,1) can build any vector (a,b), so they span ℝ².'
+    },
+    {
+      title: 'Independence',
+      plain: 'A second natural question is whether some vectors are unnecessary because they can already be built from the others.',
+      math: 'A list is linearly independent when the only linear combination giving 0 uses all-zero coefficients.',
+      example: '(1,0) and (2,0) are dependent because one is a multiple of the other.'
+    },
+    {
+      title: 'Basis',
+      plain: 'A basis is the sweet spot: enough vectors to build everything, but no extra redundant ones.',
+      math: 'A basis is a linearly independent spanning set.',
+      example: '{(1,0),(0,1)} is a basis of ℝ².'
+    },
+    {
+      title: 'Dimension',
+      plain: 'Dimension counts how many independent building blocks a space needs.',
+      math: 'The dimension of a finite-dimensional vector space is the number of vectors in any basis.',
+      example: 'ℝ² has dimension 2 because every basis has two vectors.'
+    }
+  ];
+
+  var ROADMAP_CONNECTIONS = [
+    {
+      from: 0, to: 1, label: 'Sets/functions → equivalence/clock',
+      plain: 'Sets let you talk about collections, and functions teach you how mathematics tracks rules and outputs. That language is then reused when you define an equivalence relation, which groups a set into “same kind as” classes.',
+      math: 'An equivalence relation is a special subset of S × S. Its equivalence classes partition the set S. Congruence modulo m is one such relation on ℤ.',
+      example: 'integers become grouped by remainder mod 5: one class for remainder 0, one for remainder 1, and so on.'
+    },
+    {
+      from: 1, to: 2, label: 'Clock arithmetic → fields',
+      plain: 'Clock arithmetic gives you new number systems. Some of those systems are good enough to allow division by every nonzero element, and those are exactly the ones that become fields.',
+      math: 'ℤ/mℤ is a ring for every m. It is a field exactly when m is prime.',
+      example: 'ℤ/5ℤ is a field, but ℤ/6ℤ is not because 2·3 ≡ 0 mod 6.'
+    },
+    {
+      from: 2, to: 3, label: 'Fields → vector spaces',
+      plain: 'Vectors need numbers to scale them. The field tells you which numbers are allowed as scalars and guarantees that scalar arithmetic behaves properly.',
+      math: 'A vector space V is defined over a field F, and scalar multiplication is a map F × V → V.',
+      example: 'ℝ² is a vector space over ℝ. You can multiply a vector by any real number.'
+    },
+    {
+      from: 3, to: 4, label: 'Vector spaces → span',
+      plain: 'After defining a vector space, the next question is what new vectors you can produce from a given list.',
+      math: 'Span is defined using linear combinations inside a vector space.',
+      example: 'all vectors of the form a(1,0)+b(0,1) make up the span of {(1,0),(0,1)}.'
+    },
+    {
+      from: 3, to: 5, label: 'Vector spaces → independence',
+      plain: 'At the same time, you want to know whether a list has unnecessary repeats in disguise.',
+      math: 'Independence is tested by asking whether c₁v₁+⋯+cₙvₙ=0 has only the trivial solution.',
+      example: 'if one vector is a scalar multiple of another, the list is dependent.'
+    },
+    {
+      from: 4, to: 6, label: 'Span → basis',
+      plain: 'Span contributes the “enough vectors” half of the basis idea.',
+      math: 'If a list spans V, it can potentially be a basis, but only if it is also independent.',
+      example: 'three vectors may span ℝ², but one of them is then redundant.'
+    },
+    {
+      from: 5, to: 6, label: 'Independence → basis',
+      plain: 'Independence contributes the “no redundancy” half of the basis idea.',
+      math: 'A basis is exactly a spanning set that is also linearly independent.',
+      example: '{(1,0),(0,1)} is independent and spans ℝ², so it is a basis.'
+    },
+    {
+      from: 6, to: 7, label: 'Basis → dimension',
+      plain: 'Once you find a basis, counting its vectors tells you the dimension.',
+      math: 'All bases of the same finite-dimensional vector space have the same size, so dimension is well defined.',
+      example: 'every basis of ℝ³ has three vectors, so dim(ℝ³)=3.'
+    }
+  ];
+
+  function renderRoadmapControls() {
+    if (!$('roadmap-controls')) return;
+    $('roadmap-controls').innerHTML = ROADMAP_CONNECTIONS.map(function (c, i) {
+      return '<button type="button" data-conn-btn="' + i + '" aria-pressed="false">' + esc(c.label) + '</button>';
+    }).join('');
+  }
+
+  var activeRoadmap = { type: 'connection', index: 0 };
+
+  function setActiveStageNode(idx) {
+    document.querySelectorAll('#roadmap-visual .node[data-stage]').forEach(function (el) {
+      el.classList.toggle('active', Number(el.getAttribute('data-stage')) === idx);
+    });
+  }
+  function setActiveEdge(idx) {
+    document.querySelectorAll('#roadmap-visual .edge').forEach(function (el, i) {
+      el.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('[data-conn-btn]').forEach(function (el) {
+      el.setAttribute('aria-pressed', String(Number(el.getAttribute('data-conn-btn')) === idx));
+    });
+  }
+
+  function showRoadmapStage(idx) {
+    if (!$('roadmap-detail')) return;
+    activeRoadmap = { type: 'stage', index: idx };
+    var s = ROADMAP_STAGES[idx];
+    setActiveStageNode(idx);
+    setActiveEdge(-1);
+    $('roadmap-detail').innerHTML =
+      '<div class="detail-label">Topic</div>' +
+      '<h3>' + esc(s.title) + '</h3>' +
+      '<div class="plain-block"><strong>In everyday English:</strong> ' + esc(s.plain) + '</div>' +
+      '<div class="math-block"><strong>In mathematical language:</strong> ' + esc(s.math) + '</div>' +
+      '<div class="example-block"><strong>Example:</strong> ' + esc(s.example) + '</div>';
+  }
+
+  function showRoadmapConnection(idx) {
+    if (!$('roadmap-detail')) return;
+    activeRoadmap = { type: 'connection', index: idx };
+    var c = ROADMAP_CONNECTIONS[idx];
+    setActiveStageNode(-1);
+    setActiveEdge(idx);
+    $('roadmap-detail').innerHTML =
+      '<div class="detail-label">Relationship</div>' +
+      '<h3>' + esc(c.label) + '</h3>' +
+      '<div class="plain-block"><strong>In everyday English:</strong> ' + esc(c.plain) + '</div>' +
+      '<div class="math-block"><strong>In mathematical language:</strong> ' + esc(c.math) + '</div>' +
+      '<div class="example-block"><strong>Example:</strong> ' + esc(c.example) + '</div>';
+  }
+
+  function initRoadmapVisual() {
+    if (!$('roadmap-visual')) return;
+    renderRoadmapControls();
+    $('roadmap-visual').addEventListener('click', function (e) {
+      var stage = e.target.closest('[data-stage]');
+      var conn = e.target.closest('[data-conn]');
+      if (stage) showRoadmapStage(Number(stage.getAttribute('data-stage')));
+      else if (conn) showRoadmapConnection(Number(conn.getAttribute('data-conn')));
+    });
+    $('roadmap-visual').addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var stage = e.target.closest('[data-stage]');
+      if (stage) {
+        e.preventDefault();
+        showRoadmapStage(Number(stage.getAttribute('data-stage')));
+      }
+    });
+    $('roadmap-controls').addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-conn-btn]');
+      if (btn) showRoadmapConnection(Number(btn.getAttribute('data-conn-btn')));
+    });
+    showRoadmapConnection(0);
+  }
+
+  function svgWrap(inner, viewBox) {
+    return '<figure class="glossary-visual"><p class="visual-label">See the idea</p><svg viewBox="' + viewBox + '" role="img" aria-hidden="true">' + inner + '</svg><figcaption>';
+  }
+
+  function getGlossaryVisual(id) {
+    var visuals = {
+      'subset': [
+        '<rect x="20" y="20" width="300" height="180" rx="18" fill="#eef4fb" stroke="#a8bfd7"/><rect x="95" y="55" width="150" height="110" rx="18" fill="#dcecff" stroke="#78a0d2"/><text x="170" y="118" text-anchor="middle" font-size="22" font-weight="700" fill="#20406a">A</text><text x="42" y="52" font-size="22" font-weight="700" fill="#20406a">B</text><text x="170" y="230" text-anchor="middle" font-size="16" fill="#516376">Everything in A sits inside B.</text>',
+        '0 0 340 250',
+        'The smaller collection lies entirely inside the larger one. That is what A ⊆ B means.'
+      ],
+      'union-intersection': [
+        '<circle cx="135" cy="104" r="60" fill="#cfe2ff" stroke="#77a0d8"/><circle cx="205" cy="104" r="60" fill="#ffe6c8" stroke="#d59f60"/><path d="M170 48 A60 60 0 0 1 170 160 A60 60 0 0 1 170 48 Z" fill="#cfdcc0" opacity="0.95"/><text x="112" y="104" text-anchor="middle" font-size="24" font-weight="700" fill="#244264">A</text><text x="228" y="104" text-anchor="middle" font-size="24" font-weight="700" fill="#7e4d17">B</text><text x="170" y="220" text-anchor="middle" font-size="16" fill="#516376">Union = both circles together. Intersection = the overlap.</text>',
+        '0 0 340 250',
+        'Use the picture to separate “everything in either set” from “only what they share.”'
+      ],
+      'function': [
+        '<rect x="28" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="197" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><text x="85" y="48" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">Domain</text><text x="254" y="48" text-anchor="middle" font-size="18" font-weight="700" fill="#7b4d19">Codomain</text><circle cx="85" cy="84" r="10" fill="#3e72b1"/><circle cx="85" cy="125" r="10" fill="#3e72b1"/><circle cx="85" cy="166" r="10" fill="#3e72b1"/><circle cx="254" cy="92" r="10" fill="#c9833a"/><circle cx="254" cy="146" r="10" fill="#c9833a"/><path d="M95 84 C135 84, 185 92, 244 92" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#ga)"/><path d="M95 125 C135 125, 185 146, 244 146" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#ga)"/><path d="M95 166 C135 166, 185 92, 244 92" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#ga)"/><defs><marker id="ga" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">Each input has exactly one arrow leaving it.</text>',
+        '0 0 340 245',
+        'A function may send different inputs to the same output, but one input cannot split into two outputs.'
+      ],
+      'injective': [
+        '<rect x="20" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="205" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><circle cx="78" cy="84" r="10" fill="#3e72b1"/><circle cx="78" cy="125" r="10" fill="#3e72b1"/><circle cx="78" cy="166" r="10" fill="#3e72b1"/><circle cx="262" cy="84" r="10" fill="#c9833a"/><circle cx="262" cy="125" r="10" fill="#c9833a"/><circle cx="262" cy="166" r="10" fill="#c9833a"/><path d="M88 84 C135 84, 185 84, 252 84" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gb)"/><path d="M88 125 C135 125, 185 125, 252 125" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gb)"/><path d="M88 166 C135 166, 185 166, 252 166" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gb)"/><defs><marker id="gb" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">No two different inputs land at the same output.</text>',
+        '0 0 340 245',
+        'Injective means no collisions.'
+      ],
+      'surjective': [
+        '<rect x="20" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="205" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><circle cx="78" cy="84" r="10" fill="#3e72b1"/><circle cx="78" cy="125" r="10" fill="#3e72b1"/><circle cx="78" cy="166" r="10" fill="#3e72b1"/><circle cx="262" cy="84" r="10" fill="#c9833a"/><circle cx="262" cy="125" r="10" fill="#c9833a"/><circle cx="262" cy="166" r="10" fill="#c9833a"/><path d="M88 84 C150 84, 180 84, 252 84" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gc)"/><path d="M88 125 C135 125, 190 125, 252 125" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gc)"/><path d="M88 166 C135 166, 185 166, 252 166" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gc)"/><defs><marker id="gc" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">Every output gets hit by at least one input.</text>',
+        '0 0 340 245',
+        'Surjective means nothing in the codomain is missed.'
+      ],
+      'bijective': [
+        '<rect x="20" y="26" width="115" height="168" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><rect x="205" y="26" width="115" height="168" rx="16" fill="#fff0df" stroke="#d7b07c"/><circle cx="78" cy="84" r="10" fill="#3e72b1"/><circle cx="78" cy="125" r="10" fill="#3e72b1"/><circle cx="78" cy="166" r="10" fill="#3e72b1"/><circle cx="262" cy="84" r="10" fill="#c9833a"/><circle cx="262" cy="125" r="10" fill="#c9833a"/><circle cx="262" cy="166" r="10" fill="#c9833a"/><path d="M88 84 C135 84, 185 84, 252 84" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gd)"/><path d="M88 125 C135 125, 185 125, 252 125" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gd)"/><path d="M88 166 C135 166, 185 166, 252 166" stroke="#728aa5" stroke-width="3" fill="none" marker-end="url(#gd)"/><defs><marker id="gd" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">Each output is reached exactly once, so the rule can be undone.</text>',
+        '0 0 340 245',
+        'Bijective means both injective and surjective.'
+      ],
+      'equiv-class': [
+        '<rect x="20" y="40" width="70" height="50" rx="12" fill="#eef4fb" stroke="#a8bfd7"/><rect x="105" y="40" width="70" height="50" rx="12" fill="#eef4fb" stroke="#a8bfd7"/><rect x="190" y="40" width="70" height="50" rx="12" fill="#eef4fb" stroke="#a8bfd7"/><text x="55" y="70" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">0</text><text x="140" y="70" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">1</text><text x="225" y="70" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">2</text><text x="170" y="135" text-anchor="middle" font-size="17" fill="#516376">mod 3 classes</text><rect x="52" y="155" width="236" height="42" rx="12" fill="#e6f1ea" stroke="#88b49a"/><text x="170" y="181" text-anchor="middle" font-size="16" fill="#275c3c">[1] = {…, −5, −2, 1, 4, 7, …}</text>',
+        '0 0 360 220',
+        'Pick one element, then collect everything equivalent to it. That collection is its equivalence class.'
+      ],
+      'congruence': [
+        '<circle cx="170" cy="110" r="70" fill="#eef4fb" stroke="#a8bfd7" stroke-width="3"/><g font-size="18" font-weight="700" fill="#20406a" text-anchor="middle"><text x="170" y="52">0</text><text x="228" y="78">1</text><text x="252" y="138">2</text><text x="170" y="190">3</text><text x="94" y="138">4</text></g><circle cx="252" cy="138" r="18" fill="#ffefd7" stroke="#d6a76d"/><text x="252" y="144" text-anchor="middle" font-size="16" font-weight="700" fill="#7b4d19">2</text><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">7 and 2 land at the same clock position mod 5.</text>',
+        '0 0 340 240',
+        'Congruent numbers behave the same with respect to the chosen modulus because they have the same remainder.'
+      ],
+      'zm': [
+        '<circle cx="170" cy="110" r="74" fill="#eef4fb" stroke="#a8bfd7" stroke-width="3"/><g font-size="18" font-weight="700" fill="#20406a" text-anchor="middle"><text x="170" y="43">[0]</text><text x="239" y="83">[1]</text><text x="214" y="165">[2]</text><text x="126" y="165">[3]</text><text x="101" y="83">[4]</text></g><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">ℤ/5ℤ has five positions: one class for each remainder.</text>',
+        '0 0 340 240',
+        'Clock arithmetic does not keep every integer separately. It keeps one class for each remainder.'
+      ],
+      'units': [
+        '<circle cx="170" cy="110" r="74" fill="#eef4fb" stroke="#a8bfd7" stroke-width="3"/><g font-size="18" font-weight="700" fill="#20406a" text-anchor="middle"><text x="170" y="43">0</text><text x="239" y="83">1</text><text x="214" y="165">2</text><text x="126" y="165">3</text><text x="101" y="83">4</text></g><path d="M206 153 C220 135, 232 110, 239 91" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#ge)"/><path d="M231 99 C222 118, 208 140, 190 154" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#ge)"/><defs><marker id="ge" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">In ℤ/5ℤ, 2 and 3 are partners because 2·3 ≡ 1.</text>',
+        '0 0 340 240',
+        'A unit has a multiplicative partner that brings you to 1.'
+      ],
+      'field': [
+        '<rect x="32" y="38" width="125" height="148" rx="16" fill="#e7f3ea" stroke="#88b49a"/><rect x="183" y="38" width="125" height="148" rx="16" fill="#fff0df" stroke="#d7b07c"/><text x="94" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#275c3c">Allowed</text><text x="246" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#7b4d19">Not allowed</text><text x="94" y="100" text-anchor="middle" font-size="15" fill="#275c3c">add</text><text x="94" y="124" text-anchor="middle" font-size="15" fill="#275c3c">subtract</text><text x="94" y="148" text-anchor="middle" font-size="15" fill="#275c3c">multiply</text><text x="94" y="172" text-anchor="middle" font-size="15" fill="#275c3c">divide by nonzero</text><text x="246" y="124" text-anchor="middle" font-size="15" fill="#7b4d19">divide by 0</text><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">A field is a system where the usual arithmetic works, except division by 0.</text>',
+        '0 0 340 240',
+        'The picture compresses the idea: fields support the usual arithmetic and inverses for every nonzero element.'
+      ],
+      'vector-space': [
+        '<line x1="45" y1="190" x2="45" y2="28" stroke="#7d90a8" stroke-width="2"/><line x1="30" y1="175" x2="292" y2="175" stroke="#7d90a8" stroke-width="2"/><path d="M45 175 L132 102" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gf)"/><path d="M45 175 L235 145" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gf)"/><path d="M45 175 L215 72" stroke="#2f7a4a" stroke-width="4" fill="none" marker-end="url(#gf)"/><defs><marker id="gf" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="140" y="94" font-size="15" fill="#3e72b1">u</text><text x="240" y="143" font-size="15" fill="#c9833a">v</text><text x="218" y="68" font-size="15" fill="#2f7a4a">2u+v</text><text x="170" y="225" text-anchor="middle" font-size="15" fill="#516376">A vector space lets you add vectors and scale them.</text>',
+        '0 0 320 240',
+        'The green arrow is built from the blue and orange ones, showing addition and scalar multiplication.'
+      ],
+      'subspace': [
+        '<line x1="40" y1="180" x2="40" y2="32" stroke="#7d90a8" stroke-width="2"/><line x1="25" y1="165" x2="145" y2="165" stroke="#7d90a8" stroke-width="2"/><line x1="55" y1="150" x2="130" y2="80" stroke="#2f7a4a" stroke-width="5"/><circle cx="92" cy="115" r="4" fill="#2f7a4a"/><text x="95" y="220" text-anchor="middle" font-size="14" fill="#516376">through the origin ✓</text><line x1="195" y1="180" x2="195" y2="32" stroke="#7d90a8" stroke-width="2"/><line x1="180" y1="165" x2="300" y2="165" stroke="#7d90a8" stroke-width="2"/><line x1="210" y1="120" x2="285" y2="65" stroke="#c9833a" stroke-width="5"/><text x="245" y="220" text-anchor="middle" font-size="14" fill="#516376">offset line ✗</text>',
+        '0 0 330 240',
+        'A familiar visual test in ℝ²: a line through the origin can be a subspace; a shifted line cannot.'
+      ],
+      'lincomb': [
+        '<line x1="40" y1="190" x2="40" y2="32" stroke="#7d90a8" stroke-width="2"/><line x1="25" y1="175" x2="300" y2="175" stroke="#7d90a8" stroke-width="2"/><path d="M40 175 L120 125" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gg)"/><path d="M40 175 L80 75" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gg)"/><path d="M40 175 L160 95" stroke="#8b56a8" stroke-width="5" fill="none" marker-end="url(#gg)"/><defs><marker id="gg" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs><text x="125" y="121" font-size="14" fill="#3e72b1">2v₁</text><text x="82" y="70" font-size="14" fill="#c9833a">v₂</text><text x="164" y="92" font-size="14" fill="#8b56a8">2v₁+v₂</text>',
+        '0 0 330 240',
+        'A linear combination is what you get after scaling some vectors and adding the results.'
+      ],
+      'span': [
+        '<rect x="38" y="46" width="254" height="152" rx="16" fill="#eef4fb" stroke="#a8bfd7"/><line x1="58" y1="174" x2="270" y2="68" stroke="#a14e90" stroke-width="5"/><circle cx="170" cy="120" r="4" fill="#a14e90"/><text x="170" y="220" text-anchor="middle" font-size="15" fill="#516376">All purple points belong to the span.</text><text x="170" y="240" text-anchor="middle" font-size="13" fill="#516376">If one vector is available, the span may be a line.</text>',
+        '0 0 330 255',
+        'Span is the collection of everything you can reach using linear combinations.'
+      ],
+      'indep': [
+        '<line x1="40" y1="185" x2="40" y2="30" stroke="#7d90a8" stroke-width="2"/><line x1="25" y1="170" x2="145" y2="170" stroke="#7d90a8" stroke-width="2"/><path d="M40 170 L102 110" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gh)"/><path d="M40 170 L134 158" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gh)"/><text x="92" y="220" text-anchor="middle" font-size="14" fill="#516376">independent</text><line x1="190" y1="185" x2="190" y2="30" stroke="#7d90a8" stroke-width="2"/><line x1="175" y1="170" x2="305" y2="170" stroke="#7d90a8" stroke-width="2"/><path d="M190 170 L240 130" stroke="#3e72b1" stroke-width="4" fill="none" marker-end="url(#gh)"/><path d="M190 170 L290 90" stroke="#c9833a" stroke-width="4" fill="none" marker-end="url(#gh)" stroke-dasharray="6 5"/><text x="250" y="220" text-anchor="middle" font-size="14" fill="#516376">dependent if one is built from the other</text><defs><marker id="gh" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#728aa5"/></marker></defs>',
+        '0 0 330 240',
+        'Independent vectors contribute genuinely new directions.'
+      ],
+      'basis': [
+        '<rect x="25" y="30" width="125" height="170" rx="16" fill="#e7f3ea" stroke="#88b49a"/><rect x="185" y="30" width="125" height="170" rx="16" fill="#fff0df" stroke="#d7b07c"/><text x="87" y="60" text-anchor="middle" font-size="17" font-weight="700" fill="#275c3c">Enough</text><text x="87" y="88" text-anchor="middle" font-size="15" fill="#275c3c">spans the space</text><text x="247" y="60" text-anchor="middle" font-size="17" font-weight="700" fill="#7b4d19">No extras</text><text x="247" y="88" text-anchor="middle" font-size="15" fill="#7b4d19">independent</text><text x="170" y="150" text-anchor="middle" font-size="22" font-weight="700" fill="#20406a">basis</text><text x="170" y="222" text-anchor="middle" font-size="15" fill="#516376">A basis combines spanning and independence.</text>',
+        '0 0 340 240',
+        'Think of a basis as “enough vectors, but not too many.”'
+      ],
+      'dimension': [
+        '<rect x="25" y="56" width="80" height="80" rx="14" fill="#eef4fb" stroke="#a8bfd7"/><rect x="130" y="56" width="80" height="80" rx="14" fill="#eef4fb" stroke="#a8bfd7"/><rect x="235" y="56" width="80" height="80" rx="14" fill="#eef4fb" stroke="#a8bfd7"/><text x="65" y="103" text-anchor="middle" font-size="26" font-weight="700" fill="#20406a">v₁</text><text x="170" y="103" text-anchor="middle" font-size="26" font-weight="700" fill="#20406a">v₂</text><text x="275" y="103" text-anchor="middle" font-size="26" font-weight="700" fill="#20406a">v₃</text><text x="170" y="185" text-anchor="middle" font-size="18" font-weight="700" fill="#20406a">3 vectors in a basis → dimension 3</text>',
+        '0 0 340 215',
+        'Dimension is the count of vectors in any basis of the space.'
+      ]
+    };
+    var v = visuals[id];
+    if (!v) return '';
+    return svgWrap(v[0], v[1]) + esc(v[2]) + '</figcaption></figure>';
+  }
+
+
   /* ---------- Startup ---------- */
   $('topic-sel').innerHTML = '<option value="all">All topics</option>' + TOPIC_KEYS.map(function (k) {
     return '<option value="' + k + '">' + esc(TOPICS[k]) + '</option>';
@@ -472,6 +757,7 @@
   renderPractice();
   renderDec();
   renderChecklist();
+  initRoadmapVisual();
   route();
   window.addEventListener('hashchange', route);
 })();

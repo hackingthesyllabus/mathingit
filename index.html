@@ -66,6 +66,49 @@ label.inline{display:inline-flex;gap:8px;align-items:center;color:var(--muted);f
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padding:18px 0 40px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (max-width:600px){header.top h1{font-size:1.5rem}}
+
+
+/* --- Visual framework additions --- */
+.hero-framework{display:grid;gap:12px;grid-template-columns:1fr;margin-top:14px}
+@media (min-width:840px){.hero-framework{grid-template-columns:repeat(3,1fr)}}
+.framework-card{background:linear-gradient(180deg,var(--card),var(--bg));border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:0 6px 18px rgba(20,34,60,.05)}
+.framework-card .stepno{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:13px;margin-bottom:8px}
+.framework-card h4{margin:0 0 6px;font-size:1rem}
+.framework-card p{margin:0;font-size:.95rem;max-width:none}
+.framework-card .mathline{margin-top:9px;padding:8px 10px;border-radius:9px;background:var(--code);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace}
+.quickflow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 4px}
+.quickflow .chipflow{background:var(--accent-soft);color:var(--accent);padding:7px 10px;border-radius:999px;font-size:13px;font-weight:600}
+.quickflow .arrow{color:var(--muted);font-weight:700}
+.visual-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;margin:14px 0;box-shadow:0 6px 18px rgba(20,34,60,.04)}
+.visual-note{font-size:14px;color:var(--muted)}
+.visual-map{overflow-x:auto;padding-bottom:8px}
+.visual-map svg{display:block;width:100%;height:auto;min-width:860px}
+.visual-map .node{cursor:pointer}
+.visual-map .node rect{fill:var(--card);stroke:var(--line);stroke-width:2;rx:16}
+.visual-map .node circle{fill:var(--accent)}
+.visual-map .node text{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.visual-map .node .ntext{fill:#fff;font-weight:700;font-size:13px}
+.visual-map .node .label{fill:var(--ink);font-weight:700;font-size:18px}
+.visual-map .node .sub{fill:var(--muted);font-size:13px}
+.visual-map .node.active rect,.visual-map .node:hover rect,.visual-map .node:focus rect{stroke:var(--accent);stroke-width:3}
+.visual-map .edge{stroke:#8ea3ba;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.visual-map .edge-hit{stroke:transparent;stroke-width:18;fill:none;cursor:pointer}
+.visual-map .edge.active{stroke:var(--accent);stroke-width:5}
+.map-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 10px}
+.map-controls button{font-size:13px;padding:7px 10px}
+.map-controls button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:700}
+.map-detail{border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;background:linear-gradient(180deg,var(--card),var(--bg))}
+.map-detail h3{margin:.1em 0 .4em}
+.map-detail .detail-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.map-detail .plain-block,.map-detail .math-block,.map-detail .example-block{border-left:3px solid var(--line);padding:8px 0 8px 12px;margin:10px 0}
+.map-detail .math-block{border-color:var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;padding:10px 12px}
+.map-detail .example-block{border-color:var(--ok);background:var(--ok-soft);border-radius:0 10px 10px 0;padding:10px 12px}
+.glossary-visual{margin:12px 0 8px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:12px}
+.glossary-visual svg{display:block;width:100%;height:auto;max-height:260px;background:var(--card);border-radius:10px}
+.glossary-visual figcaption{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.55}
+.glossary-visual .visual-label{margin:0 0 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.roadmap-hint{font-size:14px;color:var(--muted);margin:6px 0 0}
+
 </style>
 </head>
 <body>
@@ -92,6 +135,36 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padd
 <section class="page" id="p-start">
   <h2 class="pt">Start here</h2>
   <p class="lede">This guide follows the course from sets and functions through fields, vector spaces and dimension. It assumes no earlier course in abstract algebra. For each idea, read the plain-English version first, then the precise definition, then an example and a non-example.</p>
+
+  
+
+  <div class="visual-card">
+    <p class="kicker">Visual framework</p>
+    <h3>The three moves you keep repeating in this course</h3>
+    <p class="visual-note">This is the main framework for understanding the course. First identify the object, then translate the rule, then solve the task. The rest of the guide keeps coming back to these same moves.</p>
+    <div class="quickflow"><span class="chipflow">1 · Name the object</span><span class="arrow">→</span><span class="chipflow">2 · Translate the rule</span><span class="arrow">→</span><span class="chipflow">3 · Solve the task</span></div>
+    <div class="hero-framework">
+      <section class="framework-card">
+        <div class="stepno">1</div>
+        <h4>Name the object</h4>
+        <p>Ask what kind of thing you are looking at: a set, a function, a relation, a field, a vector space, a subspace, a span, a basis, or a dimension question.</p>
+        <div class="mathline">Examples: “Is this a function?” · “Is W a subspace?” · “Is [a] a unit?”</div>
+      </section>
+      <section class="framework-card">
+        <div class="stepno">2</div>
+        <h4>Translate the rule</h4>
+        <p>Say the idea in plain English, then restate it in mathematical language. This is where you unpack symbols and definitions into conditions you can check.</p>
+        <div class="mathline">Example: “A ⊆ B” means every element of A is also in B.</div>
+      </section>
+      <section class="framework-card">
+        <div class="stepno">3</div>
+        <h4>Solve the task</h4>
+        <p>Once you know the object and the rule, decide what the question is asking: compute, prove, disprove, construct, or compare. Then choose the right first move.</p>
+        <div class="mathline">Examples: solve for coefficients · show A ⊆ B and B ⊆ A · find one counterexample</div>
+      </section>
+    </div>
+  </div>
+
 
   <div class="card">
     <h3>What the course is about</h3>
@@ -133,7 +206,64 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padd
 <section class="page" id="p-roadmap">
   <h2 class="pt">Roadmap</h2>
   <p class="lede">Each stage builds on the ones before it. Functions give the language of one-to-one and onto. Clock arithmetic gives the first non-obvious field. Fields supply the scalars used to scale vectors. Span, independence and bases describe the shape of a vector space, and dimension counts that shape.</p>
-  <div class="grid">
+  
+  <div class="visual-card">
+    <p class="kicker">Visual roadmap</p>
+    <h3>Click a box for the idea. Click an arrow for the relationship.</h3>
+    <p class="visual-note">The boxes name the big ideas. The arrows show how one idea prepares the next. If you want to know <em>what a topic is</em>, click the box. If you want to know <em>how two topics are connected</em>, click the arrow.</p>
+    <div class="visual-map" id="roadmap-visual">
+      <svg viewBox="0 0 980 600" role="img" aria-label="Interactive Algebra I roadmap showing relationships from sets and functions to equivalence and clock arithmetic, fields, vector spaces, span, independence, basis, and dimension.">
+        <defs>
+          <marker id="map-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#8ea3ba"></path></marker>
+        </defs>
+        <path id="edge0" class="edge" d="M251 77 H338" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="0" d="M251 77 H338"/>
+        <path id="edge1" class="edge" d="M581 77 H668" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="1" d="M581 77 H668"/>
+        <path id="edge2" class="edge" d="M782 124 V165 H489 V195" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="2" d="M782 124 V165 H489 V195"/>
+        <path id="edge3" class="edge" d="M488 260 V288 H230 V308" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="3" d="M488 260 V288 H230 V308"/>
+        <path id="edge4" class="edge" d="M492 260 V288 H750 V308" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="4" d="M492 260 V288 H750 V308"/>
+        <path id="edge5" class="edge" d="M230 374 V405 H488 V421" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="5" d="M230 374 V405 H488 V421"/>
+        <path id="edge6" class="edge" d="M750 374 V405 H492 V421" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="6" d="M750 374 V405 H492 V421"/>
+        <path id="edge7" class="edge" d="M488 486 V517" marker-end="url(#map-arrow)"/>
+        <path class="edge-hit" data-conn="7" d="M488 486 V517"/>
+
+        <g class="node" tabindex="0" role="button" data-stage="0" aria-label="Sets and functions">
+          <rect x="18" y="26" width="233" height="102" rx="16"></rect><circle cx="47" cy="49" r="16"></circle><text class="ntext" x="47" y="54" text-anchor="middle">1</text><text class="label" x="40" y="82">Sets &amp; functions</text><text class="sub" x="40" y="106">Collections and rules</text>
+        </g>
+        <g class="node" tabindex="0" role="button" data-stage="1" aria-label="Equivalence and clock arithmetic">
+          <rect x="338" y="26" width="243" height="102" rx="16"></rect><circle cx="367" cy="49" r="16"></circle><text class="ntext" x="367" y="54" text-anchor="middle">2</text><text class="label" x="360" y="82">Equivalence &amp; clock</text><text class="sub" x="360" y="106">Same remainder, same class</text>
+        </g>
+        <g class="node" tabindex="0" role="button" data-stage="2" aria-label="Fields">
+          <rect x="668" y="26" width="228" height="102" rx="16"></rect><circle cx="697" cy="49" r="16"></circle><text class="ntext" x="697" y="54" text-anchor="middle">3</text><text class="label" x="690" y="82">Fields</text><text class="sub" x="690" y="106">Arithmetic systems</text>
+        </g>
+        <g class="node" tabindex="0" role="button" data-stage="3" aria-label="Vector spaces">
+          <rect x="338" y="194" width="302" height="66" rx="16"></rect><circle cx="367" cy="216" r="16"></circle><text class="ntext" x="367" y="221" text-anchor="middle">4</text><text class="label" x="395" y="222">Vector spaces</text><text class="sub" x="395" y="244">Add and scale vectors</text>
+        </g>
+        <g class="node" tabindex="0" role="button" data-stage="4" aria-label="Span">
+          <rect x="42" y="308" width="375" height="66" rx="16"></rect><circle cx="71" cy="330" r="16"></circle><text class="ntext" x="71" y="335" text-anchor="middle">5</text><text class="label" x="99" y="336">Span and combinations</text><text class="sub" x="99" y="358">Which vectors can we build?</text>
+        </g>
+        <g class="node" tabindex="0" role="button" data-stage="5" aria-label="Independence">
+          <rect x="560" y="308" width="375" height="66" rx="16"></rect><circle cx="589" cy="330" r="16"></circle><text class="ntext" x="589" y="335" text-anchor="middle">6</text><text class="label" x="617" y="336">Independence</text><text class="sub" x="617" y="358">Which vectors are redundant?</text>
+        </g>
+        <g class="node" tabindex="0" role="button" data-stage="6" aria-label="Basis">
+          <rect x="330" y="420" width="316" height="66" rx="16"></rect><circle cx="359" cy="442" r="16"></circle><text class="ntext" x="359" y="447" text-anchor="middle">7</text><text class="label" x="390" y="448">Basis</text><text class="sub" x="390" y="470">Build everything; no extras</text>
+        </g>
+        <g class="node" tabindex="0" role="button" data-stage="7" aria-label="Dimension">
+          <rect x="390" y="520" width="196" height="66" rx="16"></rect><circle cx="419" cy="542" r="16"></circle><text class="ntext" x="419" y="547" text-anchor="middle">8</text><text class="label" x="451" y="548">Dimension</text><text class="sub" x="451" y="570">Count the basis vectors</text>
+        </g>
+      </svg>
+    </div>
+    <div class="map-controls" id="roadmap-controls"></div>
+    <p class="roadmap-hint">Tip: the boxes tell you what a topic is for. The arrows tell you how one idea leads to the next.</p>
+    <div class="map-detail" id="roadmap-detail" aria-live="polite"></div>
+  </div>
+<div class="grid">
     <section class="card"><p class="kicker">Lecture 1</p><h3>1 · Sets and functions</h3>
       <p>Describe collections, combine them, and decide whether a function is injective, surjective, bijective or invertible.</p>
       <p class="muted">Terms: <a href="#g-set">Set</a> · <a href="#g-subset">Subset</a> · <a href="#g-function">Function</a> · <a href="#g-injective">Injective</a> · <a href="#g-surjective">Surjective</a> · <a href="#g-invertible">Invertible</a></p></section>
@@ -163,7 +293,7 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padd
 
 <section class="page" id="p-glossary">
   <h2 class="pt">Glossary</h2>
-  <p class="lede">Open a term to see the plain-English idea, the precise definition, an example, a non-example, and a check question.</p>
+  <p class="lede">Open a term to see the plain-English idea, the precise definition, an example, a non-example, a check question, and for many core ideas a small visual explanation.</p>
   <div class="row">
     <input type="search" id="gsearch" placeholder="Search terms" aria-label="Search glossary">
     <select id="gstage" aria-label="Filter by stage">
