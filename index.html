@@ -104,7 +104,9 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padd
 .map-detail .math-block{border-color:var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;padding:10px 12px}
 .map-detail .example-block{border-color:var(--ok);background:var(--ok-soft);border-radius:0 10px 10px 0;padding:10px 12px}
 .glossary-visual{margin:12px 0 8px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:12px}
-.glossary-visual svg{display:block;width:100%;height:auto;max-height:260px;background:var(--card);border-radius:10px}
+.glossary-visual svg{display:block;width:100%;height:auto;max-height:none;background:#fbfcff;border-radius:10px;color:#24364a}
+.glossary-visual figcaption{color:var(--ink)}
+@media (max-width:600px){.visual-map svg{min-width:840px}.glossary-visual{padding:8px}.glossary-visual svg{width:100%;height:auto}}
 .glossary-visual figcaption{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.55}
 .glossary-visual .visual-label{margin:0 0 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
 .roadmap-hint{font-size:14px;color:var(--muted);margin:6px 0 0}
@@ -205,62 +207,91 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padd
 
 <section class="page" id="p-roadmap">
   <h2 class="pt">Roadmap</h2>
-  <p class="lede">Each stage builds on the ones before it. Functions give the language of one-to-one and onto. Clock arithmetic gives the first non-obvious field. Fields supply the scalars used to scale vectors. Span, independence and bases describe the shape of a vector space, and dimension counts that shape.</p>
+  <p class="lede">This is a teaching map, not a strict chain of prerequisites. Some connections build on earlier definitions; others show how the same mathematical ideas are reused in a different context. Fields are introduced before clock arithmetic in these lectures. Prime-modulus clock systems are later examples of fields. Select a box to understand a topic, or an arrow to understand a relationship.</p>
   
   <div class="visual-card">
     <p class="kicker">Visual roadmap</p>
     <h3>Click a box for the idea. Click an arrow for the relationship.</h3>
-    <p class="visual-note">The boxes name the big ideas. The arrows show how one idea prepares the next. If you want to know <em>what a topic is</em>, click the box. If you want to know <em>how two topics are connected</em>, click the arrow.</p>
+    <p class="visual-note">The numbered boxes match the lecture-stage cards below. The arrows show meaningful connections, not a single required order. If you want to know <em>what a topic is</em>, click the box. If you want to know <em>how two topics are connected</em>, click the arrow.</p>
     <div class="visual-map" id="roadmap-visual">
-      <svg viewBox="0 0 980 600" role="img" aria-label="Interactive Algebra I roadmap showing relationships from sets and functions to equivalence and clock arithmetic, fields, vector spaces, span, independence, basis, and dimension.">
-        <defs>
-          <marker id="map-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#8ea3ba"></path></marker>
-        </defs>
-        <path id="edge0" class="edge" d="M251 77 H338" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="0" d="M251 77 H338"/>
-        <path id="edge1" class="edge" d="M581 77 H668" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="1" d="M581 77 H668"/>
-        <path id="edge2" class="edge" d="M782 124 V165 H489 V195" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="2" d="M782 124 V165 H489 V195"/>
-        <path id="edge3" class="edge" d="M488 260 V288 H230 V308" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="3" d="M488 260 V288 H230 V308"/>
-        <path id="edge4" class="edge" d="M492 260 V288 H750 V308" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="4" d="M492 260 V288 H750 V308"/>
-        <path id="edge5" class="edge" d="M230 374 V405 H488 V421" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="5" d="M230 374 V405 H488 V421"/>
-        <path id="edge6" class="edge" d="M750 374 V405 H492 V421" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="6" d="M750 374 V405 H492 V421"/>
-        <path id="edge7" class="edge" d="M488 486 V517" marker-end="url(#map-arrow)"/>
-        <path class="edge-hit" data-conn="7" d="M488 486 V517"/>
-
-        <g class="node" tabindex="0" role="button" data-stage="0" aria-label="Sets and functions">
-          <rect x="18" y="26" width="233" height="102" rx="16"></rect><circle cx="47" cy="49" r="16"></circle><text class="ntext" x="47" y="54" text-anchor="middle">1</text><text class="label" x="40" y="82">Sets &amp; functions</text><text class="sub" x="40" y="106">Collections and rules</text>
-        </g>
-        <g class="node" tabindex="0" role="button" data-stage="1" aria-label="Equivalence and clock arithmetic">
-          <rect x="338" y="26" width="243" height="102" rx="16"></rect><circle cx="367" cy="49" r="16"></circle><text class="ntext" x="367" y="54" text-anchor="middle">2</text><text class="label" x="360" y="82">Equivalence &amp; clock</text><text class="sub" x="360" y="106">Same remainder, same class</text>
-        </g>
-        <g class="node" tabindex="0" role="button" data-stage="2" aria-label="Fields">
-          <rect x="668" y="26" width="228" height="102" rx="16"></rect><circle cx="697" cy="49" r="16"></circle><text class="ntext" x="697" y="54" text-anchor="middle">3</text><text class="label" x="690" y="82">Fields</text><text class="sub" x="690" y="106">Arithmetic systems</text>
-        </g>
-        <g class="node" tabindex="0" role="button" data-stage="3" aria-label="Vector spaces">
-          <rect x="338" y="194" width="302" height="66" rx="16"></rect><circle cx="367" cy="216" r="16"></circle><text class="ntext" x="367" y="221" text-anchor="middle">4</text><text class="label" x="395" y="222">Vector spaces</text><text class="sub" x="395" y="244">Add and scale vectors</text>
-        </g>
-        <g class="node" tabindex="0" role="button" data-stage="4" aria-label="Span">
-          <rect x="42" y="308" width="375" height="66" rx="16"></rect><circle cx="71" cy="330" r="16"></circle><text class="ntext" x="71" y="335" text-anchor="middle">5</text><text class="label" x="99" y="336">Span and combinations</text><text class="sub" x="99" y="358">Which vectors can we build?</text>
-        </g>
-        <g class="node" tabindex="0" role="button" data-stage="5" aria-label="Independence">
-          <rect x="560" y="308" width="375" height="66" rx="16"></rect><circle cx="589" cy="330" r="16"></circle><text class="ntext" x="589" y="335" text-anchor="middle">6</text><text class="label" x="617" y="336">Independence</text><text class="sub" x="617" y="358">Which vectors are redundant?</text>
-        </g>
-        <g class="node" tabindex="0" role="button" data-stage="6" aria-label="Basis">
-          <rect x="330" y="420" width="316" height="66" rx="16"></rect><circle cx="359" cy="442" r="16"></circle><text class="ntext" x="359" y="447" text-anchor="middle">7</text><text class="label" x="390" y="448">Basis</text><text class="sub" x="390" y="470">Build everything; no extras</text>
-        </g>
-        <g class="node" tabindex="0" role="button" data-stage="7" aria-label="Dimension">
-          <rect x="390" y="520" width="196" height="66" rx="16"></rect><circle cx="419" cy="542" r="16"></circle><text class="ntext" x="419" y="547" text-anchor="middle">8</text><text class="label" x="451" y="548">Dimension</text><text class="sub" x="451" y="570">Count the basis vectors</text>
-        </g>
-      </svg>
-    </div>
+<svg viewBox="0 0 1060 600" role="img" aria-label="Interactive map with eight numbered course stages. Boxes and arrows explain topic relationships, rather than a single prerequisite chain.">
+<defs><marker id="map-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#8ea3ba"/></marker></defs>
+<path id="edge0" class="edge" d="M304 95 H394" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 95 H394" data-conn="0"/>
+<path id="edge1" class="edge" d="M664 95 H754" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M664 95 H754" data-conn="1"/>
+<path id="edge2" class="edge" d="M304 257 H340 V192 H889 V144" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 257 H340 V192 H889 V144" data-conn="2"/>
+<path id="edge3" class="edge" d="M304 290 H394" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 290 H394" data-conn="3"/>
+<path id="edge4" class="edge" d="M416 338 V390 H170 V450" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M416 338 V390 H170 V450" data-conn="4"/>
+<path id="edge5" class="edge" d="M528 338 V450" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M528 338 V450" data-conn="5"/>
+<path id="edge6" class="edge" d="M304 510 H394" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 510 H394" data-conn="6"/>
+<path id="edge7" class="edge" d="M664 510 H754" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M664 510 H754" data-conn="7"/>
+<g class="node" tabindex="0" role="button" data-stage="0" aria-label="Stage 1: Sets &amp; functions">
+<rect x="34" y="46" width="270" height="98" rx="16"/>
+<circle cx="60" cy="73" r="16"/>
+<text class="ntext" x="60" y="78" text-anchor="middle">1</text>
+<text class="label" x="60" y="106" font-size="19">Sets &amp; functions</text>
+<text class="sub" x="60" y="127">Membership, rules, outputs</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="1" aria-label="Stage 2: Fields &amp; complex">
+<rect x="34" y="240" width="270" height="98" rx="16"/>
+<circle cx="60" cy="267" r="16"/>
+<text class="ntext" x="60" y="272" text-anchor="middle">2</text>
+<text class="label" x="60" y="300" font-size="19">Fields &amp; complex</text>
+<text class="sub" x="60" y="321">Arithmetic with inverses</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="2" aria-label="Stage 3: Relations &amp; clock">
+<rect x="394" y="46" width="270" height="98" rx="16"/>
+<circle cx="420" cy="73" r="16"/>
+<text class="ntext" x="420" y="78" text-anchor="middle">3</text>
+<text class="label" x="420" y="106" font-size="17">Relations &amp; clock</text>
+<text class="sub" x="420" y="127">Equivalent remainders</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="3" aria-label="Stage 4: Finite fields">
+<rect x="754" y="46" width="270" height="98" rx="16"/>
+<circle cx="780" cy="73" r="16"/>
+<text class="ntext" x="780" y="78" text-anchor="middle">4</text>
+<text class="label" x="780" y="106" font-size="19">Finite fields</text>
+<text class="sub" x="780" y="127">Prime moduli</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="4" aria-label="Stage 5: Vector spaces">
+<rect x="394" y="240" width="270" height="98" rx="16"/>
+<circle cx="420" cy="267" r="16"/>
+<text class="ntext" x="420" y="272" text-anchor="middle">5</text>
+<text class="label" x="420" y="300" font-size="19">Vector spaces</text>
+<text class="sub" x="420" y="321">Vectors and scalars</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="5" aria-label="Stage 6: Span">
+<rect x="34" y="450" width="270" height="98" rx="16"/>
+<circle cx="60" cy="477" r="16"/>
+<text class="ntext" x="60" y="482" text-anchor="middle">6</text>
+<text class="label" x="60" y="510" font-size="19">Span</text>
+<text class="sub" x="60" y="531">Vectors we can build</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="6" aria-label="Stage 7: Independence &amp; bases">
+<rect x="394" y="450" width="270" height="98" rx="16"/>
+<circle cx="420" cy="477" r="16"/>
+<text class="ntext" x="420" y="482" text-anchor="middle">7</text>
+<text class="label" x="420" y="510" font-size="17">Independence &amp; bases</text>
+<text class="sub" x="420" y="531">No redundancy; enough vectors</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="7" aria-label="Stage 8: Dimension">
+<rect x="754" y="450" width="270" height="98" rx="16"/>
+<circle cx="780" cy="477" r="16"/>
+<text class="ntext" x="780" y="482" text-anchor="middle">8</text>
+<text class="label" x="780" y="510" font-size="19">Dimension</text>
+<text class="sub" x="780" y="531">Number of basis vectors</text>
+</g>
+</svg>
+</div>
     <div class="map-controls" id="roadmap-controls"></div>
-    <p class="roadmap-hint">Tip: the boxes tell you what a topic is for. The arrows tell you how one idea leads to the next.</p>
+    <p class="roadmap-hint">Tip: a box explains a topic; an arrow explains a specific mathematical connection. Not every earlier topic is required for every later topic.</p>
     <div class="map-detail" id="roadmap-detail" aria-live="polite"></div>
   </div>
 <div class="grid">
