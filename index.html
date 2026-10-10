@@ -1,1237 +1,364 @@
-<!DOCTYPE html>
-<html lang="en" data-palette="paper">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Algebra I Study Map</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Algebra I Study Guide</title>
 <style>
-/* Layout: one index bar on top, one reading column underneath.
-   Accent is used once per view (the stage ladder, the active tab). */
-:root{
-  --paper:#EEF1F0; --card:#FFFFFF; --ink:#18212B; --ink-2:#4A5661;
-  --rule:#C9D1D6; --accent:#1F6F78; --accent-soft:#D5E9EA; --warm:#A94F25; --warm-soft:#F6E3D8;
-  --f-display:"IBM Plex Serif",Georgia,serif; --f-body:"IBM Plex Sans",system-ui,sans-serif; --f-mono:"IBM Plex Mono",Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0E1417; --card:#162025; --ink:#E4EBEE; --ink-2:#A6B3BA; --rule:#2B3840;
-    --accent:#5FC0C8; --accent-soft:#1B3A3F; --warm:#E0875A; --warm-soft:#33241D; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0E1417; --card:#162025; --ink:#E4EBEE; --ink-2:#A6B3BA; --rule:#2B3840;
-  --accent:#5FC0C8; --accent-soft:#1B3A3F; --warm:#E0875A; --warm-soft:#33241D; color-scheme:dark;
-}
+:root{--bg:#f7f6f2;--card:#fff;--ink:#1d2430;--muted:#5a6472;--line:#dcdfe4;--accent:#2f5d8a;--accent-soft:#e6eef7;--warn:#9a4f2a;--warn-soft:#fbeee6;--ok:#2f7a4a;--ok-soft:#e7f3ea;--code:#f1f3f6}
+@media (prefers-color-scheme:dark){:root{--bg:#121619;--card:#1b2127;--ink:#e6e9ee;--muted:#a3adba;--line:#2e3742;--accent:#8fb8e6;--accent-soft:#1f2c3b;--warn:#f0a77f;--warn-soft:#2e2219;--ok:#8fd1a0;--ok-soft:#1d2e23;--code:#222a33}}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;padding-inline:16px}
-h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.2;text-wrap:balance;margin:0 0 .5em}
-h1{font-size:clamp(1.6rem,4vw,2.3rem)} h2{font-size:1.5rem} h3{font-size:1.15rem}
-p{margin:0 0 .9em;max-width:66ch}
-.wrap{max-width:980px;margin:0 auto;padding-block:20px 56px}
-header.top{padding-top:18px;border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-header.top .wrap{padding-block:0 12px}
-.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 4px}
-nav.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
-nav.tabs a{flex:0 0 auto;text-decoration:none;color:var(--ink-2);padding:7px 12px;border-radius:8px;font-size:14px;border:1px solid transparent}
-nav.tabs a:hover{color:var(--ink);border-color:var(--rule)}
-nav.tabs a[aria-current="page"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 18px}
+header.top{background:var(--card);border-bottom:1px solid var(--line);padding-top:18px}
+header.top h1{font:600 1.8rem/1.2 Georgia,"Times New Roman",serif;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 10px;font-size:.95rem}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;padding:4px 0 10px}
+nav.tabs a{white-space:nowrap;color:var(--muted);text-decoration:none;padding:7px 11px;border-radius:8px;font-size:14px}
+nav.tabs a:hover{color:var(--ink);background:var(--bg)}
+nav.tabs a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+main{padding:22px 0 56px}
+.page{display:none}.page.on{display:block}
+h2.pt{font:600 1.6rem/1.25 Georgia,"Times New Roman",serif;margin:.2em 0 .4em}
+h3{font-size:1.05rem;margin:1em 0 .35em}
+p{margin:.45em 0 .85em;max-width:70ch}
+.lede{color:var(--muted);font-size:1.05rem}
 a{color:var(--accent)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.page{display:none}
-.page.on{display:block}
-.lede{font-size:1.08rem;color:var(--ink-2);max-width:62ch}
-.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;min-width:0}
-.card+.card{margin-top:14px}
-.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.btn{font:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:7px 12px;cursor:pointer;text-align:left}
-.btn:hover{border-color:var(--accent)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
-.chip{font-size:13px;color:var(--accent);background:var(--accent-soft);border:none;border-radius:999px;padding:4px 10px;cursor:pointer;font-family:inherit}
-.muted{color:var(--ink-2);font-size:14px}
-.formula{font-family:var(--f-mono);font-size:15px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;overflow-x:auto;max-width:100%}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0}
+.card.warn{background:var(--warn-soft);border-color:var(--warn)}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+.formula{font:14.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--code);border-radius:8px;padding:10px 12px;white-space:pre-wrap;overflow-x:auto}
+.tag{display:inline-block;font-size:12.5px;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 10px;margin:0 6px 6px 0;text-decoration:none}
+.muted{color:var(--muted);font-size:14.5px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.stack{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+button{font:inherit;font-size:14.5px;padding:8px 14px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button:disabled{opacity:.5;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+button.opt{text-align:left;width:100%}
+input[type=search],select,textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
+input[type=search]{width:min(420px,100%)}
+select{max-width:340px}
+textarea{width:100%;min-height:90px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.feedback{border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:12px 0}
+.feedback.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback.wrong{border-color:var(--warn);background:var(--warn-soft)}
+details{padding:9px 0;border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;font-weight:600}
+details[open] > summary{margin-bottom:6px}
+.entry > summary .tag{margin-left:8px;vertical-align:middle}
+details.check{border:0;padding:4px 0}
+details.check summary{font-weight:500;color:var(--accent)}
 table{width:100%;border-collapse:collapse;font-size:15px}
-th,td{text-align:left;vertical-align:top;padding:9px 8px;border-bottom:1px solid var(--rule)}
-th{font-size:13px;color:var(--ink-2);font-weight:500}
-.tablewrap{overflow-x:auto;max-width:100%}
-input[type=text],select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;width:100%;max-width:100%}
-textarea{min-height:64px;font-family:var(--f-mono);font-size:14px}
-label{font-size:14px;color:var(--ink-2);display:block;margin-bottom:4px}
-.grid2{display:grid;gap:14px;grid-template-columns:1fr}
-@media (min-width:720px){.grid2{grid-template-columns:1fr 1fr}}
-.ladder{display:grid;gap:10px;grid-template-columns:1fr;margin:8px 0 18px}
-@media (min-width:820px){.ladder{grid-template-columns:repeat(7,minmax(0,1fr));gap:0;align-items:stretch}}
-.rung{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:14px;text-align:left;cursor:pointer;color:var(--ink);font:inherit;min-width:0;position:relative}
-.rung:hover{border-color:var(--accent)}
-.rung[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
-@media (min-width:820px){.rung{border-radius:0}.rung:first-child{border-radius:12px 0 0 12px}.rung:last-child{border-radius:0 12px 12px 0}}
-.rung .n{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
-.rung .t{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:4px 0 6px;line-height:1.25}
-.rung .l{font-size:12px;color:var(--ink-2);font-family:var(--f-mono)}
-.stepline{display:none}
-@media (min-width:820px){.stepline{display:block;height:2px;background:var(--accent);position:absolute;left:100%;top:50%;width:0;}}
-.note{font-size:14px;color:var(--ink-2);border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:12px 0}
-.warn{border-left-color:var(--warm);background:var(--warm-soft);padding:10px 12px;border-radius:0 8px 8px 0}
-.defs-layout{display:grid;gap:16px;grid-template-columns:1fr}
-@media (min-width:860px){.defs-layout{grid-template-columns:300px minmax(0,1fr);align-items:start}}
-.deflist{max-height:none}
-@media (min-width:860px){.deflist{position:sticky;top:150px;max-height:calc(100vh - 170px);overflow:auto}}
-.deflist h3{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);margin:14px 0 6px;font-weight:500}
-.deflist button{display:block;width:100%;margin-bottom:4px}
-.parts td:first-child{font-family:var(--f-mono);white-space:nowrap;color:var(--accent)}
-.two{display:grid;gap:12px;grid-template-columns:1fr}
-@media (min-width:600px){.two{grid-template-columns:1fr 1fr}}
-.stepbox{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--rule)}
-.stepbox input{margin-top:5px;width:18px;height:18px;flex:0 0 auto;accent-color:var(--accent)}
-.stepbox .num{font-family:var(--f-mono);color:var(--accent);font-size:13px}
-.progress{height:6px;background:var(--rule);border-radius:999px;overflow:hidden;margin:10px 0 4px}
-.progress div{height:100%;background:var(--accent);width:0;transition:width .3s}
-.ask{list-style:none;padding:0;margin:0;counter-reset:q}
-.ask li{counter-increment:q;padding:6px 0;border-bottom:1px solid var(--rule)}
-.ask li::before{content:counter(q) ". ";font-family:var(--f-mono);color:var(--accent)}
-ol.moves{padding-left:1.2em;margin:.4em 0}
-ol.moves li{margin:.3em 0}
-.crumbs{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);margin-bottom:10px;min-height:1.6em}
-.result-title{font-family:var(--f-display);font-size:1.4rem;margin:0 0 6px}
-.status{font-size:14px;margin-top:8px}
-.ok{color:var(--accent)} .bad{color:var(--warm)}
-.blank{font-family:var(--f-mono);color:var(--warm);}
-.plainout{font-size:1.1rem;line-height:1.5;font-family:var(--f-display);margin:.2em 0 .6em}
-
-/* VISUAL-ONLY ADDITION: existing course content, tab navigation and interactions are unchanged. */
-.visual-relationship { margin:18px 0 20px; padding:16px 18px 8px; border:1px solid var(--rule); background:var(--card); border-radius:15px; }
-.visual-relationship header { display:flex; justify-content:space-between; gap:14px; align-items:baseline; flex-wrap:wrap; margin-bottom:2px; }
-.visual-relationship h2 { font:600 1.2rem/1.3 var(--f-display); margin:0; }
-.visual-relationship .visual-note { color:var(--ink-2); font-size:12px; margin:0; }
-.relationship-svg { display:block; width:100%; height:auto; max-width:960px; margin:0 auto; overflow:visible; }
-.relationship-svg .rel-box { stroke-width:1.5; transition:stroke-width .2s,filter .2s; }
-.relationship-svg .rel-node.is-current .rel-box {stroke:var(--accent);stroke-width:4;filter:drop-shadow(0 4px 6px #1f6f7822)}
-.relationship-svg .rel-text {font:600 18px/1.2 var(--f-body);fill:#1e3444}
-.relationship-svg .rel-sub {font:400 13.2px var(--f-body);fill:#4a5a69}
-.relationship-svg .rel-num {font:600 14px var(--f-mono);fill:#fff}
-.relationship-svg .rel-edge {fill:none;stroke:#718da0;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
-.visual-showcase { margin:14px 0 20px; padding:14px; border:1px solid var(--rule); border-radius:13px; background:var(--paper); }
-.visual-label {font-family:var(--f-mono);font-weight:600;letter-spacing:.09em;text-transform:uppercase;font-size:11px;color:var(--accent);margin:0 0 9px}
-.visual-showcase svg {display:block;width:100%;height:auto;max-height:285px;border-radius:10px;background:var(--card)}
-.visual-showcase figcaption {font:400 13px/1.5 var(--f-body);color:var(--ink-2);margin-top:9px}
-.visual-showcase .vline {stroke:#99adb8;stroke-width:2;stroke-linecap:round}
-.visual-showcase .vtxt {font:600 16px var(--f-body);fill:var(--ink)}
-.visual-showcase .vsmall {font:400 12px var(--f-body);fill:var(--ink-2)}
-.decision-visual {display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin-bottom:14px;color:var(--ink)}
-.decision-visual .dpart {flex:1 1 160px;padding:12px 14px;border:1px solid var(--rule);background:var(--card);border-radius:11px;min-width:0;}
-.decision-visual .dpart strong{font-size:13px;display:block;margin:4px 0}
-.decision-visual .dpart span{font-size:12px;color:var(--ink-2);display:block}
-.decision-visual .dbubble{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;font-weight:600;background:var(--accent-soft);color:var(--accent);font-size:13px}
-@media(max-width:700px){
-  .visual-relationship {overflow-x:auto;overscroll-behavior-x:contain}
-  .visual-relationship .relationship-svg {width:790px;max-width:none;margin:0}
-  .visual-relationship header {width:min(100%,calc(100vw - 58px));}
-  .visual-relationship header .visual-note::after {content:" · Swipe the diagram to follow the arrows";font-weight:600}
-  .visual-showcase {overflow-x:auto;overscroll-behavior-x:contain}
-  .visual-showcase svg {width:570px;min-width:570px;max-width:none;max-height:none}
-  .visual-showcase::after {content:"Swipe sideways to explore the illustration";display:block;font:11px/1.5 var(--f-mono);color:var(--ink-2);margin-top:7px}
-}
-@media(max-width:640px){.visual-relationship{padding:12px 6px 8px}.visual-relationship header{padding-inline:10px}.relationship-svg .rel-text{font-size:19px}.relationship-svg .rel-sub{font-size:14px}.visual-showcase{padding:9px}.decision-visual .dpart{flex-basis:100%}}
-
-
-/* On phones, show notation as readable stacked entries, not a squeezed 3-column table. */
-@media (max-width: 700px) {
-  #page-notation > .card { padding: 14px; }
-  #page-notation .tablewrap { overflow: visible; }
-  #page-notation table, #page-notation tbody { display: block; width: 100%; }
-  #page-notation thead { display: none; }
-  #page-notation tbody tr {
-    display: block;
-    padding: 14px;
-    margin: 0 0 12px;
-    border: 1px solid var(--rule);
-    border-radius: 10px;
-    background: var(--card);
-  }
-  #page-notation tbody td {
-    display: block;
-    width: 100%;
-    padding: 0;
-    border: 0;
-    white-space: normal !important;
-    overflow-wrap: anywhere;
-  }
-  #page-notation tbody td + td { margin-top: 12px; }
-  #page-notation tbody td::before {
-    display: block;
-    margin-bottom: 2px;
-    font: 500 11px/1.5 var(--f-body);
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: var(--ink-2);
-  }
-  #page-notation tbody td:nth-child(1)::before { content: "Symbol"; }
-  #page-notation tbody td:nth-child(2)::before { content: "Read it as"; }
-  #page-notation tbody td:nth-child(3)::before { content: "Example"; }
-  #page-notation tbody td:nth-child(1) { font-size: 19px; }
-  #page-notation tbody td:nth-child(3) { line-height: 1.7; }
-}
-
-
-/* Teaching layers added in this revision. */
-.bridge-intro{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:20px;margin:18px 0}
-.bridge-intro p{max-width:90ch}.bridge-list{display:grid;gap:12px;margin:14px 0 24px}
-.bridge{border:1px solid var(--rule);background:var(--card);border-radius:12px;padding:17px 18px}
-.bridge h3{margin-bottom:12px}.bridge .split{display:grid;gap:12px;grid-template-columns:1fr}
-@media(min-width:720px){.bridge .split{grid-template-columns:1fr 1fr}}
-.layer{border-left:3px solid var(--rule);padding:5px 14px;margin:8px 0}
-.layer.math{border-color:var(--accent);background:var(--accent-soft);border-radius:0 9px 9px 0;padding:12px 14px}
-.layer.everyday{border-color:var(--warm)}
-.layer-tag{font-family:var(--f-mono);text-transform:uppercase;font-size:11px;letter-spacing:.04em;color:var(--ink-2);margin:0 0 6px}
-.layer p{margin:0;max-width:90ch}
-.why-connection{margin-top:10px;font-size:14px;color:var(--ink-2)}
-.tier-title{font-size:1rem!important;font-family:var(--f-body)!important;margin:18px 0 8px!important}
-.sequence{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:12px 0}
-.sequence span{background:var(--accent-soft);color:var(--ink);border-radius:8px;padding:7px 9px;font-size:13px}
-.sequence b{font-size:14px;color:var(--accent)}
-.examQ fieldset{border:0;padding:0;margin:12px 0}
-.examQ label{display:flex;align-items:start;gap:10px;padding:11px;margin:6px 0;border:1px solid var(--rule);border-radius:9px;color:var(--ink);font-size:15px;cursor:pointer}
-.examQ label:hover{border-color:var(--accent)}
-.examQ input{width:18px;height:18px;accent-color:var(--accent);flex-shrink:0;margin-top:3px}
-.exam-feedback{margin-top:16px;padding:14px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);line-height:1.6}
-.exam-feedback p{max-width:90ch}
-.small-guidance{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:12px 14px;margin:12px 0}
-.math-prompt{font-family:var(--f-mono);background:var(--paper);border-radius:8px;padding:10px 12px;overflow:auto;margin:10px 0;white-space:pre-wrap}
-@media(max-width:700px){.bridge-intro,.bridge{padding:14px}.layer{padding-left:10px}.parts td:first-child{white-space:normal;overflow-wrap:anywhere}}
-
-
-
-/* Visual refresh: a restrained editorial learning interface; theme tokens control all other sections. */
-:root[data-palette="paper"]{
- --paper:#F8F7F3;--card:#FFF;--ink:#202B3B;--ink-2:#536277;--rule:#DEE3E8;
- --accent:#335FA8;--accent-soft:#EDF2FB;--warm:#AE6036;--warm-soft:#FFF1E5;
- --surface-2:#F4F6F9;--header:#FFFFFF;--shadow:0 9px 30px rgba(30,46,68,.045);
- --f-display:"Iowan Old Style", "Baskerville", Georgia,serif;--f-body:"Avenir Next","Segoe UI",system-ui,sans-serif;--f-mono:"SFMono-Regular",Consolas,monospace;
- color-scheme:light;
-}
-:root[data-palette="sage"]{
- --paper:#F5F7F2;--card:#FFFFFF;--ink:#243632;--ink-2:#566A61;--rule:#D8E1D9;
- --accent:#2C765F;--accent-soft:#E6F1EA;--warm:#9C6438;--warm-soft:#FBF0E4;
- --surface-2:#F0F4EF;--header:#FFFFFF;--shadow:0 9px 30px rgba(39,69,55,.045);
- --f-display:"Iowan Old Style", "Baskerville", Georgia,serif;--f-body:"Avenir Next","Segoe UI",system-ui,sans-serif;--f-mono:"SFMono-Regular",Consolas,monospace;
- color-scheme:light;
-}
-:root[data-palette="night"]{
- --paper:#101827;--card:#1A2739;--ink:#F2F5FB;--ink-2:#B6C5D7;--rule:#34445B;
- --accent:#9BBFFF;--accent-soft:#243C61;--warm:#F3BA89;--warm-soft:#432F2A;
- --surface-2:#162235;--header:#172235;--shadow:0 13px 32px rgba(0,0,0,.18);
- --f-display:"Iowan Old Style", "Baskerville", Georgia,serif;--f-body:"Avenir Next","Segoe UI",system-ui,sans-serif;--f-mono:"SFMono-Regular",Consolas,monospace;
- color-scheme:dark;
-}
-body{font-size:16px;line-height:1.68;background:var(--paper);color:var(--ink);padding:0 22px}
-header.top{background:var(--header);border-bottom:1px solid var(--rule);padding-top:0;box-shadow:0 4px 20px rgba(18,37,57,.025);top:0}
-header.top .wrap{padding-block:13px 10px}
-.wrap{max-width:1150px;padding-block:25px 70px}
-.brandline{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:0 0 10px}
-.brandmark{display:flex;align-items:center;gap:12px}
-.brand-icon{height:42px;width:42px;border-radius:13px;background:var(--accent);display:grid;place-items:center;color:var(--card);font:700 27px Georgia,serif}
-[data-palette="night"] .brand-icon{color:#112039}
-.brand-title{display:block;font-weight:750;letter-spacing:-.035em;font-size:18px;line-height:1.35}
-.brand-sub{display:block;font-size:12px;color:var(--ink-2);letter-spacing:.025em;line-height:1.4}
-.palette-switch{display:flex;align-items:center;gap:5px;padding:4px;background:var(--surface-2);border:1px solid var(--rule);border-radius:13px}
-.palette-label{font-size:11px;letter-spacing:.04em;text-transform:uppercase;margin:0 9px;color:var(--ink-2);white-space:nowrap}
-.palette-button{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid transparent;border-radius:9px;background:none;color:var(--ink-2);font:600 12px var(--f-body);cursor:pointer}
-.palette-button i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--swatch);border:1px solid #fff7}
-.palette-button[aria-pressed="true"]{background:var(--card);border-color:var(--rule);color:var(--ink);box-shadow:0 1px 3px #00000010}
-.palette-button:hover{color:var(--accent)}
-.nav-kicker{font-size:10px;color:var(--ink-2);margin:0 0 6px;font-weight:650;letter-spacing:.125em}
-.kicker-divider{margin-inline:6px;color:var(--rule)}
-nav.tabs{gap:5px;scrollbar-width:none}nav.tabs::-webkit-scrollbar{display:none}
-nav.tabs a{font-weight:620;color:var(--ink-2);font-size:13px;padding:8px 13px;border-radius:9px}
-nav.tabs a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);border-color:transparent}
-nav.tabs a:hover{background:var(--surface-2)}
-h1,h2,h3{letter-spacing:-.023em}h1{font-size:clamp(2.05rem,4.9vw,3.5rem);line-height:1.08}h2{font-size:1.65rem}
-.lede{font-size:1.085rem;color:var(--ink-2);line-height:1.7}
-.card,.bridge,.bridge-intro,.visual-relationship,.exam-feedback{box-shadow:var(--shadow);border-radius:17px}
-.card{padding:23px;border-color:var(--rule)}
-.btn{padding:9px 14px;font-weight:600;border-radius:10px}
-.btn.primary{color:#fff}
-[data-palette="night"] .btn.primary{color:#132039}
-.btn:hover{transform:translateY(-1px)}
-.formula,.small-guidance,.math-prompt,.visual-showcase{background:var(--surface-2)}
-.layer.math{background:var(--accent-soft)}
-.hero-eyebrow,.section-kicker{font-weight:750;letter-spacing:.14em;font-size:11px;color:var(--accent);line-height:1.4}
-.hero-eyebrow{display:flex;align-items:center;gap:10px;margin:15px 0 17px}
-.hero-dot{display:inline-block;width:9px;height:9px;background:var(--accent);border-radius:50%;box-shadow:0 0 0 5px var(--accent-soft)}
-.eyebrow-line{width:34px;height:1px;background:var(--rule)}
-.hero-title{max-width:15ch;margin:0 0 18px;font-size:clamp(2.6rem,6vw,4.8rem);font-weight:600}
-.hero-title em{color:var(--accent);font-style:italic}
-.hero-lede{max-width:80ch;margin:0 0 26px}
-.visual-relationship{padding:23px 25px 12px;margin:16px 0 15px;overflow:hidden}
-.visual-relationship header{align-items:center;margin-bottom:12px}
-.visual-relationship h2{font-size:1.6rem}
-.visual-relationship .visual-note{max-width:37ch;font-size:13px;line-height:1.5}
-.visual-relationship .section-kicker{margin:0 0 5px}
-.relationship-svg{max-width:1000px;margin:0 auto}
-.relationship-svg .rel-node{cursor:pointer;outline:none}
-.relationship-svg .rel-box{fill:var(--surface-2)!important;stroke:var(--rule)!important;stroke-width:2;transition:fill .18s,stroke .18s,stroke-width .18s}
-.relationship-svg .rel-node circle{fill:var(--accent)!important}
-.relationship-svg .rel-node .rel-text{fill:var(--ink);font-weight:700;font-family:var(--f-body)}
-.relationship-svg .rel-node .rel-sub{fill:var(--ink-2);font-family:var(--f-body)}
-.relationship-svg .rel-node .rel-num{fill:#fff}
-[data-palette="night"] .relationship-svg .rel-node .rel-num{fill:#1a2739}
-.relationship-svg .rel-edge{stroke:var(--rule);stroke-width:3.5;transition:stroke .18s,stroke-width .18s}
-.relationship-svg .rel-edge.is-link-active{stroke:var(--accent);stroke-width:5.2}
-.relationship-svg marker path{fill:var(--accent)!important}
-.relationship-svg .rel-hit{cursor:pointer;pointer-events:stroke;outline:none}
-.relationship-svg .rel-node.is-current .rel-box{stroke:var(--rule)!important;stroke-width:2;filter:none}
-.relationship-svg .rel-node.is-link-active .rel-box{fill:var(--accent-soft)!important;stroke:var(--accent)!important;stroke-width:3;filter:drop-shadow(0 3px 7px #335fa818)}
-.relationship-svg .rel-node:hover .rel-box,.relationship-svg .rel-node:focus-visible .rel-box{stroke:var(--accent)!important;stroke-width:4}
-.relationship-svg .rel-hit:focus-visible{stroke:var(--accent)!important;opacity:.22}
-.map-diagram-foot{border-top:1px solid var(--rule);padding:13px 2px 4px;display:flex;justify-content:space-between;gap:12px;color:var(--ink-2);font-size:12px;align-items:center}
-.touch-dot{font-size:17px;color:var(--accent);vertical-align:middle}
-.relationship-explorer{background:var(--card);border:1px solid var(--rule);border-radius:17px;padding:22px 24px 20px;box-shadow:var(--shadow);margin-bottom:27px}
-.explore-head{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.explore-head h2{font-size:1.43rem;margin:1px 0 15px}
-.explore-head .section-kicker{margin:0 0 5px}
-.explore-count{font-size:12px;font-weight:700;color:var(--accent);border-radius:30px;white-space:nowrap;background:var(--accent-soft);padding:7px 12px}
-.connection-strip{display:flex;align-items:stretch;gap:7px;overflow:auto;scrollbar-width:thin;padding:0 0 11px;margin:0 0 4px}
-.connection-chip{display:flex;align-items:center;gap:8px;white-space:nowrap;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;font:650 12px var(--f-body);cursor:pointer;flex:0 0 auto;transition:background .15s,color .15s}
-.connection-chip:hover{color:var(--accent);border-color:var(--accent)}
-.connection-chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.number-pill{display:grid;place-items:center;background:var(--card);height:22px;min-width:22px;border-radius:6px;font-size:11px;color:var(--ink-2);border:1px solid var(--rule)}
-.connection-chip[aria-pressed="true"] .number-pill{background:var(--accent);border-color:var(--accent);color:#fff}
-[data-palette="night"] .connection-chip[aria-pressed="true"] .number-pill{color:#1a2739}
-.relationship-detail{border:1px solid var(--rule);border-radius:14px;overflow:hidden;margin-top:12px;background:var(--card)}
-.detail-leading{padding:22px 23px 18px;border-bottom:1px solid var(--rule)}
-.detail-label{font-size:10px;letter-spacing:.16em;font-weight:750;color:var(--accent)}
-.detail-leading h3{font-family:var(--f-display);font-size:clamp(1.55rem,3vw,2.1rem);margin:6px 0 12px}
-.relationship-prominent{font-size:1.05rem;line-height:1.8;max-width:88ch;margin:0}
-.relationship-layers{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.relationship-layer{padding:18px 23px;background:var(--accent-soft);border-right:1px solid var(--rule)}
-.relationship-layer.example-layer{background:var(--surface-2);border-right:0}
-.relationship-layer p:not(.layer-tag){font-size:15px;line-height:1.75;margin:0;max-width:87ch;overflow-wrap:break-word}
-.relationship-layer .layer-tag{color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.09em}
-.example-layer .layer-tag{color:var(--warm)}
-.explore-controls{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
-.follow-on-title{padding-top:10px;margin:0 0 18px}
-.follow-on-title .section-kicker{margin:0 0 7px}
-.follow-on-title h2{margin:0 0 8px}
-.bridge-intro{background:var(--card)}
-.all-connections{border:1px solid var(--rule);background:var(--card);border-radius:16px;margin:24px 0;padding:0;box-shadow:var(--shadow)}
-.all-connections summary{cursor:pointer;padding:19px 23px;font-weight:700;list-style-position:inside}
-.all-connections summary span{float:right;font-size:12px;color:var(--ink-2);font-weight:500}
-.all-connections .bridge-list{padding:0 15px 15px;margin:0}
-.rung{border-radius:12px!important;margin:0 3px;box-shadow:var(--shadow);background:var(--card)}
-.rung[aria-pressed="true"]{background:var(--accent-soft)!important;border-color:var(--accent)!important}
-.deflist button[aria-pressed="true"], .rung[aria-pressed="true"]{font-weight:750}
-@media(min-width:820px){.ladder{gap:4px}}
-@media(max-width:820px){.relationship-layers{grid-template-columns:1fr}.relationship-layer{border-right:0;border-bottom:1px solid var(--rule)}}
-@media(max-width:700px){
- body{padding:0 13px}
- header.top .wrap{padding:9px 0 8px}
- .brand-icon{height:36px;width:36px;border-radius:10px;font-size:23px}
- .brand-title{font-size:15px}.brand-sub{font-size:10px}
- .palette-switch{padding:3px;gap:1px}.palette-label{display:none}
- .palette-button{padding:5px 6px;font-size:11px;gap:4px}.palette-button i{width:9px;height:9px}
- .nav-kicker{display:none}
- nav.tabs{padding-top:6px}
- .wrap{padding-block:20px 40px}
- .hero-eyebrow{font-size:9px;gap:7px;letter-spacing:.09em;margin:12px 0 18px}
- .eyebrow-line{width:15px}
- .hero-title{font-size:clamp(2.55rem,11vw,3.4rem)}
- .hero-lede{font-size:1rem}
- .visual-relationship{padding:16px 13px 10px;overflow-x:auto}
- .visual-relationship header{width:auto;min-width:0;padding:0 4px}
- .visual-relationship header h2{font-size:1.35rem}
- .visual-relationship header .visual-note{font-size:12px;max-width:100%}
- .visual-relationship .relationship-svg{width:780px;max-width:none}
- .map-diagram-foot{min-width:780px}
- .relationship-explorer{padding:17px 13px}
- .detail-leading{padding:17px 16px}.relationship-layer{padding:15px 16px}
- .explore-head h2{font-size:1.23rem}
- .explore-count{font-size:11px;padding:6px 9px}
- .all-connections summary{padding:18px 14px}.all-connections summary span{float:none;margin-left:6px}
- .card{padding:17px}
-}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
-
+th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:13px}
+td.sym{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--accent);white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.steps{padding-left:1.25em}
+.steps li{margin:.35em 0}
+.check-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0}
+.check-item input{margin-top:6px;width:18px;height:18px;accent-color:var(--accent)}
+.kicker{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 4px}
+.prompt{font-size:1.08rem;margin:.6em 0}
+label.inline{display:inline-flex;gap:8px;align-items:center;color:var(--muted);font-size:14.5px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padding:18px 0 40px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:600px){header.top h1{font-size:1.5rem}}
 </style>
 </head>
 <body>
+
 <header class="top">
-<div class="wrap">
-<div class="brandline"><div class="brandmark"><span class="brand-icon">∑</span><div><span class="brand-title">Algebra, understood.</span><span class="brand-sub">A visual learning companion</span></div></div>
-<div class="palette-switch" role="group" aria-label="Colour theme"><span class="palette-label">Look & feel</span><button type="button" class="palette-button" data-palette-choice="paper" aria-label="Paper and Ink theme" title="Paper & Ink"><i style="--swatch:#4169A8"></i><span>Paper</span></button><button type="button" class="palette-button" data-palette-choice="sage" aria-label="Sage and Stone theme" title="Sage & Stone"><i style="--swatch:#3B806D"></i><span>Sage</span></button><button type="button" class="palette-button" data-palette-choice="night" aria-label="Midnight theme" title="Midnight"><i style="--swatch:#1B2B45"></i><span>Night</span></button></div></div>
-<p class="kicker nav-kicker">YOUR COURSE <span class="kicker-divider">/</span> LECTURES 1–9 & CHAPTER 5</p>
+  <div class="wrap">
+    <h1>Algebra I Study Guide</h1>
+    <p class="sub">Lectures 1–9 and Chapter 5 · plain-English explanations, precise definitions, worked examples, and practice</p>
     <nav class="tabs" aria-label="Sections">
-      <a href="#map">Course map</a>
-      <a href="#defs">Definitions</a>
-      <a href="#decide">What kind of question?</a>
-      <a href="#routine">When you're stuck</a>
-      <a href="#notation">Reading notation</a>
-      <a href="#build">Practice &amp; build</a>
+      <a href="#start">Start</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#worked">Worked examples</a>
+      <a href="#practice">Practice</a>
+      <a href="#question">Question type</a>
+      <a href="#reference">Reference</a>
+      <a href="#checklist">Checklist</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
 
-<!-- ================= MAP ================= -->
-<section class="page" id="page-map">
-<div class="hero-eyebrow"><span class="hero-dot"></span> A VISUAL GUIDE TO ALGEBRA I <span class="eyebrow-line"></span> LECTURES 1–9 + CHAPTER 5</div>
-<h1 class="hero-title">See how the ideas <em>connect.</em></h1>
-<p class="lede hero-lede">Math becomes easier to follow when you can see what each idea does, why the next one matters, and how both are described using mathematical language. Select any box, arrow, or connection below to explore it.</p><div class="visual-relationship" id="relationshipVisual">
-  <header><div><p class="section-kicker">EXPLORE THE MAP</p><h2>The relationships, at a glance</h2></div><p class="visual-note">Tap a box or arrow to see why two ideas are connected. Every explanation includes everyday words and precise math.</p></header>
-  <svg class="relationship-svg" viewBox="0 0 1000 615" role="img" aria-label="Course relationship map: sets and functions lead to equivalence and modular arithmetic. Fields supply scalars for vector spaces. Vector spaces support building through span and checking redundancy through independence. Spanning and independence together give a basis, whose size determines dimension.">
-  <defs><marker id="rel-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#718da0"/></marker></defs>
-  <!-- structural connections, drawn behind nodes -->
-  <path class="rel-edge" data-bridge-path="0" d="M293 79 H350" marker-end="url(#rel-arrow)"/>
-  <path class="rel-edge" data-bridge-path="1" d="M650 79 H701" marker-end="url(#rel-arrow)"/>
-  <path class="rel-edge" data-bridge-path="2" d="M840 128 V166 H513 V194" marker-end="url(#rel-arrow)"/>
-  <path class="rel-edge" data-bridge-path="3" d="M510 279 V295 H245 V314" marker-end="url(#rel-arrow)"/>
-  <path class="rel-edge" data-bridge-path="4" d="M510 279 V295 H755 V314" marker-end="url(#rel-arrow)"/>
-  <path class="rel-edge" data-bridge-path="5" d="M245 399 V418 H495 V445" marker-end="url(#rel-arrow)"/>
-  <path class="rel-edge" data-bridge-path="6" d="M755 399 V418 H505 V445" marker-end="url(#rel-arrow)"/>
-  <path class="rel-edge" data-bridge-path="7" d="M500 530 V551" marker-end="url(#rel-arrow)"/>
-  <path class="rel-hit" data-link="1" d="M293 79 H350" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 2"/>
-<path class="rel-hit" data-link="4" d="M650 79 H701" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 5"/>
-<path class="rel-hit" data-link="5" d="M840 128 V166 H513 V194" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 6"/>
-<path class="rel-hit" data-link="6" d="M510 279 V295 H245 V314" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 7"/>
-<path class="rel-hit" data-link="7" d="M510 279 V295 H755 V314" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 8"/>
-<path class="rel-hit" data-link="8" d="M245 399 V418 H495 V445" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 9"/>
-<path class="rel-hit" data-link="8" d="M755 399 V418 H505 V445" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 9"/>
-<path class="rel-hit" data-link="9" d="M500 530 V551" fill="none" stroke="transparent" stroke-width="26" role="button" tabindex="0" aria-label="Open connection 10"/>
-<g class="rel-node" data-link="0" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="0"><rect class="rel-box" x="18" y="30" width="275" height="98" rx="16" fill="#e1efff" stroke="#a0bede"/><circle cx="48" cy="51" r="16" fill="#3971b7"/><text class="rel-num" x="48" y="56" text-anchor="middle">1</text><text class="rel-text" x="43" y="83">Sets &amp; functions</text><text class="rel-sub" x="43" y="107">Which objects and rules?</text></g>
-  <g class="rel-node" data-link="3" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="1"><rect class="rel-box" x="350" y="30" width="300" height="98" rx="16" fill="#f7e9cf" stroke="#d3bd88"/><circle cx="378" cy="51" r="16" fill="#a87623"/><text class="rel-num" x="378" y="56" text-anchor="middle">2</text><text class="rel-text" x="375" y="83">Equivalence / clock</text><text class="rel-sub" x="375" y="107">Group by a shared remainder</text></g>
-  <g class="rel-node" data-link="5" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="2"><rect class="rel-box" x="701" y="30" width="281" height="98" rx="16" fill="#e9e2fc" stroke="#baa9dd"/><circle cx="732" cy="51" r="16" fill="#7853ae"/><text class="rel-num" x="732" y="56" text-anchor="middle">3</text><text class="rel-text" x="727" y="83">Fields</text><text class="rel-sub" x="727" y="107">Arithmetic and scalar numbers</text></g>
-  <g class="rel-node" data-link="6" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="3"><rect class="rel-box" x="350" y="194" width="300" height="85" rx="16" fill="#e0f4e9" stroke="#9ed2b7"/><circle cx="380" cy="216" r="16" fill="#27855d"/><text class="rel-num" x="380" y="221" text-anchor="middle">4</text><text class="rel-text" x="380" y="251">Vector spaces</text><text class="rel-sub" x="380" y="269">Add vectors; scale by field elements</text></g>
-  <g class="rel-node" data-link="8" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="4"><rect class="rel-box" x="63" y="314" width="365" height="85" rx="16" fill="#ddedff" stroke="#9fbfe1"/><circle cx="90" cy="336" r="16" fill="#3971b7"/><text class="rel-num" x="90" y="341" text-anchor="middle">5</text><text class="rel-text" x="90" y="367">Combinations &amp; span</text><text class="rel-sub" x="90" y="386">Which vectors can we build?</text></g>
-  <g class="rel-node" data-link="8" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="5"><rect class="rel-box" x="572" y="314" width="365" height="85" rx="16" fill="#ffebdf" stroke="#dbbaa3"/><circle cx="598" cy="336" r="16" fill="#b26a45"/><text class="rel-num" x="598" y="341" text-anchor="middle">6</text><text class="rel-text" x="600" y="367">Independence</text><text class="rel-sub" x="600" y="386">Are any vectors redundant?</text></g>
-  <g class="rel-node" data-link="8" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="5"><rect class="rel-box" x="322" y="445" width="356" height="85" rx="16" fill="#e1f4e9" stroke="#8dcba9"/><text class="rel-text" x="500" y="475" text-anchor="middle">Basis</text><text class="rel-sub" x="500" y="498" text-anchor="middle">Spans the space AND independent</text><text class="rel-sub" x="500" y="516" text-anchor="middle">Complete, with no redundancy</text></g>
-  <g class="rel-node" data-link="9" role="button" tabindex="0" aria-label="Explain this idea and its connection to the next" data-rel-stage="6"><rect class="rel-box" x="322" y="555" width="356" height="52" rx="15" fill="#ebe6fa" stroke="#b9aad9"/><circle cx="350" cy="580" r="16" fill="#7853ae"/><text class="rel-num" x="350" y="585" text-anchor="middle">7</text><text class="rel-text" x="386" y="580">Dimension</text><text class="rel-sub" x="386" y="596">How many vectors in a basis?</text></g>
-  </svg>
-<div class="map-diagram-foot"><span><span class="touch-dot">↗</span> Interactive: select a connection in the diagram</span><span class="desktop-hint">On a phone, swipe sideways to explore</span></div>
-</div><section class="relationship-explorer" aria-label="Explore mathematical connections">
-<div class="explore-head"><div><p class="section-kicker">CLICK TO UNDERSTAND</p><h2>Why does one idea lead to another?</h2></div><span class="explore-count" id="relationshipCount">1 of 10</span></div>
-<div class="connection-strip" id="connectionChoices" aria-label="Choose a mathematical connection"></div>
-<div id="relationshipDetail" class="relationship-detail" aria-live="polite"></div>
-<div class="explore-controls"><button type="button" class="btn" id="prevRelationship">← Previous</button><button type="button" class="btn primary" id="nextRelationship">Next connection →</button></div>
-</section><div class="follow-on-title"><p class="section-kicker">GO DEEPER</p><h2>A longer explanation of the whole journey</h2><p class="lede">These two stories tie the course together. You can also select an individual stage to see its definitions.</p></div><div class="bridge-intro"><h2>Start with a concrete story</h2><p><strong>First story:</strong> Take ordinary integers such as 2, 7 and 12. You can place them in a set, use a rule to give each a remainder, and group numbers with the same remainder. This becomes arithmetic with remainder-groups. Under special conditions, that arithmetic is a field.</p><p><strong>Second story:</strong> A field gives us numbers that can scale vectors. From vectors we build combinations, ask how much we can reach (span), and ask whether we have extras (independence). Both tests together produce a basis; counting a basis gives dimension.</p><div class="sequence" aria-label="Learning progression"><span>Choose items</span><b>→</b><span>Group them</span><b>→</b><span>Do arithmetic</span><b>→</b><span>Scale vectors</span><b>→</b><span>Build + remove extras</span><b>→</b><span>Count directions</span></div><p class="muted">This is a teaching route, not a claim that every mathematical topic can only be defined using the one before it.</p></div><div class="ladder" id="ladder"></div><div aria-live="polite" class="card" id="stageDetail"></div><details class="all-connections"><summary>See every connection explained together <span>10 explanations</span></summary><div class="bridge-list" id="bridges"></div></details><div class="note">This map offers a route through the ideas, not a list of claims that each idea is logically required for the next. For example, not every field comes from clock arithmetic. Proof methods and axioms remain important throughout.</div>
-</section>
-
-<!-- ================= DEFINITIONS ================= -->
-<section class="page" id="page-defs">
-  <h1>Definitions, one at a time</h1>
-  <p class="lede">Begin with everyday words, then read the exact mathematical definition. Connect both to the same concrete example before you tackle the notation, examples and practice check. Technical terms are introduced rather than assumed.</p>
-  <div class="defs-layout">
-    <aside class="card deflist">
-      <label for="defSearch">Search</label>
-      <input type="text" id="defSearch" placeholder="e.g. injective, basis, mod" autocomplete="off">
-      <div id="defList"></div>
-    </aside>
-    <article class="card" id="defDetail" aria-live="polite"></article>
-  </div>
-</section>
-
-<!-- ================= DECIDE ================= -->
-<section class="page" id="page-decide">
-  <h1>What kind of question is this?</h1>
-  <p class="lede">Answer one question at a time. Each answer narrows the question until you reach a move to try. The trail at the top shows the path you took.</p>
-  
-<div class="decision-visual" aria-label="Visual guide to moving from the question to a mathematical step">
- <div class="dpart"><div class="dbubble">1</div><strong>Recognize the claim</strong><span>What is the problem asking?</span></div>
- <div class="dpart"><div class="dbubble">2</div><strong>Follow a branch</strong><span>Choose the closest question type below.</span></div>
- <div class="dpart"><div class="dbubble">3</div><strong>Use the first move</strong><span>Translate the result into a test.</span></div>
-</div>
+<section class="page" id="p-start">
+  <h2 class="pt">Start here</h2>
+  <p class="lede">This guide follows the course from sets and functions through fields, vector spaces and dimension. It assumes no earlier course in abstract algebra. For each idea, read the plain-English version first, then the precise definition, then an example and a non-example.</p>
 
   <div class="card">
-    <div class="crumbs" id="crumbs"></div>
-    <h2 id="decQ" style="font-size:1.25rem"></h2>
-    <div class="row" id="decOpts" style="margin-top:10px;flex-direction:column;align-items:stretch"></div>
-    <div id="decLeaf"></div>
-    <div class="row" style="margin-top:14px"><button class="btn" id="decBack">Back</button><button class="btn" id="decReset">Start over</button></div>
+    <h3>What the course is about</h3>
+    <p>Algebra asks which rules are enough for a system to behave like arithmetic. You meet several systems: clock arithmetic (numbers that wrap around after m), the complex numbers, and vectors (arrows, lists of numbers, polynomials). For each one you ask the same questions: which pieces can I build from others, which pieces are redundant, and how many independent pieces do I need?</p>
   </div>
-</section>
 
-<!-- ================= ROUTINE ================= -->
-<section class="page" id="page-routine">
-  <h1>When you're stuck: six steps</h1>
-  <p class="lede">Work through the steps in order. Tick each one as you go. If you've been stuck for more than a few minutes, go back to step 3 and ask which condition you haven't checked.</p>
-  <div class="progress" aria-hidden="true"><div id="progBar"></div></div>
-  <p class="muted" id="progText"></p>
-  <div class="card" id="routineList"></div>
   <div class="card">
-    <h3>Questions to ask yourself</h3>
-    <ol class="ask">
-      <li>What exactly is given, and what do I have to show or find?</li>
-      <li>Which definition applies, and what are its conditions?</li>
-      <li>What does this sentence mean in ordinary words?</li>
-      <li>Can I test a small case to see what is happening?</li>
-      <li>Am I assuming a picture proves a general claim?</li>
+    <h3>How to read a definition</h3>
+    <ol class="steps">
+      <li><strong>Say it in words.</strong> Find the plain-English idea before the symbols.</li>
+      <li><strong>Name the pieces.</strong> Which symbols are the objects, which are the rules, and which are the conditions?</li>
+      <li><strong>Work one example.</strong> Use small numbers you can check by hand.</li>
+      <li><strong>Break one example.</strong> Find a case that fails. The non-example shows what the definition rules out.</li>
     </ol>
   </div>
-  <div style="margin-top:12px"><button class="btn" id="routineReset">Clear all ticks</button></div>
+
+  <div class="card">
+    <h3>How to use this guide</h3>
+    <ol class="steps">
+      <li>Open the <a href="#roadmap">Roadmap</a> to see how the topics depend on each other.</li>
+      <li>Read a term in the <a href="#glossary">Glossary</a>, and try its check question before opening the answer.</li>
+      <li>Study a full problem in <a href="#worked">Worked examples</a>, one step at a time.</li>
+      <li>Practise in <a href="#practice">Practice</a>. Start with “By topic” to build confidence, then switch to “Mixed” to practise recognising which kind of problem you are facing.</li>
+      <li>Stuck? Use <a href="#question">Question type</a> and the routine on the <a href="#reference">Reference</a> page.</li>
+      <li>Track coverage in the <a href="#checklist">Checklist</a>.</li>
+    </ol>
+  </div>
+
+  <div class="card warn">
+    <h3>Limits of this guide</h3>
+    <ul>
+      <li>It does not replace the lectures, tutorials, the textbook, or office hours.</li>
+      <li>The practice questions and worked examples were written for this guide. They are not past exam questions and do not predict what will be on an exam.</li>
+      <li>Do not use it to produce answers for graded work. Check your course outline for the rules on collaboration and AI tools before using any tool on coursework.</li>
+    </ul>
+  </div>
 </section>
 
-<!-- ================= NOTATION ================= -->
-<section class="page" id="page-notation">
-  <h1>Reading the notation</h1>
-  <p class="lede">Read the full sentence first. In the “Read it as” column, terms are unpacked rather than replaced with more unfamiliar terms. The same symbol can carry slightly different conventions in different textbooks; the subset symbol here is ⊆, which allows equality.</p>
+<section class="page" id="p-roadmap">
+  <h2 class="pt">Roadmap</h2>
+  <p class="lede">Each stage builds on the ones before it. Functions give the language of one-to-one and onto. Clock arithmetic gives the first non-obvious field. Fields supply the scalars used to scale vectors. Span, independence and bases describe the shape of a vector space, and dimension counts that shape.</p>
+  <div class="grid">
+    <section class="card"><p class="kicker">Lecture 1</p><h3>1 · Sets and functions</h3>
+      <p>Describe collections, combine them, and decide whether a function is injective, surjective, bijective or invertible.</p>
+      <p class="muted">Terms: <a href="#g-set">Set</a> · <a href="#g-subset">Subset</a> · <a href="#g-function">Function</a> · <a href="#g-injective">Injective</a> · <a href="#g-surjective">Surjective</a> · <a href="#g-invertible">Invertible</a></p></section>
+    <section class="card"><p class="kicker">Lecture 2</p><h3>2 · Fields and complex numbers</h3>
+      <p>State the field axioms, prove basic facts such as a · 0 = 0, and compute with complex numbers.</p>
+      <p class="muted">Terms: <a href="#g-field">Field</a> · <a href="#g-field-facts">Field facts</a> · <a href="#g-complex">Complex numbers</a> · <a href="#g-conj-mod">Conjugate and modulus</a></p></section>
+    <section class="card"><p class="kicker">Lecture 3 and Chapter 5</p><h3>3 · Relations and clock arithmetic</h3>
+      <p>Test an equivalence relation, work in ℤ/mℤ, and find units.</p>
+      <p class="muted">Terms: <a href="#g-relation">Relation</a> · <a href="#g-equiv-rel">Equivalence relation</a> · <a href="#g-congruence">Congruence</a> · <a href="#g-zm">Z/mZ</a> · <a href="#g-units">Units</a> · <a href="#g-ring">Ring</a> · <a href="#g-powers">Powers</a></p></section>
+    <section class="card"><p class="kicker">Lecture 4</p><h3>4 · Finite fields</h3>
+      <p>Decide when ℤ/mℤ is a field, and explain why.</p>
+      <p class="muted">Terms: <a href="#g-fp">Z/pZ and F_p</a></p></section>
+    <section class="card"><p class="kicker">Lectures 4 and 5</p><h3>5 · Vector spaces</h3>
+      <p>Check the eight axioms, and test whether a set is a subspace.</p>
+      <p class="muted">Terms: <a href="#g-vector-space">Vector space</a> · <a href="#g-vs-facts">Vector-space facts</a> · <a href="#g-subspace">Subspace</a></p></section>
+    <section class="card"><p class="kicker">Lecture 6</p><h3>6 · Span</h3>
+      <p>Write vectors as linear combinations, and decide whether a vector lies in a span.</p>
+      <p class="muted">Terms: <a href="#g-lincomb">Linear combination</a> · <a href="#g-span">Span</a> · <a href="#g-spanning">Spanning set</a></p></section>
+    <section class="card"><p class="kicker">Lectures 7 and 8</p><h3>7 · Independence and bases</h3>
+      <p>Test independence, recognise bases, and see why representations are unique.</p>
+      <p class="muted">Terms: <a href="#g-indep">Independence</a> · <a href="#g-basis">Basis</a></p></section>
+    <section class="card"><p class="kicker">Lectures 8 and 9</p><h3>8 · Dimension</h3>
+      <p>State the replacement theorem, count dimension, and use it to compare subspaces.</p>
+      <p class="muted">Terms: <a href="#g-dimension">Dimension</a> · <a href="#g-replacement">Replacement theorem</a></p></section>
+  </div>
+</section>
+
+<section class="page" id="p-glossary">
+  <h2 class="pt">Glossary</h2>
+  <p class="lede">Open a term to see the plain-English idea, the precise definition, an example, a non-example, and a check question.</p>
+  <div class="row">
+    <input type="search" id="gsearch" placeholder="Search terms" aria-label="Search glossary">
+    <select id="gstage" aria-label="Filter by stage">
+      <option value="all">All stages</option>
+      <option value="1">1 · Sets and functions</option>
+      <option value="2">2 · Fields and complex numbers</option>
+      <option value="3">3 · Clock arithmetic and relations</option>
+      <option value="4">4 · Finite fields</option>
+      <option value="5">5 · Vector spaces</option>
+      <option value="6">6 · Span</option>
+      <option value="7">7 · Independence and bases</option>
+      <option value="8">8 · Dimension</option>
+    </select>
+  </div>
+  <div id="glist"></div>
+</section>
+
+<section class="page" id="p-worked">
+  <h2 class="pt">Worked examples</h2>
+  <p class="lede">Each example shows the reasoning, not just the answer. Cover the steps and try them yourself first.</p>
+
   <div class="card">
-    <label for="symSearch">Filter symbols</label>
-    <input type="text" id="symSearch" placeholder="type a word, e.g. union or inverse" autocomplete="off">
+    <h3>1 · Show that f(x) = 2x + 1 is a bijection from ℝ to ℝ</h3>
+    <ol class="steps">
+      <li><strong>Injective.</strong> Assume f(x) = f(y). Then 2x + 1 = 2y + 1, so 2x = 2y, so x = y.</li>
+      <li><strong>Surjective.</strong> Take any real y. Let x = (y − 1)/2, a real number. Then f(x) = 2 · (y − 1)/2 + 1 = y.</li>
+      <li><strong>Conclusion.</strong> Both properties hold, so f is bijective. The x found in step 2 is the inverse function evaluated at y.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>2 · Is W = {(x, y, z) ∈ ℝ³ : x = 2y} a subspace?</h3>
+    <ol class="steps">
+      <li><strong>Zero.</strong> (0, 0, 0) satisfies 0 = 2 · 0, so 0 is in W.</li>
+      <li><strong>Addition.</strong> Take u = (2s, s, p) and v = (2t, t, q). Then u + v = (2(s + t), s + t, p + q), which satisfies the condition, so it is in W.</li>
+      <li><strong>Scaling.</strong> For any real c, cu = (2cs, cs, cp), which also satisfies x = 2y.</li>
+      <li><strong>Conclusion.</strong> W is a subspace. Its z-coordinate is free, so W is a plane through the origin.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>3 · Is {(1, 2), (2, 4)} linearly independent?</h3>
+    <ol class="steps">
+      <li>Set c₁(1, 2) + c₂(2, 4) = (0, 0). The two coordinate equations are c₁ + 2c₂ = 0 and 2c₁ + 4c₂ = 0.</li>
+      <li>The second equation is twice the first, so there are solutions other than the trivial one. Take c₂ = 1 and c₁ = −2.</li>
+      <li>Check: −2(1, 2) + (2, 4) = (0, 0), with nonzero coefficients. The list is dependent.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>4 · Is (4, 5, 6) in span{(1, 0, 1), (0, 1, 1)}?</h3>
+    <ol class="steps">
+      <li>We need a(1, 0, 1) + b(0, 1, 1) = (4, 5, 6), which is (a, b, a + b) = (4, 5, 6).</li>
+      <li>The first two coordinates give a = 4 and b = 5.</li>
+      <li>The third coordinate would then be a + b = 9, not 6. No solution exists, so (4, 5, 6) is not in the span.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>5 · Show that ℤ/6ℤ is not a field</h3>
+    <ol class="steps">
+      <li>A field needs every nonzero element to have an inverse. Look at 2: 2 · 3 = 6 ≡ 0 (mod 6).</li>
+      <li>Suppose 2 had an inverse b, so 2b ≡ 1 (mod 6). Multiply both sides by 3: 6b ≡ 3, which says 0 ≡ 3 (mod 6). That is false.</li>
+      <li>So 2 has no inverse, and ℤ/6ℤ is not a field.</li>
+    </ol>
+    <p class="note">Why it works: 2 and 3 are zero divisors. A field has none.</p>
+  </div>
+
+  <div class="card">
+    <h3>6 · Find the remainder of 156,347 when divided by 11</h3>
+    <ol class="steps">
+      <li>Since 10 ≡ −1 (mod 11), the powers of 10 alternate in sign, so use alternating digit sums, starting from the right.</li>
+      <li>7 − 4 + 3 − 6 + 5 − 1 = 4.</li>
+      <li>So 156,347 ≡ 4 (mod 11). Check: 11 · 14,213 = 156,343, and 156,347 − 156,343 = 4.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="page" id="p-practice">
+  <h2 class="pt">Practice</h2>
+  <p class="lede">Two ways to practise. <strong>By topic</strong> names the topic first, so you can focus. <strong>Mixed</strong> hides the topic: you first decide what kind of problem it is, which is the skill exams test most directly.</p>
+  <div class="card">
+    <div class="row">
+      <button class="mode" data-mode="topic" aria-pressed="true">By topic</button>
+      <button class="mode" data-mode="mixed" aria-pressed="false">Mixed</button>
+      <label class="inline">Topic <select id="topic-sel" aria-label="Topic"></select></label>
+    </div>
+    <p class="muted" id="p-count"></p>
+    <div id="p-area"></div>
+    <p class="muted" id="p-score"></p>
+  </div>
+</section>
+
+<section class="page" id="p-question">
+  <h2 class="pt">Question type</h2>
+  <p class="lede">Answer one question at a time. Each answer narrows the problem until you reach a first move, and the definitions behind it.</p>
+  <div class="card">
+    <p class="muted" id="d-trail"></p>
+    <h3 id="d-q"></h3>
+    <div class="stack" id="d-opts"></div>
+    <div id="d-leaf"></div>
+    <div class="row"><button id="d-back">Back</button><button id="d-reset">Start over</button></div>
+  </div>
+</section>
+
+<section class="page" id="p-reference">
+  <h2 class="pt">Reference</h2>
+
+  <h3>Notation</h3>
+  <div class="card">
+    <input type="search" id="nsearch" placeholder="Filter symbols, for example inverse or subset" aria-label="Filter notation">
     <div class="tablewrap" style="margin-top:12px">
-      <table><thead><tr><th>Symbol</th><th>Read it as</th><th>Example</th></tr></thead>
-      <tbody id="symRows"></tbody></table>
+      <table>
+        <thead><tr><th>Symbol</th><th>Read as</th><th>Example</th><th>Note</th></tr></thead>
+        <tbody id="notation-body">
+          <tr><td class="sym">∈ and ∉</td><td>is (is not) an element of</td><td>2 ∈ {1, 2, 3}; 4 ∉ {1, 2, 3}</td><td>Single items go into sets with ∈.</td></tr>
+          <tr><td class="sym">⊆</td><td>is a subset of (equality allowed)</td><td>{1, 2} ⊆ {1, 2, 3}</td><td>The lecture notes write ⊂ for this.</td></tr>
+          <tr><td class="sym">⊊</td><td>is a proper subset of</td><td>{1, 2} ⊊ {1, 2, 3}</td><td>Strictly smaller.</td></tr>
+          <tr><td class="sym">∪ and ∩</td><td>union; intersection</td><td>{1, 2} ∪ {2, 3} = {1, 2, 3}</td><td>“or” includes “both”.</td></tr>
+          <tr><td class="sym">∅</td><td>the empty set</td><td>{1} ∩ {2} = ∅</td><td>Not the number 0.</td></tr>
+          <tr><td class="sym">f : S → T</td><td>f is a function from S to T</td><td>f : ℝ → ℝ</td><td>S is the domain and T is the codomain.</td></tr>
+          <tr><td class="sym">f(U) and f⁻¹(V)</td><td>image of U; preimage of V</td><td>f(x) = x²: f⁻¹({4}) = {−2, 2}</td><td>f⁻¹ here names a set. It need not be an inverse function.</td></tr>
+          <tr><td class="sym">g ∘ f</td><td>apply f, then g</td><td>(g ∘ f)(x) = g(f(x))</td><td>Order matters.</td></tr>
+          <tr><td class="sym">∀ and ∃</td><td>for all; there exists</td><td>∀x ∃y: x + y = 0</td><td>Read left to right.</td></tr>
+          <tr><td class="sym">⇒ and ⇔</td><td>if … then; if and only if</td><td>a ≡ b ⇔ m divides a − b</td><td>⇔ means both directions.</td></tr>
+          <tr><td class="sym">a ≡ b (mod m)</td><td>a and b are congruent mod m</td><td>7 ≡ 2 (mod 5)</td><td>Same remainder mod m.</td></tr>
+          <tr><td class="sym">[a]</td><td>equivalence class of a</td><td>[1] mod 3 = {…, −2, 1, 4, …}</td><td>Chapter 5 adds a subscript m when the modulus matters.</td></tr>
+          <tr><td class="sym">ℤ/mℤ and ℤ_m</td><td>integers mod m</td><td>ℤ/5ℤ = {[0], …, [4]}</td><td>Chapter 5 writes ℤ_m; the lectures write ℤ/mℤ. Same thing.</td></tr>
+          <tr><td class="sym">F_p</td><td>the field ℤ/pℤ, for prime p</td><td>F₅ has 5 elements</td><td>Chapter 5 uses the same notation.</td></tr>
+          <tr><td class="sym">a⁻¹</td><td>multiplicative inverse</td><td>3⁻¹ = 5 in ℤ/7ℤ</td><td>Exists for units and for nonzero field elements.</td></tr>
+          <tr><td class="sym">c₁v₁ + … + cₙvₙ</td><td>linear combination</td><td>2(1, 0) + 3(0, 1) = (2, 3)</td><td>The cᵢ are scalars.</td></tr>
+          <tr><td class="sym">span(S)</td><td>everything reachable from S</td><td>span{(1, 0), (0, 1)} = ℝ²</td><td>span(∅) = {0}.</td></tr>
+          <tr><td class="sym">dim V</td><td>dimension of V</td><td>dim ℝ² = 2</td><td>The number of vectors in any basis.</td></tr>
+          <tr><td class="sym">z̄ and |z|</td><td>conjugate; modulus of a complex number z</td><td>3 + 4i: z̄ = 3 − 4i, |z| = 5</td><td>z · z̄ = |z|².</td></tr>
+          <tr><td class="sym">ℤ ⊆ ℚ ⊆ ℝ ⊆ ℂ</td><td>number systems inside one another</td><td>—</td><td>The lecture notes write ⊂.</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
+
+  <h3>Common mistakes</h3>
+  <div class="card">
+    <ul>
+      <li>Checking a few examples and calling it a proof. A “for all” claim needs an argument that works for every element.</li>
+      <li>Forgetting to check that 0 is in a subspace, or treating the empty set as the number 0.</li>
+      <li>Reading f⁻¹(V) as an inverse function. The preimage is always a set. An inverse function exists only when f is bijective.</li>
+      <li>Testing surjectivity against the domain instead of the codomain.</li>
+      <li>Forgetting to reduce mod m. In ℤ/9ℤ, [3] + [7] is [1], not 10.</li>
+      <li>Calling vectors independent because they look different. Test for a nonzero combination that gives zero.</li>
+      <li>Assuming independence is the same over every field. Over F₂ the same vectors can behave differently from how they behave over ℝ.</li>
+      <li>Confusing spanning with basis. A spanning list can contain redundant vectors; a basis cannot.</li>
+      <li>Assuming every nonzero element of a ring has an inverse. ℤ/6ℤ has zero divisors.</li>
+    </ul>
+  </div>
+
+  <h3>Proof templates</h3>
+  <div class="card">
+    <ul>
+      <li>To show A = B: show A ⊆ B and B ⊆ A.</li>
+      <li>To show f is injective: assume f(x) = f(y) and deduce x = y.</li>
+      <li>To show f is surjective: take an arbitrary y in the codomain and solve f(x) = y.</li>
+      <li>To show W is a subspace: show 0 is in W, that W is closed under addition, and that W is closed under scaling.</li>
+      <li>To show a list is a basis: show it spans, and show it is independent.</li>
+      <li>To show a ≡ b (mod m): show that m divides a − b.</li>
+    </ul>
+  </div>
+
+  <h3>When you are stuck</h3>
+  <div class="card">
+    <label class="check-item"><input type="checkbox"><span><strong>Name the object.</strong> Is it a set, a function, a field, a vector space, a subspace, a span, a basis, or a dimension question?</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Translate the symbols.</strong> Say “for every x in S” out loud when you see ∀x ∈ S.</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Unpack the definition.</strong> Turn it into conditions you can check one at a time.</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Decide the task.</strong> Are you proving, disproving, constructing, or computing?</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Try a small case.</strong> Use ℝ², ℤ/3ℤ, or a two-element set to see what is going on.</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Connect and solve.</strong> Justify every step with the definition or a theorem.</span></label>
+    <p class="muted" style="margin-top:10px">If you have been stuck for more than a few minutes, go back to step 3 and ask which condition you have not yet checked.</p>
+  </div>
+
+  <p class="muted">Sources: the uploaded lecture notes (Lectures 1–9) and Chapter 5. Chapter 5 is from Wayne Aitken’s Math 378 notes (CSUSM, Spring 2009), and its notation differs slightly, as the table shows.</p>
 </section>
 
-<!-- ================= BUILD ================= -->
-<section class="page" id="page-build">
-  <h1>Practice the meaning, then build the mathematics</h1>
-  <p class="lede">First, try short questions that move from everyday meaning to symbols and worked problems. After that, use the translator and proof outline to practise building explanations. The proof outline checks whether you wrote each step, not whether your proof is mathematically correct.</p>
-  <section class="card" id="practiceCard" aria-label="Guided practice"><h2>Practice questions</h2><p class="muted">These are illustrative questions based on the definitions and connections, not predictions of a particular exam. Choose an answer and check the explanation.</p><div class="row" style="margin:12px 0"><label for="practiceTopic" style="margin:0">Topic</label><select id="practiceTopic" style="max-width:280px"><option value="all">All topics</option><option value="sets">Sets and functions</option><option value="clock">Remainders and fields</option><option value="vectors">Vector spaces and bases</option></select></div><p class="muted" id="practiceCounter"></p><div id="practiceQuestion"></div><div class="row" style="margin-top:12px"><button class="btn primary" id="practiceCheck">Check answer</button><button class="btn" id="practiceNext">Next question</button></div><div id="practiceFeedback" aria-live="polite"></div></section>
-
-  <div class="card">
-    <h2 style="font-size:1.25rem">Statement translator</h2>
-    <label for="tplSel">Choose a statement</label>
-    <select id="tplSel"></select>
-    <div id="tplInputs" class="two" style="margin-top:12px"></div>
-    <div style="margin-top:14px">
-      <p class="muted" style="margin-bottom:4px">In symbols</p>
-      <div class="formula" id="tplSym"></div>
-      <p class="muted" style="margin:14px 0 4px">In plain English</p>
-      <p class="plainout" id="tplPlain"></p>
-      <p class="muted" style="margin:14px 0 4px">Piece by piece</p>
-      <div class="tablewrap"><table class="parts"><tbody id="tplParts"></tbody></table></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2 style="font-size:1.25rem">Proof outline</h2>
-    <label for="skSel">Choose what you're proving</label>
-    <select id="skSel"></select>
-    <div id="skSteps" style="margin-top:12px"></div>
-    <div class="row" style="margin-top:10px"><button class="btn primary" id="skCheck">Check the outline</button></div>
-    <p class="status" id="skStatus" aria-live="polite"></p>
-  </div>
+<section class="page" id="p-checklist">
+  <h2 class="pt">Checklist</h2>
+  <p class="lede">Lecture 9 lists the midterm topics. These boxes cover that list, plus the Chapter 5 items. Ticks are saved in this browser.</p>
+  <div id="check-list"></div>
 </section>
 
 </main>
 
-<script>
-(function(){
-"use strict";
+<footer class="wrap">
+  Built from the uploaded lecture notes and Chapter 5. Practice questions and worked examples were written for this guide and are not past exam questions. Check anything important against your course materials.
+</footer>
 
-/* ---------- helpers ---------- */
-function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-function $(id){return document.getElementById(id);}
-
-/* ---------- stages ---------- */
-var STAGES=[
- {n:"1",t:"Sets and functions",l:"Lectures 1–2",p:"Inputs, outputs, and what can be undone. These are foundational ways to describe collections and rules between them.",defs:["set","subset","union","intersection","function","image","preimage","injective","surjective","bijective","invertible","composition"]},
- {n:"2",t:"Equivalence and clock numbers",l:"Lecture 3 · Ch. 5",p:"Sorting things by remainder. This creates the clock numbers Z/mZ.",defs:["congruence","equivclass","equivrel","zm","unit"]},
- {n:"3",t:"Fields",l:"Lectures 2, 4",p:"Number systems where you can divide by anything nonzero. This arithmetic forms a field exactly when the number of clock positions is prime.",defs:["field","primefield","complex"]},
- {n:"4",t:"Vector spaces",l:"Lecture 5",p:"Things you can add and scale. Arrows are one example, not the only one.",defs:["vectorspace","subspace"]},
- {n:"5",t:"Span",l:"Lecture 6",p:"Everything you can build from a list of vectors.",defs:["lincomb","span","spanning"]},
- {n:"6",t:"Independence and bases",l:"Lectures 7–8",p:"Which lists have no redundancy, and which lists are exactly enough.",defs:["indep","basis"]},
- {n:"7",t:"Dimension",l:"Lectures 8–9",p:"How many vectors a basis has, and why that number is the same for every basis.",defs:["dim","replacement"]}
-];
-
-/* ---------- definitions ---------- */
-var DEFS={
- set:{t:"Set",s:0,L:"Lecture 1",plain:"A set is a bag of things. Nothing repeats, and the order does not matter.",
-  f:"x ∈ S",parts:[["x","one thing"],["∈","is an element of, or 'is in'"],["S","the bag"]],
-  ex:"{1, 2, 3} is a set, and 2 ∈ {1, 2, 3}.",nx:"An ordered pair (1, 2) remembers which number comes first; that is different from the unordered set {1, 2}.",
-  chk:["Is 4 ∈ {1, 2, 3}?","No. 4 is not in the bag."],links:["subset","union"]},
- subset:{t:"Subset",s:0,L:"Lecture 1",plain:"Every item in the first collection also appears in the second collection. The two collections are allowed to be exactly the same.",
-  f:"A ⊆ B  ⇔  ∀x (x ∈ A ⇒ x ∈ B)",parts:[["A ⊆ B","everything in A also appears in B (equality is allowed)"],["for all x","take any item x"],["x ∈ A ⇒ x ∈ B","if it is in A, then it is in B"]],
-  ex:"{1, 2} ⊆ {1, 2, 3}.",nx:"{1, 4} is not inside {1, 2, 3}, because 4 is missing.",
-  chk:["Is {1, 2, 3} ⊂ {1, 2}?","No. 3 is in the first set but not the second."],links:["set","union"]},
- union:{t:"Union",s:0,L:"Lecture 1",plain:"Combine every item that appears in the first collection, the second collection, or both. Keep each item only once.",
-  f:"x ∈ A ∪ B  ⇔  x ∈ A  or  x ∈ B",parts:[["∪","combine the two bags"],["or","at least one; 'both' counts"]],
-  ex:"{1, 2} ∪ {2, 3} = {1, 2, 3}. The 2 appears once.",nx:"The union is not only the overlap. That is the intersection.",
-  chk:["What is {1, 2} ∪ {2, 3}?","{1, 2, 3}"],links:["intersection"]},
- intersection:{t:"Intersection",s:0,L:"Lecture 1",plain:"Keep only the items that appear in both collections.",
-  f:"x ∈ A ∩ B  ⇔  x ∈ A  and  x ∈ B",parts:[["∩","keep only what both share"],["and","must be in both"]],
-  ex:"{1, 2} ∩ {2, 3} = {2}.",nx:"{1, 2} ∩ {3, 4} = ∅. They share nothing, so the result is empty.",
-  chk:["What is {1, 2, 3} ∩ {3, 4, 5}?","{3}"],links:["union","set"]},
- "function":{t:"Function",s:0,L:"Lectures 1–2",plain:"A function is a machine. You give it an input, and it returns exactly one output.",
-  f:"f : S → T",parts:[["f","the machine"],["S","the domain: allowed inputs"],["T","the codomain: allowed outputs"],["→","each input goes to one output"],["f(x)","the output for input x"]],
-  ex:"f(x) = 2x + 1, from ℝ to ℝ. The input 3 gives 7.",nx:"Sending 2 to both 3 and 5 is not a function. One input cannot have two outputs.",
-  chk:["Can one function send 2 to both 3 and 5?","No. Each input gets exactly one output."],links:["image","preimage","injective","surjective","composition"]},
- image:{t:"Image",s:0,L:"Lecture 1",plain:"The image of a set U of inputs is the set of outputs that U lands on.",
-  f:"f(U) = { f(x) : x ∈ U }",parts:[["f(U)","the image of U"],["{ f(x) : x ∈ U }","list f(x) for each x in U"]],
-  ex:"f(x) = x², U = {−1, 2}. Then f(U) = {1, 4}.",nx:"The range need not be the whole codomain. For squaring real numbers, negative real outputs are allowed in the codomain ℝ but never reached.",
-  chk:["For f(x) = x², what is f({−2, 3})?","{4, 9}"],links:["function","preimage"]},
- preimage:{t:"Preimage",s:0,L:"Lecture 1",plain:"The preimage of a set V of outputs is every input that lands in V.",
-  f:"f⁻¹(V) = { x : f(x) ∈ V }",parts:[["f⁻¹(V)","the preimage of V (this is a name for a set, not an inverse function)"],["x : f(x) ∈ V","all x whose output is in V"]],
-  ex:"f(x) = x². Then f⁻¹({4}) = {−2, 2}.",nx:"Preimages are sets of inputs and exist for any function; an inverse function needs the original function to be bijective.",
-  chk:["For f(x) = x², what is f⁻¹({9})?","{−3, 3}"],links:["image","injective"]},
- injective:{t:"Injective",s:0,L:"Lecture 1",plain:"Injective means no collisions: two different inputs never give the same output.",
-  f:"f(x) = f(y)  ⇒  x = y",parts:[["f(x) = f(y)","the outputs match"],["⇒","then"],["x = y","the inputs must have been the same"]],
-  ex:"f(x) = 2x + 1 is injective.",nx:"f(x) = x² is not injective, because f(2) = f(−2) = 4.",
-  chk:["Is f(x) = x² injective on ℝ?","No. f(2) = f(−2) = 4."],links:["surjective","bijective"]},
- surjective:{t:"Surjective",s:0,L:"Lecture 1",plain:"Surjective means nothing is missed: every allowed output is hit by at least one input.",
-  f:"for all y ∈ T, there exists x ∈ S with f(x) = y",parts:[["for all y ∈ T","take any allowed output"],["there exists x ∈ S","at least one input"],["f(x) = y","that input lands on y"]],
-  ex:"f(x) = 2x + 1, from ℝ to ℝ, is surjective.",nx:"f(x) = 2x + 1, from ℤ to ℤ, is not surjective. Every output is odd, so 2 is missed.",
-  chk:["Is f: ℤ → ℤ, f(x) = 2x + 1 surjective?","No. Every output is odd, so 2 is never hit."],links:["injective","bijective","function"]},
- bijective:{t:"Bijective",s:0,L:"Lectures 1–2",plain:"Bijective means both injective and surjective: a perfect pairing, with nothing left over and nothing shared.",
-  f:"f is injective  and  f is surjective",parts:[["injective","no collisions"],["surjective","nothing missed"]],
-  ex:"f(x) = x³, from ℝ to ℝ, is bijective.",nx:"f(x) = |x| + 1, from ℤ to the positive integers {1, 2, 3, …}, is surjective but not injective, since f(−1) = f(1).",
-  chk:["Is f(x) = x³ on ℝ bijective?","Yes. Each real number has exactly one real cube root."],links:["invertible","injective","surjective"]},
- invertible:{t:"Invertible",s:0,L:"Lecture 1",plain:"A function is invertible if a second machine can undo it exactly.",
-  f:"exists g with g(f(x)) = x for all x, and f(g(y)) = y for all y",parts:[["exists g","there is a second function"],["g(f(x)) = x","going through f, then g, returns you to the start"],["f(g(y)) = y","going through g, then f, returns you to the start"]],
-  ex:"f(x) = 2x + 1 on ℝ. The undo is g(y) = (y − 1)/2.",nx:"f(x) = x² on ℝ is not invertible. Both 2 and −2 give 4, so you cannot tell which input to return.",
-  chk:["Is f(x) = 2x + 1 on ℝ invertible? If yes, what is the undo?","Yes. g(y) = (y − 1)/2."],links:["bijective","composition"]},
- composition:{t:"Composition",s:0,L:"Lecture 1",plain:"g ∘ f means: apply f first, then apply g to the result.",
-  f:"(g ∘ f)(x) = g(f(x))",parts:[["g ∘ f","a single function built from f and g"],["g(f(x))","f runs first, g runs second"]],
-  ex:"f(x) = x + 1 and g(x) = 2x. Then (g ∘ f)(3) = g(4) = 8.",nx:"Order matters. Here (f ∘ g)(3) = f(6) = 7, which is not 8.",
-  chk:["For f(x) = x + 1 and g(x) = 2x, what is (f ∘ g)(3)?","f(g(3)) = f(6) = 7."],links:["function","invertible"]},
- congruence:{t:"Congruence mod m",s:1,L:"Lecture 3 · Ch. 5",plain:"a ≡ b (mod m) means a and b leave the same remainder when divided by m. They sit at the same spot on an m-hour clock.",
-  f:"a ≡ b (mod m)  ⇔  m divides (a − b)",parts:[["≡","'same spot on the clock'"],["(mod m)","the clock has m hours"],["m divides (a − b)","the difference is a whole multiple of m"]],
-  ex:"7 ≡ 2 (mod 5), because 7 − 2 = 5.",nx:"7 is not congruent to 3 mod 5, because 7 − 3 = 4 is not a multiple of 5.",
-  chk:["Is 13 ≡ 3 (mod 5)?","Yes. 13 − 3 = 10, which is a multiple of 5."],links:["equivrel","zm"]},
- equivrel:{t:"Equivalence relation",s:1,L:"Lecture 3",plain:"An equivalence relation is a 'same kind' rule that passes three checks: each thing matches itself, the match works both ways, and it chains through.",
-  f:"reflexive:  a ~ a\nsymmetric:  a ~ b ⇒ b ~ a\ntransitive:  a ~ b and b ~ c ⇒ a ~ c",parts:[["reflexive","everything matches itself"],["symmetric","if a matches b, then b matches a"],["transitive","matches chain through"]],
-  ex:"Congruence mod m is an equivalence relation.",nx:"'<' is not one. It fails symmetry, because 1 < 2 but 2 < 1 is false.",
-  chk:["Does '<' pass the symmetry check?","No. 1 < 2, but not 2 < 1."],links:["congruence","equivclass"]},
- equivclass:{t:"Equivalence class",s:1,L:"Lecture 3",plain:"The class of a is everything equivalent to a. Classes split the set into separate pieces that never overlap.",
-  f:"[a] = { x : x ≡ a }",parts:[["[a]","the class containing a"],["x ≡ a","everything that matches a"]],
-  ex:"Modulo 3, [1] = [4] = [−2]; these are names for the same equivalence class of integers.",nx:"[1] and [2] in Z/3Z are different pieces, so they share no elements.",
-  chk:["In Z/3Z, is [1] = [4]?","Yes. 4 ≡ 1 (mod 3)."],links:["congruence","zm"]},
- zm:{t:"Clock numbers Z/mZ",s:1,L:"Lecture 3 · Ch. 5",plain:"For any positive whole number m, group the integers into m groups according to their remainder after division by m. Each group is one clock number. Calculate with representatives and keep the remainder.",
-  f:"ℤ/mℤ = { [0], [1], …, [m − 1] }  (m ≥ 1)",parts:[["ℤ/mℤ","the set of m remainder-classes, not just a list of integers"],["[a]","the class of all integers with the same remainder as a"]],
-  ex:"In ℤ/5ℤ: [3] + [4] = [2] and [3] · [4] = [2].",nx:"For every positive integer m, ℤ/mℤ has exactly m equivalence classes, not infinitely many.",
-  chk:["In Z/5Z, what is 2 · 3?","1, since 6 leaves remainder 1 on the 5-clock."],links:["unit","field"]},
- unit:{t:"Unit",s:1,L:"Ch. 5 §7",plain:"A unit is a clock number that has a partner which multiplies with it to give 1.",
-  f:"a · b ≡ 1 (mod m)",parts:[["a","the number you have"],["b","its partner"],["≡ 1 (mod m)","the product leaves remainder 1"]],
-  ex:"2 is a unit in Z/9Z, because 2 · 5 = 10 ≡ 1.",nx:"3 is not a unit in Z/9Z. Multiples of 3 mod 9 are 0, 3, or 6, never 1.",
-  chk:["Is 4 a unit in Z/9Z? If yes, what is its partner?","Yes. 4 · 7 = 28 ≡ 1 (mod 9), so the partner is 7."],links:["zm","field"]},
- field:{t:"Field",s:2,L:"Lectures 2, 4",plain:"A field is a system in which addition and multiplication follow the field rules, and subtraction and division by any nonzero element are possible. Dividing by zero is not allowed.",
-  f:"field axioms; 0 ≠ 1; a + (−a) = 0;\nevery a ≠ 0 has a multiplicative inverse",parts:[["additive inverse","a + (−a) = 0, for every a, including 0"],["multiplicative inverse","a · a⁻¹ = 1, for every a ≠ 0 only"]],
-  ex:"ℚ, ℝ, ℂ, and Z/pZ for prime p are fields.",nx:"Z/6Z is not a field. 2 · 3 = 6 ≡ 0, and 2 has no partner that gives 1.",
-  chk:["Is Z/6Z a field?","No. 2 · 3 ≡ 0 (mod 6), and 2 has no inverse."],links:["primefield","unit"]},
- primefield:{t:"Z/pZ is a field (p prime)",s:2,L:"Lecture 4",plain:"When p is prime, every nonzero clock number is a unit. So Z/pZ is a field.",
-  f:"p prime  ⇒  every a ≠ 0 in Z/pZ has an inverse",parts:[["p prime","no smaller number (other than 1) divides p"],["every a ≠ 0","all nonzero clock numbers"],["has an inverse","a partner that gives 1"]],
-  ex:"Z/5Z is a field. The partners are 1↔1, 2↔3, and 4↔4.",nx:"Z/6Z is not, because 2 and 3 are nonzero and multiply to 0.",
-  chk:["Why is Z/7Z a field?","7 is prime, so every nonzero clock number has an inverse."],links:["field","zm"]},
- complex:{t:"Complex numbers",s:2,L:"Lecture 2",plain:"A complex number is a + bi, where i is a number with i² = −1. Multiply like polynomials, then replace i² with −1.",
-  f:"(a + bi)(c + di) = (ac − bd) + (ad + bc)i",parts:[["a","the real part"],["b","the imaginary part (a real number)"],["i","the number with i² = −1"]],
-  ex:"(2 + i)(3 − 4i) = 10 − 5i.",nx:"a + bi and c + di are equal only if a = c and b = d. They are not equal just because they look similar.",
-  chk:["What is (1 + i)²?","2i, since 1 + 2i + i² = 1 + 2i − 1 = 2i."],links:["field"]},
- vectorspace:{t:"Vector space",s:3,L:"Lecture 5",plain:"A vector space is a set of things you can add and scale by numbers, where the usual rules hold, including that there is a zero.",
-  f:"for all u,v ∈ V and c ∈ F: u + v ∈ V and cu ∈ V;\naddition and scaling also satisfy the vector-space axioms",parts:[["vector","any object: an arrow, a polynomial, a matrix"],["scalar","a number from the field F"],["rules","for example, u + v = v + u, and there is a zero"]],
-  ex:"ℝ² with usual addition and scaling. Pairs (x, y) can be added and stretched.",nx:"The positive pairs (x, y) with x, y > 0 are not a vector space. They contain no zero, and scaling by −1 leaves the set.",
-  chk:["Does the set of all (x, y) with x, y > 0 contain the zero vector?","No, so it fails the rules."],links:["subspace","lincomb"]},
- subspace:{t:"Subspace",s:3,L:"Lecture 5",plain:"A subspace is a vector space living inside a bigger one. It must contain zero, and it must stay inside when you add or scale.",
-  f:"0 ∈ W\nu, v ∈ W  ⇒  u + v ∈ W\nc ∈ F, u ∈ W  ⇒  cu ∈ W",parts:[["0 ∈ W","zero is in W"],["u + v ∈ W","closed under adding"],["cu ∈ W","closed under scaling"]],
-  ex:"The line y = x in ℝ² is a subspace.",nx:"The line y = x + 1 is not. It does not contain (0, 0).",
-  chk:["Is {(x, y) : x = 2y} a subspace of ℝ²?","Yes. It contains (0, 0), and sums and scalings keep x = 2y true."],links:["vectorspace","span"]},
- lincomb:{t:"Linear combination",s:4,L:"Lecture 6",plain:"A linear combination scales some vectors and adds the results.",
-  f:"c₁v₁ + c₂v₂ + … + cₙvₙ",parts:[["cᵢ","the scalars, or coefficients: numbers you choose"],["vᵢ","the vectors"],["+","add the scaled vectors"]],
-  ex:"2(1, 0) + 3(0, 1) = (2, 3).",nx:"A linear combination uses numbers to scale vectors and then adds them. A dot product, where defined, is a different operation.",
-  chk:["What is 2(1, 1) + 1(0, 2)?","(2, 4)"],links:["span","indep"]},
- span:{t:"Span",s:4,L:"Lecture 6",plain:"The span of a list is every vector you can build from the list using linear combinations.",
-  f:"span(S) = { c₁s₁ + … + cₙsₙ : cᵢ ∈ F, sᵢ ∈ S }",parts:[["span(S)","all vectors obtainable by multiplying starting vectors by permitted numbers and adding"],["cᵢ ∈ F","choose any scalars"],["sᵢ ∈ S","use vectors from S"]],
-  ex:"span{(1, 0), (0, 1)} = ℝ².",nx:"span{(1, 0)} is only the x-axis. It cannot reach (0, 1).",
-  chk:["Does span{(1, 1)} contain (2, 2)?","Yes: (2, 2) = 2·(1, 1)."],links:["lincomb","spanning"]},
- spanning:{t:"Spanning set",s:4,L:"Lectures 6, 8",plain:"A list S spans V if its span is all of V. Everything in V can be built from S.",
-  f:"span(S) = V",parts:[["span(S)","what S can build"],["= V","that is the whole space"]],
-  ex:"{(1, 0), (0, 1)} spans ℝ².",nx:"{(1, 0), (2, 0)} spans only the x-axis, not all of ℝ².",
-  chk:["Does {(1, 0), (0, 1), (1, 1)} span ℝ²?","Yes. Even (1, 0) and (0, 1) alone already do."],links:["span","basis"]},
- indep:{t:"Linear independence",s:5,L:"Lecture 7",plain:"A list is linearly independent if the only way to combine its vectors into zero is to use zero of each. Otherwise it is dependent: one vector is redundant.",
-  f:"c₁v₁ + … + cₙvₙ = 0  ⇒  every cᵢ = 0",parts:[["= 0","the combination equals the zero vector"],["⇒ every cᵢ = 0","forced: all the coefficients are zero"]],
-  ex:"{(1, 0), (0, 1)} is independent.",nx:"{(1, 0), (0, 1), (1, 1)} is dependent. (1, 1) − (1, 0) − (0, 1) = 0 with nonzero coefficients.",
-  chk:["Is {(1, 2), (2, 4)} independent?","No. 2(1, 2) − (2, 4) = 0, with coefficients that are not all zero."],links:["lincomb","basis"]},
- basis:{t:"Basis",s:5,L:"Lectures 7–8",plain:"A basis is a list that is both spanning and independent. It is just enough to build everything, with no extras, and each vector is built in exactly one way.",
-  f:"span(β) = V  and  β is linearly independent",parts:[["span(β) = V","enough to build everything"],["independent","no extras"]],
-  ex:"{(1, 0), (0, 1)} is a basis of ℝ².",nx:"{(1, 0), (0, 1), (1, 1)} is not a basis. It spans, but it is dependent.",
-  chk:["Is {(1, 0), (1, 1)} a basis of ℝ²?","Yes. It spans, since (0, 1) = (1, 1) − (1, 0), and neither vector is a multiple of the other."],links:["spanning","indep","dim"]},
- dim:{t:"Dimension",s:6,L:"Lectures 8–9",plain:"The dimension of a space is the number of vectors in any basis. It counts the independent directions you can move in.",
-  f:"dim V = number of vectors in a basis of V",parts:[["dim V","the dimension of V"],["basis","a minimal spanning list"]],
-  ex:"dim ℝ² = 2, and dim ℝ³ = 3.",nx:"ℂ has dimension 1 as a space over ℂ, but dimension 2 as a space over ℝ. The field you scale by matters.",
-  chk:["What is the dimension of ℝ³?","3, because the standard basis has 3 vectors."],links:["basis","replacement"]},
- replacement:{t:"Replacement theorem",s:6,L:"Lecture 8",plain:"An independent list is never longer than a spanning list. So all bases of a finite-dimensional space have the same size.",
-  f:"|independent list| ≤ |spanning list|",parts:[["|…|","the number of vectors"],["≤","is at most"]],
-  ex:"In ℝ², any three vectors are dependent, because an independent list can have at most two.",nx:"This needs a finite spanning list. The size rule is for finite-dimensional spaces.",
-  chk:["In ℝ², can three vectors be independent?","No. An independent list has at most two vectors."],links:["dim","basis"]}
-};
-var DEF_ORDER=[];
-STAGES.forEach(function(s){s.defs.forEach(function(id){DEF_ORDER.push(id);});});
-
-
-/* Carefully separated teaching levels */
-var TEACH_LAYERS={"set": ["Imagine collecting distinct items into one group. You can ask whether an item belongs to the group. Repeating an item does not create a new one, and putting the items in a different order does not change the group.", "A set is a collection of distinct elements. The statement x ∈ S means x is an element of S.", "For example, whether you write {3, 1, 2} or {1, 2, 3}, you have the same set."], "subset": ["Imagine two containers. Everything in the first collection can be found in the second collection too. It is also possible that the containers hold exactly the same things.", "A ⊆ B means ∀x (x ∈ A ⇒ x ∈ B). It permits A = B. A ⊊ B means A ⊆ B but A ≠ B.", "If A = {red, blue} and B = {red, blue, green}, A is a subset of B. If A and B hold the same items, A is still a subset of B."], "union": ["Imagine pouring the contents of two collections together and removing repeats. Anything that was in either collection is included.", "The union A ∪ B = {x : x ∈ A or x ∈ B}. In mathematics, “or” includes the possibility of both.", "With A = {1, 2} and B = {2, 3}, the combined collection is {1, 2, 3}."], "intersection": ["Look at two collections and keep only the things that appear in both.", "The intersection A ∩ B = {x : x ∈ A and x ∈ B}.", "If one collection holds {1, 2} and the other holds {2, 3}, their shared part is {2}."], "function": ["Think of a rule for assigning a result to every allowed starting item. Each starting item must receive one result, not two. Different starting items are allowed to share a result.", "A function f : S → T assigns exactly one element of T to each element of S. S is the domain, and T is the codomain.", "If a rule doubles a number, entering 3 gives 6. Entering 3 cannot sometimes give 6 and sometimes give 7 under the same function."], "image": ["Choose some starting items. Put each through the rule, then collect all the results that actually appear.", "For U ⊆ S and f : S → T, the image f(U) = {f(x) : x ∈ U}. The image of the full domain, f(S), is the range.", "For “square the number,” starting with −2 and 3 produces 4 and 9; the image is {4, 9}."], "preimage": ["Start with a desired group of results and work backward: which allowed starting items would end up there? There could be several, one, or none.", "For V ⊆ T and f : S → T, f⁻¹(V) = {x ∈ S : f(x) ∈ V}. This preimage notation is defined even when f has no inverse function.", "For “square the number” on real numbers, both −2 and 2 lead to 4, so the preimage of {4} is {−2, 2}."], "injective": ["The rule never merges two different starting items into the same result. If you see matching results, you know the starting items must have matched.", "A function is injective if ∀x, y ∈ S, f(x) = f(y) ⇒ x = y.", "Doubling real numbers never makes two different inputs equal. Squaring real numbers does: 2 and −2 both produce 4."], "surjective": ["Picture a shelf containing every result the rule promises it can produce. None of the spaces on the shelf are left empty: at least one starting item reaches each promised result.", "A function f : S → T is surjective if ∀y ∈ T, ∃x ∈ S such that f(x) = y.", "Doubling whole integers does not produce the odd integers, so it is not onto all integers."], "bijective": ["Every permitted result is reached, and each result has exactly one starting item. Nothing is missed, and no result is shared by two different inputs.", "A function f : S → T is bijective exactly when it is both injective and surjective.", "For “add 1” on the integers, each integer output has exactly one integer input."], "invertible": ["There is a reliable way to undo the original rule. You can move forward and back without losing information or getting stuck.", "An inverse g : T → S satisfies g ∘ f = id_S and f ∘ g = id_T. Such a two-sided inverse exists exactly when f is bijective.", "If f(x) = 2x + 1 on real numbers, first subtract 1 and then divide by 2 to undo it."], "composition": ["Do one rule, then take its result and feed that into another rule. The sequence matters: doing A then B may not match doing B then A.", "If f : S → T and g : T → U, the composition g ∘ f : S → U is defined by (g ∘ f)(x) = g(f(x)).", "Starting at 3, “add 1, then double” gives 8; “double, then add 1” gives 7."], "congruence": ["Two whole numbers share the same position on a clock that has a chosen number of positions. For a five-position clock, 2 and 7 land in the same place.", "For integers a, b and m ≥ 1, a ≡ b (mod m) exactly when m divides a − b; equivalently, they have the same remainder on division by m.", "7 and 2 differ by 5, so they occupy the same position on a clock with five positions."], "equivrel": ["Imagine deciding when two things count as “the same” for one particular purpose. The rule must count each thing as matching itself, work in either direction, and carry a match across a chain.", "A relation ~ on S is an equivalence relation if it is reflexive (a ~ a), symmetric (a ~ b ⇒ b ~ a), and transitive (a ~ b and b ~ c ⇒ a ~ c).", "On a five-position clock, “lands at the same position” meets all three tests."], "equivclass": ["Once you decide what “counts as the same,” gather every item that matches one chosen item. These matching groups do not partially overlap: they are either identical or separate.", "The equivalence class [a] = {x ∈ S : x ~ a}. Equivalence classes partition S.", "Under “same remainder after division by 3,” the numbers …, −2, 1, 4, 7, … all belong to the same group."], "zm": ["Take every integer, positive or negative, and sort it by what is left after division by a fixed positive number. There are only that many remainder-groups; these groups become the new arithmetic objects.", "ℤ/mℤ is the set of residue classes {[0], [1], …, [m−1]} for m ≥ 1, with [a]+[b]=[a+b] and [a][b]=[ab].", "For five remainder-groups, adding the group of 3 to the group of 4 gives the group of 2, because 7 leaves remainder 2."], "unit": ["A number in a given arithmetic system has a multiplication partner that brings you back to 1. Not every clock number has such a partner.", "In ℤ/mℤ, [a] is a unit if some [b] satisfies [a][b]=[1]. Equivalently, gcd(a,m)=1.", "With a nine-position clock, 2 has partner 5 because 2×5 = 10, one past 9, and therefore has remainder 1."], "field": ["In some number systems, addition, subtraction, multiplication, and division work with familiar consistency. You are allowed to divide by any number except zero, and the system stays within itself.", "A field is a commutative ring with 1 ≠ 0 in which every nonzero element has a multiplicative inverse. Addition and multiplication satisfy the field axioms.", "Ordinary fractions form a field. Arithmetic using six remainder-groups does not, because the group of 2 has no multiplication partner that gives the group of 1."], "primefield": ["A clock with a prime number of positions has a special property: every position except zero can be multiplied by some position to return to 1.", "For an integer m ≥ 2, ℤ/mℤ is a field if and only if m is prime.", "On the five-position clock, 2 and 3 multiply to 6, which returns to 1."], "complex": ["Ordinary real numbers sit on a number line. Complex numbers use two real amounts, one ordinary and one attached to the symbol i, where multiplying i by itself gives −1.", "A complex number is a + bi with a, b ∈ ℝ and i² = −1; multiplication distributes and simplifies using i² = −1.", "For 2 + 3i, the first amount is 2 and the coefficient of i is 3."], "vectorspace": ["Imagine a collection of objects that can be added together and stretched or flipped using allowed numbers, without leaving the collection. Those two operations must obey a consistent rulebook.", "A vector space V over a field F has vector addition and scalar multiplication satisfying the vector-space axioms, including additive identity, additive inverses, associativity, commutativity, and distributivity.", "Pairs of real numbers work: (1, 2) + (3, 4) = (4, 6), and 2(1, 2) = (2, 4)."], "subspace": ["Inside a larger space, choose some objects. The chosen collection counts as a smaller space only if it contains zero and adding or scaling any of its objects never takes you outside.", "A subset W of a vector space V over F is a subspace if 0 ∈ W and W is closed under addition and scalar multiplication.", "All pairs (x, y) with y=x make a smaller space inside ℝ². The shifted line y=x+1 does not, because it misses (0,0)."], "lincomb": ["Take several vectors. Multiply each by a chosen allowed number, then add the results. That is a way to make new vectors from ones you already have.", "A linear combination of v₁,…,vₙ is c₁v₁+⋯+cₙvₙ, with each scalar cᵢ drawn from the underlying field.", "In the plane, twice (1,0) plus three times (0,1) produces (2,3)."], "span": ["Ask what destinations you can reach if you are allowed to stretch, flip, and add the starting vectors in every possible way. The full collection of reachable destinations is their span.", "span(S) is the set of all finite linear combinations of elements of S; it is the smallest subspace containing S.", "Starting with a rightward step (1,0) and an upward step (0,1), you can reach any point in the plane."], "spanning": ["You have enough starting directions to reach every destination in the space, even if some of your starting directions are unnecessary extras.", "S spans V exactly when span(S)=V.", "Rightward and upward steps are enough to reach every point in the plane."], "indep": ["None of the listed vectors is an unnecessary direction that can be recreated from the others. You cannot combine them to make zero unless every multiplier is zero.", "A finite list v₁,…,vₙ is linearly independent if c₁v₁+⋯+cₙvₙ=0 implies c₁=⋯=cₙ=0.", "Rightward and upward steps are independent. Adding a diagonal step (1,1) makes one of the three unnecessary."], "basis": ["A good toolkit reaches every destination but carries no unnecessary directions. Every destination can be assembled in one and only one way from the toolkit.", "A basis of V is a linearly independent spanning set. Every vector in V has a unique finite linear combination in basis vectors.", "In the plane, the pair (1,0), (0,1) is enough to reach anywhere, with no redundant direction."], "dim": ["How many independent building directions are needed to describe the whole space? That number is its dimension. The number does not depend on which complete non-redundant toolkit you choose.", "For a finite-dimensional vector space V, dim_F(V) is the number of vectors in any basis of V over F.", "On an ordinary two-coordinate plane, two directions suffice; its dimension over the real numbers is 2."], "replacement": ["If you already have a complete toolkit of a certain size, you cannot squeeze in more independent directions than that without making some direction redundant.", "In a vector space with a finite spanning list of n vectors, every linearly independent list has at most n vectors (the exchange/replacement principle).", "In the real plane, a list of three vectors must have redundancy because two suitable directions already reach the entire plane."]};
-Object.keys(TEACH_LAYERS).forEach(function(id){DEFS[id].everyday=TEACH_LAYERS[id][0];DEFS[id].math=TEACH_LAYERS[id][1];DEFS[id].bridgeExample=TEACH_LAYERS[id][2];});
-var BRIDGES=[["Sets → equivalence", "First choose what items you are talking about. Next choose a rule for deciding which items count as the same for a particular purpose.", "On a five-position clock, the original items are integers. We decide that two integers count as “the same position” when division by 5 leaves the same remainder.", "On ℤ, define a ~ b ⇔ a ≡ b (mod 5). This is an equivalence relation on the set ℤ."], ["Functions → equivalence (a useful connection)", "A function can provide a way to group items. If two inputs produce the same output, place them together. This is one way to create a matching rule, not the definition of every matching rule.", "A rule that returns the remainder after division by 5 sends 2, 7, and 12 to the same result: 2.", "Let r : ℤ → {0,1,2,3,4} send a to its remainder mod 5. Define a ~ b ⇔ r(a)=r(b)."], ["Equivalence → clock arithmetic", "After defining which integers count as the same, replace each matching group with one object. You can then do arithmetic with those groups.", "Instead of treating 2, 7 and 12 as three different positions, treat them as one remainder-group, written [2].", "ℤ/5ℤ = {[0],[1],[2],[3],[4]}; [a]+[b]=[a+b] and [a][b]=[ab]."], ["Clock arithmetic → fields (sometimes)", "Now ask a stricter question: can we divide by every nonzero remainder-group? This works with a prime number of positions, but not with every clock. There are also many fields that are not built from clocks.", "With five positions, 2 has a multiplication partner, 3, because 2×3 leaves remainder 1. With six positions, 2 has no such partner.", "For m ≥ 2, ℤ/mℤ is a field ⇔ m is prime. ℚ, ℝ and ℂ are other fields."], ["Fields → vector spaces", "A field supplies the permitted numbers you use to stretch or flip vectors. A vector space adds new objects called vectors, together with rules for adding and scaling them.", "For pairs (x,y) with real coordinates, multiplying the pair (2,3) by 4 makes (8,12). Here 4 is a scalar (a real number).", "ℝ² is a vector space over the field ℝ. For c ∈ ℝ and v ∈ ℝ², cv ∈ ℝ²."], ["Vectors → combinations and span", "Once you can scale and add vectors, ask what you can make from a starting collection. Every possible result together is the span.", "With a rightward step (1,0) and an upward step (0,1), combining suitable amounts lets you reach any point (a,b).", "span{(1,0),(0,1)} = ℝ² since (a,b)=a(1,0)+b(0,1)."], ["Vectors → independence (a different question)", "Having enough building blocks is not the same as checking whether some are unnecessary. Independence asks whether one of your directions is already reproducible from the others.", "If you already have right (1,0) and up (0,1), the diagonal (1,1) adds no new capability: it is right + up.", "(1,1)=(1,0)+(0,1), so the three-vector list is linearly dependent."], ["Span + independence → basis", "Put those two tests together. Does the collection reach everything? Does it contain no unnecessary directions? Passing both makes it a basis.", "Right and up reach every point on the plane, and neither can be made from the other, so together they are a basis.", "B={(1,0),(0,1)} spans ℝ² and is linearly independent; hence B is a basis of ℝ²."], ["Basis → dimension", "When you have a basis, count its vectors. That count is the dimension, and every other basis for the same finite-dimensional space has the same number of vectors.", "The plane has two directions in a basis, even if you rotate your two directions or choose another suitable pair.", "dim_ℝ(ℝ²)=2. Any basis of ℝ² over ℝ contains exactly two vectors."]];
-var SETS_TO_FUNCTIONS=["Sets → functions", "First decide what things can go in and what kinds of answers can come out. A function is then a rule that gives each permitted input exactly one output. The inputs and outputs come from collections called sets.", "Let the first collection contain students in a class and the second contain calendar years. The rule 'the year this student enrolled' gives each student one year (even if many students have the same year).", "If A and B are sets, a function f: A → B assigns each a ∈ A exactly one value f(a) ∈ B."];
-BRIDGES.unshift(SETS_TO_FUNCTIONS);
-function renderBridges(){document.getElementById("bridges").innerHTML=BRIDGES.map(function(b,i){return '<article class="bridge"><h3>'+(i+1)+'. '+esc(b[0])+'</h3><div class="split"><div class="layer everyday"><p class="layer-tag">Everyday explanation</p><p>'+esc(b[1])+'</p></div><div class="layer math"><p class="layer-tag">Mathematical connection</p><p>'+esc(b[3])+'</p></div></div><div class="small-guidance"><p class="layer-tag">A concrete example</p><p style="margin:0">'+esc(b[2])+'</p></div></article>';}).join("");}
-renderBridges();
-
-/* Interactive relationship diagram. All explanations come from BRIDGES above. */
-var activeRelationship=0;
-var diagramNodeLinks=[[0,1,2],[1,2,3,4],[4,5],[5,6,7],[6,8],[7,8],[8,9],[9]];
-var linkPaths=[[],[0],[],[],[1],[2],[3],[4],[5,6],[7]];
-var pathNodes=[[0],[0,1],[0,1],[1],[1,2],[2,3],[3,4],[3,5],[4,5,6],[6,7]];
-function renderRelationshipChoices(){
- $('connectionChoices').innerHTML=BRIDGES.map(function(b,i){
-   return '<button class="connection-chip" type="button" data-choose-link="'+i+'" aria-pressed="'+(i===activeRelationship)+'"><span class="number-pill">'+(i+1)+'</span>'+esc(b[0])+'</button>';
- }).join('');
-}
-function showRelationship(i){
- activeRelationship=(i+BRIDGES.length)%BRIDGES.length;
- var b=BRIDGES[activeRelationship];
- $('relationshipCount').textContent=(activeRelationship+1)+' of '+BRIDGES.length;
- $('relationshipDetail').innerHTML='<div class="detail-leading"><span class="detail-label">CONNECTION '+(activeRelationship+1).toString().padStart(2,'0')+'</span><h3>'+esc(b[0])+'</h3><p class="relationship-prominent">'+esc(b[1])+'</p></div>'+
-  '<div class="relationship-layers"><div class="relationship-layer"><p class="layer-tag">IN MATHEMATICAL LANGUAGE</p><p>'+esc(b[3])+'</p></div>'+
-  '<div class="relationship-layer example-layer"><p class="layer-tag">A REAL EXAMPLE</p><p>'+esc(b[2])+'</p></div></div>';
- document.querySelectorAll('[data-choose-link]').forEach(function(el){el.setAttribute('aria-pressed',String(Number(el.getAttribute('data-choose-link'))===activeRelationship));});
- document.querySelectorAll('.rel-node').forEach(function(el,j){el.classList.toggle('is-link-active',pathNodes[activeRelationship].indexOf(j)>=0);});
- document.querySelectorAll('.rel-edge').forEach(function(el,j){el.classList.toggle('is-link-active',linkPaths[activeRelationship].indexOf(j)>=0);});
- var selected=document.querySelector('.connection-chip[aria-pressed="true"]');
- if(selected) selected.scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});
-}
-$('connectionChoices').addEventListener('click',function(e){var btn=e.target.closest('[data-choose-link]'); if(btn)showRelationship(Number(btn.getAttribute('data-choose-link')));});
-$('nextRelationship').addEventListener('click',function(){showRelationship(activeRelationship+1);});
-$('prevRelationship').addEventListener('click',function(){showRelationship(activeRelationship-1);});
-function openDiagramLink(e){
- var hit=e.target.closest('[data-link]'); if(!hit || !hit.closest('#relationshipVisual'))return;
- if(e.type==='keydown' && e.key!=='Enter' && e.key!==' ')return;
- if(e.type==='keydown')e.preventDefault();
- var selectedLink=Number(hit.getAttribute('data-link'));
- showRelationship(selectedLink);
- var panel=$('relationshipDetail');
- // The explanation is immediately below the map; bring it into view if necessary.
- var bounds=panel.getBoundingClientRect();
- if(bounds.top>window.innerHeight-120 || bounds.bottom<0)panel.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-$('relationshipVisual').addEventListener('click',openDiagramLink);
-$('relationshipVisual').addEventListener('keydown',openDiagramLink);
-renderRelationshipChoices(); showRelationship(0);
-
-/* ---------- map ---------- */
-var activeStage=null;
-function renderLadder(){
-  var html="";
-  STAGES.forEach(function(s,i){
-    html+='<button class="rung" data-stage="'+i+'" aria-pressed="'+(activeStage===i)+'">'+
-      '<span class="n">'+s.n+'</span><div class="t">'+esc(s.t)+'</div><div class="l">'+esc(s.l)+'</div>'+
-      (i<STAGES.length-1?'<span class="stepline" aria-hidden="true"></span>':'')+'</button>';
-  });
-  $("ladder").innerHTML=html;
-}
-function renderStage(i){
-  var box=$("stageDetail");
-  if(i===null){box.innerHTML='<p class="muted">Pick a stage above to see the definitions it introduces.</p>';return;}
-  var s=STAGES[i];
-  var items=s.defs.map(function(id){return '<button class="chip" data-def="'+id+'">'+esc(DEFS[id].t)+'</button>';}).join(" ");
-  box.innerHTML='<p class="kicker">Stage '+esc(s.n)+' · '+esc(s.l)+'</p><h2>'+esc(s.t)+'</h2><p>'+esc(s.p)+'</p><div class="row">'+items+'</div>';
-}
-$("ladder").addEventListener("click",function(e){
-  var b=e.target.closest("[data-stage]"); if(!b) return;
-  activeStage=Number(b.getAttribute("data-stage"));
-  renderLadder(); renderStage(activeStage);
-});
-$("stageDetail").addEventListener("click",function(e){
-  var b=e.target.closest("[data-def]"); if(!b) return;
-  openDef(b.getAttribute("data-def"));
-});
-
-/* ---------- definitions ---------- */
-var currentDef=null;
-function renderDefList(filter){
-  var f=(filter||"").trim().toLowerCase();
-  var html="";
-  STAGES.forEach(function(s){
-    var ids=s.defs.filter(function(id){
-      if(!f) return true;
-      var d=DEFS[id];
-      return (d.t+" "+d.everyday+" "+d.math).toLowerCase().indexOf(f)>=0;
-    });
-    if(!ids.length) return;
-    html+='<h3>'+esc(s.n)+' · '+esc(s.t)+'</h3>';
-    ids.forEach(function(id){
-      html+='<button class="btn" data-def="'+id+'" aria-pressed="'+(currentDef===id)+'">'+esc(DEFS[id].t)+'</button>';
-    });
-  });
-  $("defList").innerHTML=html||'<p class="muted">Nothing matches. Try a shorter word.</p>';
-}
-function renderDef(id){
-  var d=DEFS[id], s=STAGES[d.s];
-  var rows=d.parts.map(function(p){return "<tr><td>"+esc(p[0])+"</td><td>"+esc(p[1])+"</td></tr>";}).join("");
-  var links=d.links.map(function(l){return '<button class="chip" data-def="'+l+'">'+esc(DEFS[l].t)+'</button>';}).join(" ");
-  $("defDetail").innerHTML=
-    '<p class="kicker">Stage '+esc(s.n)+' · '+esc(s.t)+' · '+esc(d.L)+'</p>'+
-    '<h2>'+esc(d.t)+'</h2>'+
-    '<div class="layer everyday"><p class="layer-tag">1 · Everyday English — no math assumed</p><p>'+esc(d.everyday)+'</p></div>'+
-    '<div class="layer math"><p class="layer-tag">2 · The same idea in mathematical language</p><p>'+esc(d.math)+'</p></div>'+
-    '<div class="small-guidance"><p class="layer-tag">3 · Make the connection concrete</p><p style="margin:0">'+esc(d.bridgeExample)+'</p></div>'+
-    '<h3 class="tier-title">4 · Read the symbols, piece by piece</h3>'+
-    '<div class="formula" style="white-space:pre-wrap">'+esc(d.f)+'</div>'+
-    '<div class="tablewrap" style="margin-top:10px"><table class="parts"><tbody>'+rows+'</tbody></table></div>'+
-    '<h3 class="tier-title">5 · Compare an example and a non-example</h3>'+
-    '<div class="two"><div class="card" style="margin:0"><p class="muted" style="margin:0 0 4px">Example</p><p style="margin:0">'+esc(d.ex)+'</p></div>'+
-    '<div class="card warn" style="margin:0"><p class="muted" style="margin:0 0 4px">Counterexample / important distinction</p><p style="margin:0">'+esc(d.nx)+'</p></div></div>'+
-    '<h3 class="tier-title">6 · Check yourself</h3>'+
-    '<details class="card" style="margin:0"><summary style="cursor:pointer;font-weight:500">'+esc(d.chk[0])+'</summary><p style="margin:10px 0 0">'+esc(d.chk[1])+'</p></details>'+
-    '<h3 class="tier-title">Read a connected definition</h3>'+
-    '<div class="row">'+links+'</div>';
-}
-function openDef(id){
-  currentDef=id;
-  renderDefList($("defSearch").value);
-  renderDef(id);
-}
-$("defSearch").addEventListener("input",function(){renderDefList(this.value);});
-$("defList").addEventListener("click",function(e){
-  var b=e.target.closest("[data-def]"); if(!b) return;
-  openDef(b.getAttribute("data-def"));
-});
-$("defDetail").addEventListener("click",function(e){
-  var b=e.target.closest("[data-def]"); if(!b) return;
-  openDef(b.getAttribute("data-def"));
-});
-
-/* ---------- decision flow ---------- */
-var DEC={
- start:{q:"What is the question asking you to do?",o:[["Show that something exists","ex"],["Show that a claim holds for every element","fa"],["Show that two things are equal","eq"],["Show that something is false","L_counter"],["Work with vectors, subspaces, or bases","vec"],["Work with clock numbers or fields","fld"]]},
- ex:{q:"What must you produce?",o:[["A specific input, number, or vector","L_construct"],["Coefficients that combine vectors into a target","L_span"]]},
- fa:{q:"Is the claim about every element of a set, or about a property of a function?",o:[["Every element of a set","L_arb"],["A property of a function","fn"]]},
- fn:{q:"Which property?",o:[["No two inputs share an output (injective)","L_inj"],["Every allowed output is hit (surjective)","L_surj"],["Both, or an undo exists (bijective or invertible)","L_bij"]]},
- eq:{q:"What kind of equality?",o:[["Two sets","L_sets"],["Two numbers mod m","L_cong"],["Two vector spaces or subspaces","L_vecs"]]},
- vec:{q:"Which vector question?",o:[["Is this set a subspace?","L_sub"],["Is this list linearly independent?","L_ind"],["Does this list span the space?","L_spanq"],["Is this list a basis?","L_basis"],["What is the dimension?","L_dim"]]},
- fld:{q:"Which question?",o:[["Is Z/mZ a field?","L_field"],["Does this clock number have an inverse?","L_unit"],["Something about complex numbers","L_cplx"]]},
- L_construct:{leaf:1,t:"Construct it",m:["Write down the candidate explicitly.","Check it satisfies every condition in the definition, one at a time."],w:"Saying 'it probably exists' is not enough. Build it, or prove that it must exist.",d:["span"]},
- L_span:{leaf:1,t:"Solve for the coefficients",m:["Write the target as c₁s₁ + … + cₙsₙ.","Solve the resulting equations for the c's.","If there is a solution, the target is in the span. If there is none, it is not."],w:"Find the coefficients first. Do not just guess from a picture.",d:["lincomb","span"]},
- L_arb:{leaf:1,t:"Start with arbitrary elements",m:["Let x (and y) be arbitrary elements of the set.","Use only the definition, not specific numbers.","Conclude the property for that arbitrary element."],w:"Checking a few numbers does not prove a 'for all' claim.",d:["set"]},
- L_inj:{leaf:1,t:"Show injective",m:["Assume f(x) = f(y).","Use the definition to show x = y."],w:"Checking a few inputs does not prove injectivity.",d:["injective"]},
- L_surj:{leaf:1,t:"Show surjective",m:["Take any target y in the codomain.","Solve f(x) = y for an x in the domain.","Check that the x you found really works."],w:"Changing the codomain changes the answer. Read it from the statement.",d:["surjective","function"]},
- L_bij:{leaf:1,t:"Show bijective or invertible",m:["Show injective and surjective, or","find g with g(f(x)) = x and f(g(y)) = y for all x and y."],w:"An undo must work from both sides.",d:["bijective","invertible"]},
- L_sets:{leaf:1,t:"Show two sets are equal",m:["Show that every element of A is in B.","Show that every element of B is in A."],w:"Two inclusions, one for each direction.",d:["subset","set"]},
- L_cong:{leaf:1,t:"Show a ≡ b (mod m)",m:["Compute a − b.","Show a − b = m·k for some integer k."],w:"",d:["congruence"]},
- L_vecs:{leaf:1,t:"Show two subspaces are equal",m:["Show each contains the other.","Or show one is inside the other and they have the same dimension."],w:"",d:["subspace","dim"]},
- L_counter:{leaf:1,t:"Disprove it with one example",m:["Find one specific case that breaks the claim.","Keep the example small, so you can check every condition.","Check the example against the definition, step by step."],w:"One correct counterexample is enough to disprove a 'for all' claim.",d:["injective","subspace"]},
- L_sub:{leaf:1,t:"Check it is a subspace",m:["Check that 0 is in the set.","Take two arbitrary elements; show their sum is in the set.","Take an arbitrary element and a scalar; show the scaled element is in the set."],w:"If 0 is not in the set, stop. It is not a subspace.",d:["subspace"]},
- L_ind:{leaf:1,t:"Check linear independence",m:["Set c₁v₁ + … + cₙvₙ = 0.","Solve for the c's.","Only the all-zero solution means independent. One other solution means dependent."],w:"Dependence needs just one nonzero solution.",d:["indep"]},
- L_spanq:{leaf:1,t:"Check whether the list spans",m:["Pick an arbitrary vector v in the space.","Solve v = c₁s₁ + … + cₙsₙ for the c's.","If the c's exist for every v, the list spans."],w:"Checking a few vectors does not prove spanning.",d:["span","spanning"]},
- L_basis:{leaf:1,t:"Check whether the list is a basis",m:["Check spanning.","Check independence.","Both must hold."],w:"Enough vectors is not enough. They must also be independent.",d:["basis"]},
- L_dim:{leaf:1,t:"Find the dimension",m:["Find any basis.","Count its vectors.","All bases of a finite-dimensional space have the same count."],w:"Count a basis, not a spanning list that contains redundant vectors.",d:["dim","replacement"]},
- L_field:{leaf:1,t:"Decide whether Z/mZ is a field",m:["If m is prime: yes. Every nonzero element has an inverse.","If m is not prime: find two nonzero numbers that multiply to 0. That breaks the field rule."],w:"A field needs an inverse for every nonzero element, not just some of them.",d:["primefield","field"]},
- L_unit:{leaf:1,t:"Check for an inverse",m:["Find b with a · b ≡ 1 (mod m).","If you find one, a is a unit. If none exists, it is not."],w:"",d:["unit"]},
- L_cplx:{leaf:1,t:"Compute with complex numbers",m:["Multiply normally, as with polynomials.","Replace i² with −1.","Collect the real part and the imaginary part."],w:"",d:["complex"]}
-};
-var trail=[], node="start";
-function renderDec(){
-  var n=DEC[node];
-  $("crumbs").textContent=trail.length?trail.map(function(t){return t.label;}).join("  →  "):"Start";
-  if(n.leaf){
-    $("decQ").textContent=n.t;
-    $("decOpts").innerHTML="";
-    var moves=n.m.map(function(m){return "<li>"+esc(m)+"</li>";}).join("");
-    var ds=n.d.map(function(id){return '<button class="chip" data-def="'+id+'">'+esc(DEFS[id].t)+'</button>';}).join(" ");
-    $("decLeaf").innerHTML='<h3 style="margin-top:14px">Try this</h3><ol class="moves">'+moves+'</ol>'+
-      (n.w?'<div class="note warn" style="margin-top:12px">'+esc(n.w)+'</div>':'')+
-      '<p class="muted" style="margin:12px 0 4px">Read the definitions behind this move</p><div class="row">'+ds+'</div>';
-  } else {
-    $("decQ").textContent=n.q;
-    $("decLeaf").innerHTML="";
-    $("decOpts").innerHTML=n.o.map(function(o,i){return '<button class="btn" data-opt="'+i+'">'+esc(o[0])+'</button>';}).join("");
-  }
-}
-$("decOpts").addEventListener("click",function(e){
-  var b=e.target.closest("[data-opt]"); if(!b) return;
-  var o=DEC[node].o[Number(b.getAttribute("data-opt"))];
-  trail.push({label:o[0],from:node});
-  node=o[1]; renderDec();
-});
-$("decLeaf").addEventListener("click",function(e){
-  var b=e.target.closest("[data-def]"); if(!b) return;
-  location.hash="defs";
-  openDef(b.getAttribute("data-def"));
-});
-$("decBack").addEventListener("click",function(){
-  if(!trail.length) return;
-  var t=trail.pop(); node=t.from; renderDec();
-});
-$("decReset").addEventListener("click",function(){trail=[];node="start";renderDec();});
-
-/* ---------- routine ---------- */
-var ROUTINE=[
- {t:"Name the object",p:"What is it: a set, a function, a field, a vector space, a subspace, a span, a basis, or a dimension question?",e:"'Is W a subspace of ℝ³?' The object is W, a set of vectors inside ℝ³."},
- {t:"Translate the symbols",p:"Say every symbol in an ordinary sentence before you try anything else.",e:"'∀x ∈ S' means 'for every x in S'. Say it out loud."},
- {t:"Unpack the definition",p:"Turn the definition into a list of conditions you can check one at a time.",e:"Subspace: contains 0; closed under adding; closed under scaling."},
- {t:"Identify the task",p:"Are you proving, disproving, constructing, or computing?",e:"'Show' or 'prove': argue from the definition. 'Find': construct it."},
- {t:"Test a small case",p:"Try a tiny example (ℝ², Z/3Z, a two-element set) to see what is going on.",e:"In ℝ², try (1, 0), (0, 1), and (1, 1) before proving a general claim."},
- {t:"Connect and solve",p:"Apply the definition or a theorem, and justify every step.",e:"If a combination gives zero with some nonzero coefficient, the list is dependent."}
-];
-var ticks=[false,false,false,false,false,false];
-function renderRoutine(){
-  $("routineList").innerHTML=ROUTINE.map(function(s,i){
-    return '<div class="stepbox"><input type="checkbox" id="rs'+i+'" data-i="'+i+'"'+(ticks[i]?' checked':'')+'>'+
-      '<div><span class="num">Step '+(i+1)+'</span><h3 style="margin:2px 0 4px">'+esc(s.t)+'</h3><p style="margin:0 0 6px">'+esc(s.p)+'</p><p class="muted" style="margin:0">Example: '+esc(s.e)+'</p></div></div>';
-  }).join("");
-  var done=ticks.filter(Boolean).length;
-  $("progBar").style.width=(done/ROUTINE.length*100)+"%";
-  $("progText").textContent=done+" of "+ROUTINE.length+" steps done";
-}
-$("routineList").addEventListener("change",function(e){
-  var i=Number(e.target.getAttribute("data-i"));
-  ticks[i]=e.target.checked; renderRoutine();
-});
-$("routineReset").addEventListener("click",function(){ticks=ticks.map(function(){return false;});renderRoutine();});
-
-/* ---------- notation ---------- */
-var SYMS=[
- ["∈","is one of the items in the stated collection","x ∈ S: x is one of the items in S","4 ∈ {1, 2, 3} is false"],
- ["∉","is not one of the items in the stated collection","4 ∉ {1, 2, 3}","—"],
- ["⊆","every item in the first collection also appears in the second (they may be equal)","{1, 2} ⊆ {1, 2, 3}","{1, 2} ⊂ {1, 2} is also true here"],
- ["⊊","every item in the first collection is in the second, but the second has something extra","{1, 2} ⊊ {1, 2, 3}","—"],
- ["∪","union: in either set","{1, 2} ∪ {2, 3} = {1, 2, 3}","—"],
- ["∩","intersection: in both sets","{1, 2} ∩ {2, 3} = {2}","—"],
- ["∅","the empty set: no elements","{1} ∩ {2} = ∅","—"],
- ["∃","there exists: at least one","∃x: f(x) = 4","—"],
- ["∀","for all: every one","∀x ∈ ℝ: x² ≥ 0","—"],
- ["⇒","if … then (one direction)","x = y ⇒ f(x) = f(y)","—"],
- ["⇔","both directions work: the left is true exactly when the right is true","a ≡ b (mod m) ⇔ m divides (a − b)","—"],
- ["≡ (mod m)","same remainder when divided by m","7 ≡ 2 (mod 5)","—"],
- ["f : S → T","f is a function from S to T","f : ℝ → ℝ","—"],
- ["f(x)","the output of f on input x","f(2) = 5 when f(x) = 2x + 1","—"],
- ["f(U)","take each starting item in U, apply f, and collect the results","f(U) = {f(x) : x ∈ U}","—"],
- ["f⁻¹(V)","collect all starting items whose results land in V; this does not assume an inverse function exists","f(x) = x²: f⁻¹({4}) = {−2, 2}","—"],
- ["g ∘ f","apply f, then g","(g ∘ f)(x) = g(f(x))","—"],
- ["[a]","all original numbers grouped with a by a chosen equivalence rule","[1] mod 3 = {…, −2, 1, 4, 7, …}","—"],
- ["ℤ/mℤ","m groups of whole-number positions, classified by remainder","ℤ/5ℤ = {[0], [1], [2], [3], [4]}","—"],
- ["a⁻¹","multiplicative inverse: partner that gives 1","2⁻¹ = 3 in Z/5Z","—"],
- ["|z|, z̄","distance from zero on the complex plane, and changing the sign of the imaginary part","|3 + 4i| = 5, and conj(3 + 4i) = 3 − 4i","—"],
- ["c₁v₁ + … + cₙvₙ","linear combination: scale and add","2(1, 0) + 3(0, 1) = (2, 3)","—"],
- ["span(S)","all vectors obtainable by multiplying starting vectors by permitted numbers and adding","span{(1, 0)} is the x-axis","—"],
- ["dim V","the count of independent building directions needed for the entire space V","dim ℝ² = 2","—"],
- ["≤","is at most","|independent| ≤ |spanning|","—"]
-];
-function renderSyms(filter){
-  var f=(filter||"").trim().toLowerCase();
-  var rows=SYMS.filter(function(r){return !f||(r[0]+" "+r[1]+" "+r[2]).toLowerCase().indexOf(f)>=0;});
-  $("symRows").innerHTML=rows.map(function(r){
-    return "<tr><td style='font-family:var(--f-mono);color:var(--accent);white-space:nowrap'>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td style='font-family:var(--f-mono);font-size:14px'>"+esc(r[2])+"</td></tr>";
-  }).join("")||"<tr><td colspan='3' class='muted'>Nothing matches.</td></tr>";
-}
-$("symSearch").addEventListener("input",function(){renderSyms(this.value);});
-
-/* ---------- statement translator ---------- */
-var TPL=[
- {id:"inj",name:"f is injective",vars:[["f","f"],["S","ℝ"]],
-  sym:"For all x, y in «S»: if «f»(x) = «f»(y), then x = y.",
-  plain:"Different inputs to «f» never give the same output.",
-  parts:[["For all x, y in «S»","take any two inputs"],["«f»(x) = «f»(y)","they give the same output"],["then x = y","so they were the same input"]]},
- {id:"surj",name:"f is surjective",vars:[["f","f"],["S","ℝ"],["T","ℝ"]],
-  sym:"For every y in «T», there exists x in «S» with «f»(x) = y.",
-  plain:"Every allowed output of «f» is hit by at least one input.",
-  parts:[["For every y in «T»","take any allowed output"],["there exists x in «S»","at least one input..."],["«f»(x) = y","...lands on it"]]},
- {id:"cong",name:"a ≡ b (mod m)",vars:[["a","7"],["b","2"],["m","5"]],
-  sym:"«a» ≡ «b» (mod «m»)  ⇔  «m» divides («a» − «b»)",
-  plain:"«a» and «b» leave the same remainder when divided by «m».",
-  parts:[["≡ (mod «m»)","same remainder when divided by «m»"],["«m» divides («a» − «b»)","«a» − «b» is a whole multiple of «m»"]]},
- {id:"span",name:"v is in span(S)",vars:[["v","v"],["S","S"]],
-  sym:"«v» ∈ span(«S») ⇔ there are scalars c₁…cₙ and vectors s₁…sₙ in «S» with «v» = c₁s₁ + … + cₙsₙ.",
-  plain:"«v» can be built from the vectors in «S» by scaling and adding.",
-  parts:[["∈ span(«S»)","can be built from «S»"],["c₁…cₙ","numbers you choose"],["«v» = c₁s₁ + … + cₙsₙ","scale each sᵢ and add"]]},
- {id:"indep",name:"S is linearly independent",vars:[["S","S"]],
-  sym:"«S» is linearly independent ⇔ (c₁s₁ + … + cₙsₙ = 0 ⇒ every cᵢ = 0).",
-  plain:"The only way to combine the vectors in «S» into zero is to use zero of each.",
-  parts:[["c₁s₁ + … + cₙsₙ = 0","a combination that gives zero"],["every cᵢ = 0","forced: all coefficients are zero"]]}
-];
-var curTpl=0, tplVals={};
-function fillTpl(str,vals){
-  return str.replace(/«(\w+)»/g,function(_,k){
-    var v=vals[k];
-    return (v&&String(v).length)?esc(v):'<span class="blank">___</span>';
-  });
-}
-function renderTpl(){
-  var t=TPL[curTpl];
-  tplVals={};
-  $("tplInputs").innerHTML=t.vars.map(function(v){
-    tplVals[v[0]]=v[1];
-    return '<div><label for="tv_'+v[0]+'">'+esc(v[0])+'</label><input type="text" id="tv_'+v[0]+'" data-k="'+v[0]+'" value="'+esc(v[1])+'"></div>';
-  }).join("");
-  paintTpl();
-}
-function paintTpl(){
-  var t=TPL[curTpl];
-  $("tplSym").innerHTML=fillTpl(t.sym,tplVals);
-  $("tplPlain").innerHTML=fillTpl(t.plain,tplVals);
-  $("tplParts").innerHTML=t.parts.map(function(p){return "<tr><td>"+fillTpl(p[0],tplVals)+"</td><td>"+fillTpl(p[1],tplVals)+"</td></tr>";}).join("");
-}
-$("tplSel").innerHTML=TPL.map(function(t,i){return '<option value="'+i+'">'+esc(t.name)+'</option>';}).join("");
-$("tplSel").addEventListener("change",function(){curTpl=Number(this.value);renderTpl();});
-$("tplInputs").addEventListener("input",function(e){
-  var k=e.target.getAttribute("data-k"); if(!k) return;
-  tplVals[k]=e.target.value; paintTpl();
-});
-
-/* ---------- proof outline ---------- */
-var SK=[
- {id:"inj",name:"Prove f is injective",steps:["Let x and y be arbitrary elements of the domain.","Assume f(x) = f(y).","Use the assumption and the definitions to show x = y.","State the conclusion: f is injective."]},
- {id:"surj",name:"Prove f is surjective",steps:["Let y be an arbitrary element of the codomain.","Find an x in the domain with f(x) = y (solve for x).","Check that f(x) really equals y.","State the conclusion: f is surjective."]},
- {id:"sub",name:"Prove W is a subspace",steps:["Show that 0 is in W.","Let u and v be arbitrary in W. Show u + v is in W.","Let c be a scalar and u in W. Show cu is in W.","State the conclusion."]},
- {id:"basis",name:"Prove a list is a basis",steps:["Spanning: let v be arbitrary. Find coefficients that build v.","Independence: assume c₁v₁ + … + cₙvₙ = 0 and show every cᵢ = 0.","State the conclusion: spanning and independent, so a basis."]},
- {id:"cong",name:"Prove a ≡ b (mod m)",steps:["Write a − b.","Show that a − b = m·k for some integer k.","State the conclusion."]}
-];
-var curSk=0;
-function renderSk(){
-  var s=SK[curSk];
-  $("skSteps").innerHTML=s.steps.map(function(t,i){
-    return '<div class="stepbox" style="display:block"><span class="num">Step '+(i+1)+'</span><p style="margin:4px 0 6px">'+esc(t)+'</p><textarea data-i="'+i+'" aria-label="Your writing for step '+(i+1)+'"></textarea></div>';
-  }).join("");
-  $("skStatus").textContent="";
-}
-$("skSel").innerHTML=SK.map(function(s,i){return '<option value="'+i+'">'+esc(s.name)+'</option>';}).join("");
-$("skSel").addEventListener("change",function(){curSk=Number(this.value);renderSk();});
-$("skCheck").addEventListener("click",function(){
-  var boxes=$("skSteps").querySelectorAll("textarea");
-  var filled=0;
-  boxes.forEach(function(b){
-    var ok=b.value.trim().length>0;
-    b.style.borderColor=ok?"var(--accent)":"var(--warm)";
-    if(ok) filled++;
-  });
-  var total=boxes.length;
-  $("skStatus").className="status "+(filled===total?"ok":"bad");
-  $("skStatus").textContent=filled===total
-    ? "All "+total+" steps have writing. This checks structure only. Compare your argument with a worked example."
-    : filled+" of "+total+" steps written. Fill in the empty ones.";
-});
-
-
-/* Guided practice: checked multiple-choice responses, never simulated proof grading. */
-var PRACTICE=[["sets", "Everyday meaning → notation", "You have a collection of numbers {1, 2, 3}. Which mathematical statement says that 2 is one of them?", ["2 ⊆ {1, 2, 3}", "2 ∈ {1, 2, 3}", "2 = {1, 2, 3}"], 1, "The symbol ∈ says a single item belongs to a collection. ⊆ compares one collection with another collection; 2 here is a number, not a set."], ["sets", "Understand two collections", "Let A={1,2} and B={1,2,3}. Which statement is correct?", ["A ⊆ B", "A ∈ B", "B ⊆ A"], 0, "Every item of A also appears in B. So A is a subset of B. A itself is not listed as a member of B."], ["sets", "Subsets can be equal", "Suppose A={1,2} and B={2,1}. Is A ⊆ B true?", ["No, the order is different", "Yes, because these collections contain the same items", "No, because subsets must be strictly smaller"], 1, "Sets do not depend on order. A=B here, and equality is allowed by ⊆. The strictly-smaller notion is called a proper subset (⊊)."], ["sets", "Function versus non-function", "A rule sends the input 4 to both 7 and 9. Can it be a function with 4 as an allowed input?", ["Yes, every rule is a function", "No, one input must have exactly one output", "No, functions must give different outputs for every different input"], 1, "A function gives exactly one output for each allowed input. Different inputs may share an output; one input cannot have two."], ["sets", "Read a function property", "What does f(x)=f(y) ⇒ x=y tell you?", ["Every permitted output gets used", "Matching outputs force matching inputs", "All inputs give the same output"], 1, "It says no two distinct inputs can land on the same output. That is the definition of an injective function."], ["sets", "Work backward through a rule", "Let f: ℝ→ℝ send x to x². What is the preimage f⁻¹({4})?", ["{2}", "{−2,2}", "{4}"], 1, "Both −2 and 2 square to 4. We are collecting the inputs that reach the chosen output set. This is a preimage, even though squaring on ℝ has no inverse function."], ["sets", "Two rules in sequence", "Let f(x)=x+1 and g(x)=2x. What does (g ∘ f)(3) equal?", ["7", "8", "6"], 1, "Run f first: f(3)=4. Then run g on that result: g(4)=8. Composition is order-sensitive."], ["clock", "Connect equivalence to grouping", "On a five-position clock, why do 2 and 12 belong to the same remainder-group?", ["Their sum is a multiple of 5", "They differ by 10, a multiple of 5", "They are both even numbers"], 1, "12−2=10, which is divisible by 5. Both integers leave remainder 2 after division by 5, so [2]=[12] in ℤ/5ℤ."], ["clock", "Compute a remainder-group", "In ℤ/5ℤ, what is [3]+[4]?", ["[7] which is the same class as [2]", "[1]", "[0]"], 0, "3+4=7. Dividing 7 by 5 leaves remainder 2, so [7]=[2]. Both ways of writing the first choice denote the same class."], ["clock", "Find a multiplication partner", "Does [2] have a multiplicative inverse in ℤ/9ℤ?", ["Yes: [5], because 2×5 leaves remainder 1", "No, because 9 is not prime", "Yes: [2], because 2×2 leaves remainder 4"], 0, "2×5=10, and 10 leaves remainder 1 on division by 9. Some nonzero elements of ℤ/9ℤ have inverses even though ℤ/9ℤ is not a field."], ["clock", "Distinguish clocks from fields", "Which of the following is a field?", ["ℤ/6ℤ", "ℤ/5ℤ", "ℤ/9ℤ"], 1, "A clock system ℤ/mℤ is a field exactly when m is prime. Of 6, 5, and 9, only 5 is prime."], ["clock", "Compute complex numbers", "What is (1+i)² if i²=−1?", ["2+2i", "2i", "0"], 1, "Expand: (1+i)²=1+2i+i²=1+2i−1=2i."], ["vectors", "Test the zero requirement", "Which of these sets is a subspace of ℝ²?", ["All points on y=x+1", "All points on y=x", "All points with both coordinates positive"], 1, "The line y=x passes through (0,0) and stays on that line after addition and scaling. The other two collections do not include the zero vector."], ["vectors", "Build a vector", "Using u=(1,0) and v=(0,1), how could you construct (2,3)?", ["2u+3v", "3u+2v", "2u−3v"], 0, "Twice (1,0) is (2,0) and three times (0,1) is (0,3). Add them to obtain (2,3). This is a linear combination."], ["vectors", "Understand span", "What can be built from all scalar multiples of (1,0) in ℝ²?", ["The whole plane", "Only the horizontal axis", "Only (1,0) itself"], 1, "Every real-number multiple of (1,0) has the form (a,0), so the second coordinate remains zero. That is the horizontal axis."], ["vectors", "Understand independence", "Why is the list (1,0), (0,1), (1,1) linearly dependent?", ["Because it contains three vectors", "Because (1,1) is already the sum of the first two", "Because all three have length 1"], 1, "(1,1)=(1,0)+(0,1), so one vector is redundant. Equivalently, (1,0)+(0,1)−(1,1)=(0,0) with nonzero coefficients."], ["vectors", "Connect span and basis", "Which pair forms a basis of ℝ²?", ["(1,0) and (2,0)", "(1,0) and (0,1)", "(0,0) and (1,1)"], 1, "The horizontal and vertical directions can build every vector in ℝ², and neither is redundant. The other pairs cannot build the entire plane."], ["vectors", "Count dimension carefully", "What is the dimension of the complex numbers ℂ when vectors can be scaled only by real numbers?", ["1", "2", "It is not a vector space"], 1, "Over ℝ, every a+bi is a(1)+b(i), so {1,i} is a basis with two vectors. Over ℂ instead, {1} would be a basis, giving dimension 1. The choice of field matters."]];
-var pool=[], pIndex=0, pPicked=null;
-function resetPractice(){
-  var topic=$("practiceTopic").value;
-  pool=PRACTICE.filter(function(q){return topic==="all"||q[0]===topic;});
-  pIndex=0;showPractice();
-}
-function showPractice(){
-  pPicked=null;
-  var q=pool[pIndex];
-  $("practiceCounter").textContent="Question "+(pIndex+1)+" of "+pool.length+" · "+q[1];
-  $("practiceQuestion").innerHTML='<div class="examQ"><h3 style="margin-top:8px">'+esc(q[2])+'</h3><fieldset><legend class="muted">Choose one answer:</legend>'+q[3].map(function(a,i){return '<label><input type="radio" name="practiceAnswer" value="'+i+'"> <span>'+esc(a)+'</span></label>';}).join("")+'</fieldset></div>';
-  $("practiceFeedback").innerHTML="";
-}
-$("practiceQuestion").addEventListener("change",function(e){if(e.target.matches('input[name="practiceAnswer"]')) pPicked=Number(e.target.value);});
-$("practiceCheck").addEventListener("click",function(){
-  var q=pool[pIndex];
-  if(pPicked===null){$("practiceFeedback").innerHTML='<div class="exam-feedback">Select an answer first.</div>';return;}
-  var correct=pPicked===q[4];
-  $("practiceFeedback").innerHTML='<div class="exam-feedback"><strong>'+(correct?'Correct.':'Not quite.')+'</strong><p style="margin:7px 0 4px"><strong>Correct answer:</strong> '+esc(q[3][q[4]])+'</p><p style="margin:0"><strong>Why:</strong> '+esc(q[5])+'</p></div>';
-});
-$("practiceNext").addEventListener("click",function(){pIndex=(pIndex+1)%pool.length;showPractice();});
-$("practiceTopic").addEventListener("change",resetPractice);
-resetPractice();
-
-/* ---------- tabs ---------- */
-var PAGES=["map","defs","decide","routine","notation","build"];
-function show(){
-  var h=(location.hash||"#map").slice(1);
-  if(PAGES.indexOf(h)<0) h="map";
-  PAGES.forEach(function(p){
-    $("page-"+p).classList.toggle("on",p===h);
-  });
-  document.querySelectorAll("nav.tabs a").forEach(function(a){
-    if(a.getAttribute("href")==="#"+h) a.setAttribute("aria-current","page");
-    else a.removeAttribute("aria-current");
-  });
-  window.scrollTo(0,0);
-}
-window.addEventListener("hashchange",show);
-
-/* ---------- init ---------- */
-renderLadder(); renderStage(0); activeStage=0; renderLadder();
-renderDefList(""); renderDef("set"); currentDef="set";
-renderDec(); renderRoutine(); renderSyms(""); renderTpl(); renderSk();
-show();
-})();
-</script>
-
-<script>
-/* Supplemental concept illustrations only. None of the site's original functions or data is changed. */
-(function(){
- 'use strict';
- const svg=(body)=>`<svg viewBox="0 0 640 245" role="img" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating the selected definition"><defs><marker id="dv-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#3c667e"/></marker></defs>${body}</svg>`;
- const t=(x,y,s,size=16,fill='#203950',weight=600,anchor='start')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Arial, sans-serif" font-weight="${weight}" font-size="${size}" fill="${fill}">${s}</text>`;
- const ln=(x1,y1,x2,y2,color='#8aa2b1',width=2,arrow=false)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}" stroke-linecap="round" ${arrow?'marker-end="url(#dv-tip)"':''}/>`;
- const dot=(x,y,color='#4584c4',r=8)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" stroke="#fff" stroke-width="2"/>`;
- const box=(x,y,w,h,fill='#e8f3ff',border='#adcae0',rx=13)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${fill}" stroke="${border}" stroke-width="1.5"/>`;
- const ar=(x1,y1,x2,y2,color='#3582bc',width=5)=>ln(x1,y1,x2,y2,color,width,true);
- const axes=(x,y)=>ln(x-145,y,x+180,y,'#b5c3cc')+ln(x,y+10,x,y-178,'#b5c3cc')+t(x+172,y-9,'x',11,'#668090')+t(x+10,y-161,'y',11,'#668090')+dot(x,y,'#9eb0b7',3);
- const panel=(x,y,w,h,fill='#f5f9ff')=>box(x,y,w,h,fill,'#dfe9ee',12);
- const venn=(mode)=>{
-  let a='#5b9bd4',b='#e8a45e';
-  let left=`<circle cx="255" cy="125" r="77" fill="${a}" fill-opacity="${mode==='intersection'?.12:.32}" stroke="#357ab0" stroke-width="2"/>`;
-  let right=`<circle cx="350" cy="125" r="77" fill="${b}" fill-opacity="${mode==='intersection'?.12:.30}" stroke="#c07a35" stroke-width="2"/>`;
-  let intersection=mode==='intersection'?`<defs><clipPath id="dv-vclip"><circle cx="255" cy="125" r="77"/></clipPath></defs><circle cx="350" cy="125" r="77" clip-path="url(#dv-vclip)" fill="#cf77b7" fill-opacity=".83"/>`:'';
-  return svg(panel(48,18,544,209,'#f9fbfd')+left+right+intersection+t(211,116,'A',22)+t(385,116,'B',22)+t(320,215, mode==='intersection'?'Only what BOTH sets share':mode==='union'?'Everything in EITHER set':'Two overlapping collections',14,'#314e63',600,'middle'));
- };
- const mappings=(type)=>{
-  let sur=type==='Surjective',bij=type==='Bijective'||type==='Invertible',inj=type==='Injective'||bij;
-  let ys=(sur||bij)?['A','B','C']:['A','B','C','D'];let xs=sur?['1','2','3','4']:['1','2','3'];
-  let from=xs.map((x,i)=>t(122,69+i*40,x,14)+dot(150,64+i*40,'#5489c9',6)).join('');
-  let to=ys.map((y,i)=>dot(485, sur?64+i*57:56+i*39,'#d99f65',6)+t(508,sur?69+i*57:61+i*39,y,14)).join('');
-  let pairs=sur?[[0,0],[1,1],[2,1],[3,2]]:[[0,0],[1,1],[2,inj?2:1]];
-  let arrows=pairs.map(([i,j])=> ar(159,64+i*40,476,sur?64+j*57:56+j*39,'#7d90a2',2.3)).join('');
-  return svg(box(84,22,94,195,'#e8f3ff','#a6c6e3',45)+box(455,22,94,195,'#fff0df','#e5bd8c',45)+from+to+arrows+t(129,36,'Inputs',12,'#315877',600,'middle')+t(503,36,'Outputs',12,'#96572c',600,'middle')+t(317,232,sur?'Every output is reached':inj?'Different inputs never collide':'Every input gets exactly one output',14,'#314e63',600,'middle'));
- };
- const clock=(kind)=>{
-  let cx=320,cy=122,r=82,body=panel(37,16,566,212,'#f8fafc')+`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#f5faff" stroke="#8cb2ce" stroke-width="2"/>`;
-  for(let k=0;k<5;k++){
-   let theta=-Math.PI/2+2*Math.PI*k/5,x=cx+Math.cos(theta)*r,y=cy+Math.sin(theta)*r;
-   body+=dot(x,y,k===2?'#de8956':'#4b86bc',15)+t(x,y+5,k,14,'#fff',600,'middle');
-  }
-  body+=t(cx,128,'mod 5',15,'#274c65',600,'middle');
-  if(kind==='unit')body+=t(320,232,'2 × 3 = 6 ≡ 1 (mod 5)',16,'#203950',600,'middle');
-  else if(kind==='zm')body+=t(320,232,'Calculate, then keep the remainder',16,'#203950',600,'middle');
-  else body+=t(320,232,'7 ≡ 2 (mod 5)  →  same clock position',15,'#203950',600,'middle');
-  return svg(body);
- };
- const vec=(kind)=>{
-  if(kind==='linear'){
-    return svg(panel(32,16,576,212)+axes(211,207)+ar(211,207,391,207,'#357bb8')+ar(211,207,211,84,'#319776')+
-      ln(391,207,391,84,'#bdcbd2',2)+ln(211,84,391,84,'#bdcbd2',2)+ar(211,207,391,84,'#9966c1',5)+t(399,207,'v₁',16,'#357bb8')+t(225,75,'v₂',16,'#319776')+t(393,73,'v₁ + v₂',16,'#8053b4')+t(460,232,'Scale, then add',14,'#314e63',600,'middle'));
-  }
-  if(kind==='subspace'){
-    return svg(panel(20,16,600,210)+axes(179,190)+ln(83,238,300,130,'#32956d',7)+dot(179,190,'#20425a',5)+t(100,30,'Line through 0',15,'#267753')+
-        axes(480,190)+ln(362,174,595,48,'#cf8058',6)+dot(480,190,'#20425a',5)+t(425,30,'Line missing 0',15,'#a45d38')+t(179,231,'Subspace ✓',13,'#267753',600,'middle')+t(480,231,'Not a subspace',13,'#a45d38',600,'middle'));
-  }
-  if(kind==='span'){
-   return svg(panel(27,13,586,214)+`<polygon points="131,182 365,182 474,39 240,39" fill="#a6d9f1" fill-opacity=".27" stroke="#7caed1" stroke-width="2" stroke-dasharray="6 5"/>`+
-    axes(250,200)+ar(250,200,408,200,'#357bb8')+ar(250,200,300,85,'#319776')+ar(250,200,380,120,'#935ac3',4)+t(410,185,'v₁',16,'#357bb8')+t(300,72,'v₂',16,'#319776')+t(388,105,'target',14,'#935ac3')+t(450,232,'All combinations fill the plane',14,'#314e63',600,'middle'));
-  }
-  if(kind==='spanning'){
-   return svg(panel(18,18,293,210)+panel(330,18,292,210)+axes(145,192)+ar(145,192,270,192,'#357bb8')+t(160,45,'One direction',16,'#203950')+t(164,231,'Only a line',13,'#627689')+
-    axes(461,192)+ar(461,192,559,192,'#357bb8')+ar(461,192,461,61,'#319776')+t(455,45,'Two directions',16,'#203950')+t(468,231,'The whole plane ℝ²',13,'#627689'));
-  }
-  if(kind==='indep'){
-   return svg(panel(16,14,292,214)+panel(330,14,292,214)+axes(145,200)+ar(145,200,215,143,'#357bb8')+ar(145,200,285,86,'#d47f4d')+t(115,43,'Dependent',17,'#ad6038')+t(105,235,'Both on one line',12,'#627689')+
-    axes(463,200)+ar(463,200,585,200,'#357bb8')+ar(463,200,489,83,'#319776')+t(434,43,'Independent',17,'#25825c')+t(430,235,'Different directions',12,'#627689'));
-  }
-  if(kind==='basis'){
-   return svg(panel(18,18,295,207)+panel(330,18,292,207)+axes(143,196)+ar(143,196,252,196,'#357bb8')+ar(143,196,143,79,'#319776')+t(78,46,'Basis: 2 vectors',17,'#267753')+t(77,231,'Spans + independent',13,'#627689')+
-     axes(458,196)+ar(458,196,567,196,'#357bb8')+ar(458,196,458,80,'#319776')+ar(458,196,567,80,'#dc8057',4)+t(381,46,'Not a basis: extra v₃',16,'#a9633d')+t(386,232,'v₃ = v₁ + v₂',13,'#627689'));
-  }
-  if(kind==='dimension'){
-   return svg(panel(18,18,190,207)+panel(225,18,192,207)+panel(434,18,188,207)+
-     ln(55,137,170,137,'#357bb8',5)+dot(105,137,'#357bb8',5)+t(112,57,'1D',22,'#203950')+t(112,197,'1 basis vector',12,'#627689',600,'middle')+
-     ar(279,171,378,171,'#357bb8')+ar(279,171,279,72,'#319776')+t(320,57,'2D',22,'#203950')+t(320,197,'2 basis vectors',12,'#627689',600,'middle')+
-     ar(493,171,584,171,'#357bb8')+ar(493,171,493,71,'#319776')+ar(493,171,447,205,'#d4825a')+t(525,57,'3D',22,'#203950')+t(526,222,'3 basis vectors',12,'#627689',600,'middle'));
-  }
-  return svg(panel(20,20,600,206)+axes(300,200));
- };
- const other=(title)=>{
-  if(title==='Complex numbers')return svg(panel(32,16,576,211)+axes(295,206)+ar(295,206,405,74,'#8264ba',6)+ln(405,74,405,206,'#aac1cc',2)+ln(295,74,405,74,'#aac1cc',2)+dot(405,74,'#8264ba')+t(418,76,'3 + 4i',18,'#674e9e')+t(355,223,'real 3',14,'#627689')+t(242,128,'imaginary 4',13,'#627689',400,'middle'));
-  if(title==='Field')return svg(panel(25,19,590,205)+box(50,49,250,138,'#e9f5ee','#a6d9ba')+box(341,49,250,138,'#eaf1ff','#acbfe1')+
-    t(72,85,'Additive inverse',19)+t(72,122,'a + (−a) = 0',21,'#226d5e')+t(72,157,'For EVERY a',13,'#42675e')+
-    t(362,85,'Multiplicative inverse',18)+t(362,122,'a · a⁻¹ = 1',21,'#315ea0')+t(362,157,'For a ≠ 0 only',13,'#42658a'));
-  if(title==='Z/pZ is a field (p prime)')return svg(panel(20,18,600,205)+box(47,62,245,109,'#e9f5ee','#a6d9ba')+box(350,62,245,109,'#eaf1ff','#acbfe1')+t(68,99,'Prime modulus p',19)+t(68,136,'e.g. p = 5',18,'#226d5e')+ar(300,115,338,115)+t(374,99,'Every nonzero class',17)+t(374,135,'has an inverse',17,'#315ea0'));
-  if(title==='Equivalence relation'||title==='Equivalence class')return svg(panel(25,16,590,210)+
-    box(47,53,170,115,'#e8f3ff','#a6c6e3')+box(237,53,170,115,'#e9f5ee','#a6d9ba')+box(427,53,170,115,'#fff0df','#e5bd8c')+
-    t(130,79,'Class [0]',17,'#2a5e96',600,'middle')+t(130,117,'0, 3, 6, …',17,'#244967',600,'middle')+
-    t(320,79,'Class [1]',17,'#267753',600,'middle')+t(320,117,'1, 4, 7, …',17,'#244967',600,'middle')+
-    t(512,79,'Class [2]',17,'#a76b33',600,'middle')+t(512,117,'2, 5, 8, …',17,'#244967',600,'middle')+
-    t(320,203,'Three non-overlapping groups modulo 3',15,'#314e63',600,'middle'));
-  if(title==='Composition')return svg(panel(26,16,588,207)+box(46,75,111,93,'#e8f3ff','#a6c6e3')+box(265,75,111,93,'#e9f5ee','#a6d9ba')+box(483,75,111,93,'#fff0df','#e5bd8c')+
-   t(101,116,'x = 2',20,'#315a82',600,'middle')+t(321,116,'f(2) = 3',19,'#267753',600,'middle')+t(539,116,'g(3) = 6',19,'#986430',600,'middle')+
-   ar(159,124,256,124)+ar(378,124,474,124)+t(207,108,'f first',14,'#445d6f',600,'middle')+t(430,108,'g second',14,'#445d6f',600,'middle')+t(319,217,'(g ∘ f)(2) = 6',17,'#203950',600,'middle'));
-  if(title==='Linear combination')return vec('linear');
-  if(title==='Span')return vec('span');
-  if(title==='Spanning set')return vec('spanning');
-  if(title==='Linear independence')return vec('indep');
-  if(title==='Basis')return vec('basis');
-  if(title==='Dimension')return vec('dimension');
-  if(title==='Vector space')return vec('linear');
-  if(title==='Subspace')return vec('subspace');
-  if(title==='Replacement theorem')return svg(panel(26,17,587,204)+t(78,63,'Independent list',18,'#357bb8')+t(78,100,'2 vectors',17)+box(215,77,169,19,'#d9eafd','#aac5e0',6)+
-       t(78,157,'Spanning list',18,'#267753')+t(78,188,'3 vectors',17)+box(215,165,255,19,'#d9f2e4','#acdbbf',6)+t(490,135,'2 ≤ 3',25,'#203950')+t(320,222,'Independent ≤ spanning (finite lists)',14,'#314e63',600,'middle'));
-  if(title==='Unit')return clock('unit');
-  if(title==='Clock numbers Z/mZ')return clock('zm');
-  if(title==='Congruence mod m')return clock('congruence');
-  if(title==='Set')return svg(panel(24,16,592,210)+`<ellipse cx="320" cy="116" rx="181" ry="83" fill="#e6f2ff" stroke="#6d9ac2" stroke-width="2"/>`+dot(230,119,'#5696cf',15)+dot(325,80,'#6db996',15)+dot(403,146,'#dc9e69',15)+t(320,219,'One collection; each object is an element',15,'#314e63',600,'middle'));
-  if(title==='Subset')return svg(panel(24,16,592,211)+`<ellipse cx="319" cy="115" rx="208" ry="89" fill="#e8f2ff" stroke="#75a2cb" stroke-width="2"/><ellipse cx="270" cy="115" rx="98" ry="63" fill="#d4f0e2" stroke="#68ae86" stroke-width="2"/>`+t(181,64,'A',19)+t(480,83,'B',21)+t(320,225,'Every item in A is also in B',14,'#314e63',600,'middle'));
-  if(title==='Union')return venn('union');
-  if(title==='Intersection')return venn('intersection');
-  if(title==='Function')return mappings('Function');
-  if(title==='Image'||title==='Preimage')return svg(panel(20,17,600,208)+box(70,39,183,170,'#e8f3ff','#a6c6e3',40)+box(389,39,183,170,'#fff0df','#e5bd8c',40)+
-     dot(181,80,'#4585c4')+dot(181,130,'#4585c4')+dot(181,180,'#4585c4')+t(155,85,'−2',15)+t(155,135,'0',15)+t(155,185,'2',15)+
-     dot(470,93,'#d99c61')+dot(470,169,'#d99c61')+t(493,99,'4',17)+t(493,175,'0',17)+ar(194,80,458,93,'#89a3b8',2)+ar(194,130,458,169,'#89a3b8',2)+ar(194,180,458,93,'#89a3b8',2)+t(319,230,title==='Image'?'Image: outputs reached by a chosen input set':'Preimage of {4} = {−2, 2}',15,'#314e63',600,'middle'));
-  if(['Injective','Surjective','Bijective','Invertible'].includes(title))return mappings(title);
-  return '';
- };
- const captions={
-  'Union':'Shade everything that belongs to A OR B, including the overlap.',
-  'Intersection':'Only the overlapping region belongs to A ∩ B.',
-  'Function':'Follow one arrow from each input. One input cannot have two outputs.',
-  'Injective':'Each input has its own output. No two arrows end at the same output.',
-  'Surjective':'Every output gets at least one arrow. Repeated destinations are allowed.',
-  'Bijective':'Every output is reached exactly once; the pairing can be undone.',
-  'Invertible':'Undoing a function requires a one-to-one pairing between domain and codomain.',
-  'Linear combination':'The purple diagonal represents a sum of scaled vectors.',
-  'Span':'With two non-parallel vectors in the real plane, combinations can reach any point.',
-  'Spanning set':'Contrast a single line of reachable points with an entire plane.',
-  'Linear independence':'The left pair points along one line; the right pair does not.',
-  'Basis':'On the right, the third arrow is the sum of the first two, so it is redundant.',
-  'Subspace':'A line through the origin can be a subspace; an offset line fails the zero test.',
-  'Dimension':'In these familiar real-coordinate examples, the dimension counts basis vectors.',
-  'Field':'Both requirements matter: additive inverses for all elements; multiplicative inverses only for nonzero elements.',
-  'Complex numbers':'A complex number a + bi is represented by (a,b) in the complex plane.',
-  'Congruence mod m':'Numbers that end at the same position have the same remainder.',
-  'Equivalence class':'Classify integers by their remainder when divided by 3.',
-  'Equivalence relation':'Congruence modulo 3 illustrates how a set is partitioned into equivalence classes.',
-  'Image':'For f(x)=x², selected inputs produce the indicated output set.',
-  'Preimage':'For f(x)=x², both −2 and 2 land at 4.',
-  'Unit':'In the 5-clock, 2 and 3 multiply to give 1, so they are multiplicative inverses.',
-  'Clock numbers Z/mZ':'The five residues show what is left after dividing by 5.',
-  'Replacement theorem':'Two independent vectors cannot require more positions than three vectors that span the same space.'
- };
- const nameList=['Set','Subset','Union','Intersection','Function','Image','Preimage','Injective','Surjective','Bijective','Invertible','Composition','Congruence mod m','Equivalence relation','Equivalence class','Clock numbers Z/mZ','Unit','Field','Z/pZ is a field (p prime)','Complex numbers','Vector space','Subspace','Linear combination','Span','Spanning set','Linear independence','Basis','Dimension','Replacement theorem'];
- const detail=document.getElementById('defDetail');
- function enhanceDefinition(){
-   if(!detail || detail.querySelector('[data-visual-only]')) return;
-   const h2=detail.querySelector('h2');if(!h2)return;
-   const title=h2.textContent.trim();if(!nameList.includes(title))return;
-   const body=other(title);if(!body)return;
-   const figure=document.createElement('figure');figure.className='visual-showcase';figure.setAttribute('data-visual-only','true');
-   figure.innerHTML=`<p class="visual-label">See the idea</p>${body}<figcaption>${captions[title]||'Read the diagram, then connect it to the definition below.'}</figcaption>`;
-   h2.insertAdjacentElement('afterend',figure);
- }
- const mo=new MutationObserver(enhanceDefinition);if(detail)mo.observe(detail,{childList:true});
- enhanceDefinition();
- const ladder=document.getElementById('ladder');
- function highlightStage(){
-  const active=ladder&&ladder.querySelector('.rung[aria-pressed="true"]');
-  const idx=active?Number(active.dataset.stage):-1;
-  document.querySelectorAll('[data-rel-stage]').forEach(el=>el.classList.toggle('is-current', Number(el.dataset.relStage)===idx));
- }
- if(ladder)new MutationObserver(highlightStage).observe(ladder,{childList:true});
- highlightStage();
-})();
-
-</script>
-<script>
-(function(){
- 'use strict';
- var root=document.documentElement;
- var choices=['paper','sage','night'];
- var initial='paper';
- try{var saved=window.localStorage.getItem('algebra-look');if(choices.indexOf(saved)>=0)initial=saved;}catch(e){}
- function setPalette(choice){
-  if(choices.indexOf(choice)<0)return;
-  root.setAttribute('data-palette',choice);
-  document.querySelectorAll('[data-palette-choice]').forEach(function(btn){btn.setAttribute('aria-pressed',String(btn.getAttribute('data-palette-choice')===choice));});
-  try{window.localStorage.setItem('algebra-look',choice);}catch(e){}
- }
- document.querySelectorAll('[data-palette-choice]').forEach(function(btn){btn.addEventListener('click',function(){setPalette(btn.getAttribute('data-palette-choice'));});});
- setPalette(initial);
-})();
-</script>
+<script src="algebra-guide-glossary.js"></script>
+<script src="algebra-guide-questions.js"></script>
+<script src="algebra-guide-app.js"></script>
 </body>
 </html>
