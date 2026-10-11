@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Algebra I Study Guide</title>
+<style>
+:root{--bg:#f7f6f2;--card:#fff;--ink:#1d2430;--muted:#5a6472;--line:#dcdfe4;--accent:#2f5d8a;--accent-soft:#e6eef7;--warn:#9a4f2a;--warn-soft:#fbeee6;--ok:#2f7a4a;--ok-soft:#e7f3ea;--code:#f1f3f6}
+@media (prefers-color-scheme:dark){:root{--bg:#121619;--card:#1b2127;--ink:#e6e9ee;--muted:#a3adba;--line:#2e3742;--accent:#8fb8e6;--accent-soft:#1f2c3b;--warn:#f0a77f;--warn-soft:#2e2219;--ok:#8fd1a0;--ok-soft:#1d2e23;--code:#222a33}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 18px}
+header.top{background:var(--card);border-bottom:1px solid var(--line);padding-top:18px}
+header.top h1{font:600 1.8rem/1.2 Georgia,"Times New Roman",serif;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 10px;font-size:.95rem}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;padding:4px 0 10px}
+nav.tabs a{white-space:nowrap;color:var(--muted);text-decoration:none;padding:7px 11px;border-radius:8px;font-size:14px}
+nav.tabs a:hover{color:var(--ink);background:var(--bg)}
+nav.tabs a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+main{padding:22px 0 56px}
+.page{display:none}.page.on{display:block}
+h2.pt{font:600 1.6rem/1.25 Georgia,"Times New Roman",serif;margin:.2em 0 .4em}
+h3{font-size:1.05rem;margin:1em 0 .35em}
+p{margin:.45em 0 .85em;max-width:70ch}
+.lede{color:var(--muted);font-size:1.05rem}
+a{color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0}
+.card.warn{background:var(--warn-soft);border-color:var(--warn)}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+.formula{font:14.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--code);border-radius:8px;padding:10px 12px;white-space:pre-wrap;overflow-x:auto}
+.tag{display:inline-block;font-size:12.5px;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 10px;margin:0 6px 6px 0;text-decoration:none}
+.muted{color:var(--muted);font-size:14.5px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.stack{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+button{font:inherit;font-size:14.5px;padding:8px 14px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button:disabled{opacity:.5;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+button.opt{text-align:left;width:100%}
+input[type=search],select,textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
+input[type=search]{width:min(420px,100%)}
+select{max-width:340px}
+textarea{width:100%;min-height:90px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.feedback{border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:12px 0}
+.feedback.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback.wrong{border-color:var(--warn);background:var(--warn-soft)}
+details{padding:9px 0;border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;font-weight:600}
+details[open] > summary{margin-bottom:6px}
+.entry > summary .tag{margin-left:8px;vertical-align:middle}
+details.check{border:0;padding:4px 0}
+details.check summary{font-weight:500;color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:13px}
+td.sym{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--accent);white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.steps{padding-left:1.25em}
+.steps li{margin:.35em 0}
+.check-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0}
+.check-item input{margin-top:6px;width:18px;height:18px;accent-color:var(--accent)}
+.kicker{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 4px}
+.prompt{font-size:1.08rem;margin:.6em 0}
+label.inline{display:inline-flex;gap:8px;align-items:center;color:var(--muted);font-size:14.5px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;padding:18px 0 40px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:600px){header.top h1{font-size:1.5rem}}
+
+
+/* --- Visual framework additions --- */
+.hero-framework{display:grid;gap:12px;grid-template-columns:1fr;margin-top:14px}
+@media (min-width:840px){.hero-framework{grid-template-columns:repeat(3,1fr)}}
+.framework-card{background:linear-gradient(180deg,var(--card),var(--bg));border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:0 6px 18px rgba(20,34,60,.05)}
+.framework-card .stepno{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:13px;margin-bottom:8px}
+.framework-card h4{margin:0 0 6px;font-size:1rem}
+.framework-card p{margin:0;font-size:.95rem;max-width:none}
+.framework-card .mathline{margin-top:9px;padding:8px 10px;border-radius:9px;background:var(--code);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace}
+.quickflow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 4px}
+.quickflow .chipflow{background:var(--accent-soft);color:var(--accent);padding:7px 10px;border-radius:999px;font-size:13px;font-weight:600}
+.quickflow .arrow{color:var(--muted);font-weight:700}
+.visual-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;margin:14px 0;box-shadow:0 6px 18px rgba(20,34,60,.04)}
+.visual-note{font-size:14px;color:var(--muted)}
+.visual-map{overflow-x:auto;padding-bottom:8px}
+.visual-map svg{display:block;width:100%;height:auto;min-width:860px}
+.visual-map .node{cursor:pointer}
+.visual-map .node rect{fill:var(--card);stroke:var(--line);stroke-width:2;rx:16}
+.visual-map .node circle{fill:var(--accent)}
+.visual-map .node text{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.visual-map .node .ntext{fill:#fff;font-weight:700;font-size:13px}
+.visual-map .node .label{fill:var(--ink);font-weight:700;font-size:18px}
+.visual-map .node .sub{fill:var(--muted);font-size:13px}
+.visual-map .node.active rect,.visual-map .node:hover rect,.visual-map .node:focus rect{stroke:var(--accent);stroke-width:3}
+.visual-map .edge{stroke:#8ea3ba;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.visual-map .edge-hit{stroke:transparent;stroke-width:18;fill:none;cursor:pointer}
+.visual-map .edge.active{stroke:var(--accent);stroke-width:5}
+.map-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 10px}
+.map-controls button{font-size:13px;padding:7px 10px}
+.map-controls button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:700}
+.map-detail{border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;background:linear-gradient(180deg,var(--card),var(--bg))}
+.map-detail h3{margin:.1em 0 .4em}
+.map-detail .detail-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.map-detail .plain-block,.map-detail .math-block,.map-detail .example-block{border-left:3px solid var(--line);padding:8px 0 8px 12px;margin:10px 0}
+.map-detail .math-block{border-color:var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;padding:10px 12px}
+.map-detail .example-block{border-color:var(--ok);background:var(--ok-soft);border-radius:0 10px 10px 0;padding:10px 12px}
+.glossary-visual{margin:12px 0 8px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:12px}
+.glossary-visual svg{display:block;width:100%;height:auto;max-height:none;background:#fbfcff;border-radius:10px;color:#24364a}
+.glossary-visual figcaption{color:var(--ink)}
+@media (max-width:600px){.visual-map svg{min-width:840px}.glossary-visual{padding:8px}.glossary-visual svg{width:100%;height:auto}}
+.glossary-visual figcaption{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.55}
+.glossary-visual .visual-label{margin:0 0 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.roadmap-hint{font-size:14px;color:var(--muted);margin:6px 0 0}
+#p-roadmap .visual-card{position:relative}
+.roadmap-pop[hidden]{display:none}
+.roadmap-pop{position:absolute;z-index:30;width:min(370px,calc(100% - 16px));background:var(--card);border:1px solid var(--accent);border-radius:12px;box-shadow:0 12px 32px rgba(20,34,60,.2);padding:14px 16px 12px;font-size:14.5px;line-height:1.5}
+.roadmap-pop h3{margin:.1em 0 .35em;font-size:1.05rem;padding-right:24px}
+.roadmap-pop p{margin:.3em 0;max-width:none}
+.roadmap-pop .pop-tag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0}
+.roadmap-pop .pop-close{position:absolute;top:6px;right:8px;border:0;background:none;font-size:20px;line-height:1;padding:2px 6px;color:var(--muted)}
+.roadmap-pop .pop-lectures{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+.section-divider{margin:2em 0 .3em;padding-top:.8em;border-top:2px solid var(--line)}
+.roadmap-note{font-size:14px;color:var(--muted);margin:0 0 10px}
+
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <h1>Algebra I Study Guide</h1>
+    <p class="sub">Lectures 1–9 and Chapter 5 · plain-English explanations, precise definitions, worked examples, and practice</p>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#start">Start</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#worked">Worked examples</a>
+      <a href="#practice">Practice</a>
+      <a href="#question">Question type</a>
+      <a href="#reference">Reference</a>
+      <a href="#checklist">Checklist</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="page" id="p-start">
+  <h2 class="pt">Start here</h2>
+  <p class="lede">This guide follows the course from sets and functions through fields, vector spaces and dimension. It assumes no earlier course in abstract algebra. For each idea, read the plain-English version first, then the precise definition, then an example and a non-example.</p>
+
+  
+
+  <div class="visual-card">
+    <p class="kicker">Visual framework</p>
+    <h3>The three moves you keep repeating in this course</h3>
+    <p class="visual-note">This is the main framework for understanding the course. First identify the object, then translate the rule, then solve the task. The rest of the guide keeps coming back to these same moves.</p>
+    <div class="quickflow"><span class="chipflow">1 · Name the object</span><span class="arrow">→</span><span class="chipflow">2 · Translate the rule</span><span class="arrow">→</span><span class="chipflow">3 · Solve the task</span></div>
+    <div class="hero-framework">
+      <section class="framework-card">
+        <div class="stepno">1</div>
+        <h4>Name the object</h4>
+        <p>Ask what kind of thing you are looking at: a set, a function, a relation, a field, a vector space, a subspace, a span, a basis, or a dimension question.</p>
+        <div class="mathline">Examples: “Is this a function?” · “Is W a subspace?” · “Is [a] a unit?”</div>
+      </section>
+      <section class="framework-card">
+        <div class="stepno">2</div>
+        <h4>Translate the rule</h4>
+        <p>Say the idea in plain English, then restate it in mathematical language. This is where you unpack symbols and definitions into conditions you can check.</p>
+        <div class="mathline">Example: “A ⊆ B” means every element of A is also in B.</div>
+      </section>
+      <section class="framework-card">
+        <div class="stepno">3</div>
+        <h4>Solve the task</h4>
+        <p>Once you know the object and the rule, decide what the question is asking: compute, prove, disprove, construct, or compare. Then choose the right first move.</p>
+        <div class="mathline">Examples: solve for coefficients · show A ⊆ B and B ⊆ A · find one counterexample</div>
+      </section>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h3>What the course is about</h3>
+    <p>Algebra asks which rules are enough for a system to behave like arithmetic. You meet several systems: clock arithmetic (numbers that wrap around after m), the complex numbers, and vectors (arrows, lists of numbers, polynomials). For each one you ask the same questions: which pieces can I build from others, which pieces are redundant, and how many independent pieces do I need?</p>
+  </div>
+
+  <div class="card">
+    <h3>How to read a definition</h3>
+    <ol class="steps">
+      <li><strong>Say it in words.</strong> Find the plain-English idea before the symbols.</li>
+      <li><strong>Name the pieces.</strong> Which symbols are the objects, which are the rules, and which are the conditions?</li>
+      <li><strong>Work one example.</strong> Use small numbers you can check by hand.</li>
+      <li><strong>Break one example.</strong> Find a case that fails. The non-example shows what the definition rules out.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>How to use this guide</h3>
+    <ol class="steps">
+      <li>Open the <a href="#roadmap">Roadmap</a> to see how the topics depend on each other.</li>
+      <li>Read a term in the <a href="#glossary">Glossary</a>, and try its check question before opening the answer.</li>
+      <li>Study a full problem in <a href="#worked">Worked examples</a>, one step at a time.</li>
+      <li>Practise in <a href="#practice">Practice</a>. Start with “By topic” to build confidence, then switch to “Mixed” to practise recognising which kind of problem you are facing.</li>
+      <li>Stuck? Use <a href="#question">Question type</a> and the routine on the <a href="#reference">Reference</a> page.</li>
+      <li>Track coverage in the <a href="#checklist">Checklist</a>.</li>
+    </ol>
+  </div>
+
+  <div class="card warn">
+    <h3>Limits of this guide</h3>
+    <ul>
+      <li>It does not replace the lectures, tutorials, the textbook, or office hours.</li>
+      <li>The practice questions and worked examples were written for this guide. They are not past exam questions and do not predict what will be on an exam.</li>
+      <li>Do not use it to produce answers for graded work. Check your course outline for the rules on collaboration and AI tools before using any tool on coursework.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="p-roadmap">
+  <h2 class="pt">Roadmap</h2>
+  <p class="lede">This is a teaching map, not a strict chain of prerequisites. Some connections build on earlier definitions; others show how the same mathematical ideas are reused in a different context. Fields are introduced before clock arithmetic in these lectures. Prime-modulus clock systems are later examples of fields. Hover or tap a box or an arrow to see its explanation beside it.</p>
+  
+  <div class="visual-card">
+    <p class="kicker">Roadmap: how ideas connect</p>
+    <h3>Hover or tap a box or an arrow</h3>
+    <p class="visual-note">This map shows how ideas connect. It is not a list of lectures; the lecture cards below are. A box explains one topic, and an arrow explains one connection between two topics.</p>
+    <div class="visual-map" id="roadmap-visual">
+<svg viewBox="0 0 1060 600" role="img" aria-label="Interactive map with eight numbered course stages. Boxes and arrows explain topic relationships, rather than a single prerequisite chain.">
+<defs><marker id="map-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#8ea3ba"/></marker></defs>
+<path id="edge0" class="edge" d="M304 95 H394" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 95 H394" data-conn="0"/>
+<path id="edge1" class="edge" d="M664 95 H754" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M664 95 H754" data-conn="1"/>
+<path id="edge2" class="edge" d="M304 257 H340 V192 H889 V144" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 257 H340 V192 H889 V144" data-conn="2"/>
+<path id="edge3" class="edge" d="M304 290 H394" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 290 H394" data-conn="3"/>
+<path id="edge4" class="edge" d="M416 338 V390 H170 V450" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M416 338 V390 H170 V450" data-conn="4"/>
+<path id="edge5" class="edge" d="M528 338 V450" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M528 338 V450" data-conn="5"/>
+<path id="edge6" class="edge" d="M304 510 H394" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M304 510 H394" data-conn="6"/>
+<path id="edge7" class="edge" d="M664 510 H754" marker-end="url(#map-arrow)"/>
+<path class="edge-hit" d="M664 510 H754" data-conn="7"/>
+<g class="node" tabindex="0" role="button" data-stage="0" aria-label="Stage 1: Sets &amp; functions">
+<rect x="34" y="46" width="270" height="98" rx="16"/>
+<circle cx="60" cy="73" r="16"/>
+<text class="ntext" x="60" y="78" text-anchor="middle">1</text>
+<text class="label" x="60" y="106" font-size="19">Sets &amp; functions</text>
+<text class="sub" x="60" y="127">Membership, rules, outputs</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="1" aria-label="Stage 2: Fields &amp; complex">
+<rect x="34" y="240" width="270" height="98" rx="16"/>
+<circle cx="60" cy="267" r="16"/>
+<text class="ntext" x="60" y="272" text-anchor="middle">2</text>
+<text class="label" x="60" y="300" font-size="19">Fields &amp; complex</text>
+<text class="sub" x="60" y="321">Arithmetic with inverses</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="2" aria-label="Stage 3: Relations &amp; clock">
+<rect x="394" y="46" width="270" height="98" rx="16"/>
+<circle cx="420" cy="73" r="16"/>
+<text class="ntext" x="420" y="78" text-anchor="middle">3</text>
+<text class="label" x="420" y="106" font-size="17">Relations &amp; clock</text>
+<text class="sub" x="420" y="127">Equivalent remainders</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="3" aria-label="Stage 4: Finite fields">
+<rect x="754" y="46" width="270" height="98" rx="16"/>
+<circle cx="780" cy="73" r="16"/>
+<text class="ntext" x="780" y="78" text-anchor="middle">4</text>
+<text class="label" x="780" y="106" font-size="19">Finite fields</text>
+<text class="sub" x="780" y="127">Prime moduli</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="4" aria-label="Stage 5: Vector spaces">
+<rect x="394" y="240" width="270" height="98" rx="16"/>
+<circle cx="420" cy="267" r="16"/>
+<text class="ntext" x="420" y="272" text-anchor="middle">5</text>
+<text class="label" x="420" y="300" font-size="19">Vector spaces</text>
+<text class="sub" x="420" y="321">Vectors and scalars</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="5" aria-label="Stage 6: Span">
+<rect x="34" y="450" width="270" height="98" rx="16"/>
+<circle cx="60" cy="477" r="16"/>
+<text class="ntext" x="60" y="482" text-anchor="middle">6</text>
+<text class="label" x="60" y="510" font-size="19">Span</text>
+<text class="sub" x="60" y="531">Vectors we can build</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="6" aria-label="Stage 7: Independence &amp; bases">
+<rect x="394" y="450" width="270" height="98" rx="16"/>
+<circle cx="420" cy="477" r="16"/>
+<text class="ntext" x="420" y="482" text-anchor="middle">7</text>
+<text class="label" x="420" y="510" font-size="17">Independence &amp; bases</text>
+<text class="sub" x="420" y="531">No redundancy; enough vectors</text>
+</g>
+<g class="node" tabindex="0" role="button" data-stage="7" aria-label="Stage 8: Dimension">
+<rect x="754" y="450" width="270" height="98" rx="16"/>
+<circle cx="780" cy="477" r="16"/>
+<text class="ntext" x="780" y="482" text-anchor="middle">8</text>
+<text class="label" x="780" y="510" font-size="19">Dimension</text>
+<text class="sub" x="780" y="531">Number of basis vectors</text>
+</g>
+</svg>
+</div>
+    <!-- explanations now appear as pop-ups beside the map -->
+    <p class="roadmap-hint">Hover (or tap) a box or arrow to see its explanation pop up next to it. Not every earlier topic is required for every later one.</p>
+    <!-- roadmap pop-ups are created by the script -->
+  </div>
+<h3 class="section-divider">Lecture coverage: what each lecture covers</h3>
+<p class="roadmap-note">The map above shows how ideas connect, so it does not line up one-to-one with these lectures.</p>
+<div class="grid">
+    <section class="card"><p class="kicker">Lecture 1</p><h3>1 · Sets and functions</h3>
+      <p>Describe collections, combine them, and decide whether a function is injective, surjective, bijective or invertible.</p>
+      <p class="muted">Terms: <a href="#g-set">Set</a> · <a href="#g-subset">Subset</a> · <a href="#g-function">Function</a> · <a href="#g-injective">Injective</a> · <a href="#g-surjective">Surjective</a> · <a href="#g-invertible">Invertible</a></p></section>
+    <section class="card"><p class="kicker">Lecture 2</p><h3>2 · Fields and complex numbers</h3>
+      <p>State the field axioms, prove basic facts such as a · 0 = 0, and compute with complex numbers.</p>
+      <p class="muted">Terms: <a href="#g-field">Field</a> · <a href="#g-field-facts">Field facts</a> · <a href="#g-complex">Complex numbers</a> · <a href="#g-conj-mod">Conjugate and modulus</a></p></section>
+    <section class="card"><p class="kicker">Lecture 3 and Chapter 5</p><h3>3 · Relations and clock arithmetic</h3>
+      <p>Test an equivalence relation, work in ℤ/mℤ, and find units.</p>
+      <p class="muted">Terms: <a href="#g-relation">Relation</a> · <a href="#g-equiv-rel">Equivalence relation</a> · <a href="#g-congruence">Congruence</a> · <a href="#g-zm">Z/mZ</a> · <a href="#g-units">Units</a> · <a href="#g-ring">Ring</a> · <a href="#g-powers">Powers</a></p></section>
+    <section class="card"><p class="kicker">Lecture 4</p><h3>4 · Finite fields</h3>
+      <p>Decide when ℤ/mℤ is a field, and explain why.</p>
+      <p class="muted">Terms: <a href="#g-fp">Z/pZ and F_p</a></p></section>
+    <section class="card"><p class="kicker">Lectures 4 and 5</p><h3>5 · Vector spaces</h3>
+      <p>Check the eight axioms, and test whether a set is a subspace.</p>
+      <p class="muted">Terms: <a href="#g-vector-space">Vector space</a> · <a href="#g-vs-facts">Vector-space facts</a> · <a href="#g-subspace">Subspace</a></p></section>
+    <section class="card"><p class="kicker">Lecture 6</p><h3>6 · Span</h3>
+      <p>Write vectors as linear combinations, and decide whether a vector lies in a span.</p>
+      <p class="muted">Terms: <a href="#g-lincomb">Linear combination</a> · <a href="#g-span">Span</a> · <a href="#g-spanning">Spanning set</a></p></section>
+    <section class="card"><p class="kicker">Lectures 7 and 8</p><h3>7 · Independence and bases</h3>
+      <p>Test independence, recognise bases, and see why representations are unique.</p>
+      <p class="muted">Terms: <a href="#g-indep">Independence</a> · <a href="#g-basis">Basis</a></p></section>
+    <section class="card"><p class="kicker">Lectures 8 and 9</p><h3>8 · Dimension</h3>
+      <p>State the replacement theorem, count dimension, and use it to compare subspaces.</p>
+      <p class="muted">Terms: <a href="#g-dimension">Dimension</a> · <a href="#g-replacement">Replacement theorem</a></p></section>
+  </div>
+</section>
+
+<section class="page" id="p-glossary">
+  <h2 class="pt">Glossary</h2>
+  <p class="lede">Open a term to see the plain-English idea, the precise definition, an example, a non-example, a check question, and for many core ideas a small visual explanation.</p>
+  <div class="row">
+    <input type="search" id="gsearch" placeholder="Search terms" aria-label="Search glossary">
+    <select id="gstage" aria-label="Filter by stage">
+      <option value="all">All stages</option>
+      <option value="1">1 · Sets and functions</option>
+      <option value="2">2 · Fields and complex numbers</option>
+      <option value="3">3 · Clock arithmetic and relations</option>
+      <option value="4">4 · Finite fields</option>
+      <option value="5">5 · Vector spaces</option>
+      <option value="6">6 · Span</option>
+      <option value="7">7 · Independence and bases</option>
+      <option value="8">8 · Dimension</option>
+    </select>
+  </div>
+  <div id="glist"></div>
+</section>
+
+<section class="page" id="p-worked">
+  <h2 class="pt">Worked examples</h2>
+  <p class="lede">Each example shows the reasoning, not just the answer. Cover the steps and try them yourself first.</p>
+
+  <div class="card">
+    <h3>1 · Show that f(x) = 2x + 1 is a bijection from ℝ to ℝ</h3>
+    <ol class="steps">
+      <li><strong>Injective.</strong> Assume f(x) = f(y). Then 2x + 1 = 2y + 1, so 2x = 2y, so x = y.</li>
+      <li><strong>Surjective.</strong> Take any real y. Let x = (y − 1)/2, a real number. Then f(x) = 2 · (y − 1)/2 + 1 = y.</li>
+      <li><strong>Conclusion.</strong> Both properties hold, so f is bijective. The x found in step 2 is the inverse function evaluated at y.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>2 · Is W = {(x, y, z) ∈ ℝ³ : x = 2y} a subspace?</h3>
+    <ol class="steps">
+      <li><strong>Zero.</strong> (0, 0, 0) satisfies 0 = 2 · 0, so 0 is in W.</li>
+      <li><strong>Addition.</strong> Take u = (2s, s, p) and v = (2t, t, q). Then u + v = (2(s + t), s + t, p + q), which satisfies the condition, so it is in W.</li>
+      <li><strong>Scaling.</strong> For any real c, cu = (2cs, cs, cp), which also satisfies x = 2y.</li>
+      <li><strong>Conclusion.</strong> W is a subspace. Its z-coordinate is free, so W is a plane through the origin.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>3 · Is {(1, 2), (2, 4)} linearly independent?</h3>
+    <ol class="steps">
+      <li>Set c₁(1, 2) + c₂(2, 4) = (0, 0). The two coordinate equations are c₁ + 2c₂ = 0 and 2c₁ + 4c₂ = 0.</li>
+      <li>The second equation is twice the first, so there are solutions other than the trivial one. Take c₂ = 1 and c₁ = −2.</li>
+      <li>Check: −2(1, 2) + (2, 4) = (0, 0), with nonzero coefficients. The list is dependent.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>4 · Is (4, 5, 6) in span{(1, 0, 1), (0, 1, 1)}?</h3>
+    <ol class="steps">
+      <li>We need a(1, 0, 1) + b(0, 1, 1) = (4, 5, 6), which is (a, b, a + b) = (4, 5, 6).</li>
+      <li>The first two coordinates give a = 4 and b = 5.</li>
+      <li>The third coordinate would then be a + b = 9, not 6. No solution exists, so (4, 5, 6) is not in the span.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>5 · Show that ℤ/6ℤ is not a field</h3>
+    <ol class="steps">
+      <li>A field needs every nonzero element to have an inverse. Look at 2: 2 · 3 = 6 ≡ 0 (mod 6).</li>
+      <li>Suppose 2 had an inverse b, so 2b ≡ 1 (mod 6). Multiply both sides by 3: 6b ≡ 3, which says 0 ≡ 3 (mod 6). That is false.</li>
+      <li>So 2 has no inverse, and ℤ/6ℤ is not a field.</li>
+    </ol>
+    <p class="note">Why it works: 2 and 3 are zero divisors. A field has none.</p>
+  </div>
+
+  <div class="card">
+    <h3>6 · Find the remainder of 156,347 when divided by 11</h3>
+    <ol class="steps">
+      <li>Since 10 ≡ −1 (mod 11), the powers of 10 alternate in sign, so use alternating digit sums, starting from the right.</li>
+      <li>7 − 4 + 3 − 6 + 5 − 1 = 4.</li>
+      <li>So 156,347 ≡ 4 (mod 11). Check: 11 · 14,213 = 156,343, and 156,347 − 156,343 = 4.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="page" id="p-practice">
+  <h2 class="pt">Practice</h2>
+  <p class="lede">Two ways to practise. <strong>By topic</strong> names the topic first, so you can focus. <strong>Mixed</strong> hides the topic: you first decide what kind of problem it is, which is the skill exams test most directly.</p>
+  <div class="card">
+    <div class="row">
+      <button class="mode" data-mode="topic" aria-pressed="true">By topic</button>
+      <button class="mode" data-mode="mixed" aria-pressed="false">Mixed</button>
+      <label class="inline">Topic <select id="topic-sel" aria-label="Topic"></select></label>
+    </div>
+    <p class="muted" id="p-count"></p>
+    <div id="p-area"></div>
+    <p class="muted" id="p-score"></p>
+  </div>
+</section>
+
+<section class="page" id="p-question">
+  <h2 class="pt">Question type</h2>
+  <p class="lede">Answer one question at a time. Each answer narrows the problem until you reach a first move, and the definitions behind it.</p>
+  <div class="card">
+    <p class="muted" id="d-trail"></p>
+    <h3 id="d-q"></h3>
+    <div class="stack" id="d-opts"></div>
+    <div id="d-leaf"></div>
+    <div class="row"><button id="d-back">Back</button><button id="d-reset">Start over</button></div>
+  </div>
+</section>
+
+<section class="page" id="p-reference">
+  <h2 class="pt">Reference</h2>
+
+  <h3>Notation</h3>
+  <div class="card">
+    <input type="search" id="nsearch" placeholder="Filter symbols, for example inverse or subset" aria-label="Filter notation">
+    <div class="tablewrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Symbol</th><th>Read as</th><th>Example</th><th>Note</th></tr></thead>
+        <tbody id="notation-body">
+          <tr><td class="sym">∈ and ∉</td><td>is (is not) an element of</td><td>2 ∈ {1, 2, 3}; 4 ∉ {1, 2, 3}</td><td>Single items go into sets with ∈.</td></tr>
+          <tr><td class="sym">⊆</td><td>is a subset of (equality allowed)</td><td>{1, 2} ⊆ {1, 2, 3}</td><td>The lecture notes write ⊂ for this.</td></tr>
+          <tr><td class="sym">⊊</td><td>is a proper subset of</td><td>{1, 2} ⊊ {1, 2, 3}</td><td>Strictly smaller.</td></tr>
+          <tr><td class="sym">∪ and ∩</td><td>union; intersection</td><td>{1, 2} ∪ {2, 3} = {1, 2, 3}</td><td>“or” includes “both”.</td></tr>
+          <tr><td class="sym">∅</td><td>the empty set</td><td>{1} ∩ {2} = ∅</td><td>Not the number 0.</td></tr>
+          <tr><td class="sym">f : S → T</td><td>f is a function from S to T</td><td>f : ℝ → ℝ</td><td>S is the domain and T is the codomain.</td></tr>
+          <tr><td class="sym">f(U) and f⁻¹(V)</td><td>image of U; preimage of V</td><td>f(x) = x²: f⁻¹({4}) = {−2, 2}</td><td>f⁻¹ here names a set. It need not be an inverse function.</td></tr>
+          <tr><td class="sym">g ∘ f</td><td>apply f, then g</td><td>(g ∘ f)(x) = g(f(x))</td><td>Order matters.</td></tr>
+          <tr><td class="sym">∀ and ∃</td><td>for all; there exists</td><td>∀x ∃y: x + y = 0</td><td>Read left to right.</td></tr>
+          <tr><td class="sym">⇒ and ⇔</td><td>if … then; if and only if</td><td>a ≡ b ⇔ m divides a − b</td><td>⇔ means both directions.</td></tr>
+          <tr><td class="sym">a ≡ b (mod m)</td><td>a and b are congruent mod m</td><td>7 ≡ 2 (mod 5)</td><td>Same remainder mod m.</td></tr>
+          <tr><td class="sym">[a]</td><td>equivalence class of a</td><td>[1] mod 3 = {…, −2, 1, 4, …}</td><td>Chapter 5 adds a subscript m when the modulus matters.</td></tr>
+          <tr><td class="sym">ℤ/mℤ and ℤ_m</td><td>integers mod m</td><td>ℤ/5ℤ = {[0], …, [4]}</td><td>Chapter 5 writes ℤ_m; the lectures write ℤ/mℤ. Same thing.</td></tr>
+          <tr><td class="sym">F_p</td><td>the field ℤ/pℤ, for prime p</td><td>F₅ has 5 elements</td><td>Chapter 5 uses the same notation.</td></tr>
+          <tr><td class="sym">a⁻¹</td><td>multiplicative inverse</td><td>3⁻¹ = 5 in ℤ/7ℤ</td><td>Exists for units and for nonzero field elements.</td></tr>
+          <tr><td class="sym">c₁v₁ + … + cₙvₙ</td><td>linear combination</td><td>2(1, 0) + 3(0, 1) = (2, 3)</td><td>The cᵢ are scalars.</td></tr>
+          <tr><td class="sym">span(S)</td><td>everything reachable from S</td><td>span{(1, 0), (0, 1)} = ℝ²</td><td>span(∅) = {0}.</td></tr>
+          <tr><td class="sym">dim V</td><td>dimension of V</td><td>dim ℝ² = 2</td><td>The number of vectors in any basis.</td></tr>
+          <tr><td class="sym">z̄ and |z|</td><td>conjugate; modulus of a complex number z</td><td>3 + 4i: z̄ = 3 − 4i, |z| = 5</td><td>z · z̄ = |z|².</td></tr>
+          <tr><td class="sym">ℤ ⊆ ℚ ⊆ ℝ ⊆ ℂ</td><td>number systems inside one another</td><td>—</td><td>The lecture notes write ⊂.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>Common mistakes</h3>
+  <div class="card">
+    <ul>
+      <li>Checking a few examples and calling it a proof. A “for all” claim needs an argument that works for every element.</li>
+      <li>Forgetting to check that 0 is in a subspace, or treating the empty set as the number 0.</li>
+      <li>Reading f⁻¹(V) as an inverse function. The preimage is always a set. An inverse function exists only when f is bijective.</li>
+      <li>Testing surjectivity against the domain instead of the codomain.</li>
+      <li>Forgetting to reduce mod m. In ℤ/9ℤ, [3] + [7] is [1], not 10.</li>
+      <li>Calling vectors independent because they look different. Test for a nonzero combination that gives zero.</li>
+      <li>Assuming independence is the same over every field. Over F₂ the same vectors can behave differently from how they behave over ℝ.</li>
+      <li>Confusing spanning with basis. A spanning list can contain redundant vectors; a basis cannot.</li>
+      <li>Assuming every nonzero element of a ring has an inverse. ℤ/6ℤ has zero divisors.</li>
+    </ul>
+  </div>
+
+  <h3>Proof templates</h3>
+  <div class="card">
+    <ul>
+      <li>To show A = B: show A ⊆ B and B ⊆ A.</li>
+      <li>To show f is injective: assume f(x) = f(y) and deduce x = y.</li>
+      <li>To show f is surjective: take an arbitrary y in the codomain and solve f(x) = y.</li>
+      <li>To show W is a subspace: show 0 is in W, that W is closed under addition, and that W is closed under scaling.</li>
+      <li>To show a list is a basis: show it spans, and show it is independent.</li>
+      <li>To show a ≡ b (mod m): show that m divides a − b.</li>
+    </ul>
+  </div>
+
+  <h3>When you are stuck</h3>
+  <div class="card">
+    <label class="check-item"><input type="checkbox"><span><strong>Name the object.</strong> Is it a set, a function, a field, a vector space, a subspace, a span, a basis, or a dimension question?</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Translate the symbols.</strong> Say “for every x in S” out loud when you see ∀x ∈ S.</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Unpack the definition.</strong> Turn it into conditions you can check one at a time.</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Decide the task.</strong> Are you proving, disproving, constructing, or computing?</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Try a small case.</strong> Use ℝ², ℤ/3ℤ, or a two-element set to see what is going on.</span></label>
+    <label class="check-item"><input type="checkbox"><span><strong>Connect and solve.</strong> Justify every step with the definition or a theorem.</span></label>
+    <p class="muted" style="margin-top:10px">If you have been stuck for more than a few minutes, go back to step 3 and ask which condition you have not yet checked.</p>
+  </div>
+
+  <p class="muted">Sources: the uploaded lecture notes (Lectures 1–9) and Chapter 5. Chapter 5 is from Wayne Aitken’s Math 378 notes (CSUSM, Spring 2009), and its notation differs slightly, as the table shows.</p>
+</section>
+
+<section class="page" id="p-checklist">
+  <h2 class="pt">Checklist</h2>
+  <p class="lede">Lecture 9 lists the midterm topics. These boxes cover that list, plus the Chapter 5 items. Ticks are saved in this browser.</p>
+  <div id="check-list"></div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  Built from the uploaded lecture notes and Chapter 5. Practice questions and worked examples were written for this guide and are not past exam questions. Check anything important against your course materials.
+</footer>
+
+<script src="algebra-guide-glossary.js"></script>
+<script src="algebra-guide-questions.js"></script>
+<script src="algebra-guide-app.js"></script>
+</body>
+</html>
